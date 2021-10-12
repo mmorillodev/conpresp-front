@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "streetsidesoftware.code-spell-checker",
+    "dsznajder.es7-react-js-snippets",
+    "dbaeumer.vscode-eslint",
+    "abusaidm.html-snippets",
+    "firsttris.vscode-jest-runner",
+    "quicktype.quicktype",
+    "jpoissonnier.vscode-styled-components"
+  ]
+}
