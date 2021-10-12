@@ -6,6 +6,7 @@
     "abusaidm.html-snippets",
     "firsttris.vscode-jest-runner",
     "quicktype.quicktype",
-    "jpoissonnier.vscode-styled-components"
+    "jpoissonnier.vscode-styled-components",
+    "eg2.vscode-npm-script"
   ]
 }
