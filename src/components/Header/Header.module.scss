@@ -1,0 +1,16 @@
+.Header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 50px;
+  background-color: #4690f3;
+}
+
+.logo {
+  position: absolute;
+  left: 50px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.5rem;
+  color: white;
+}
