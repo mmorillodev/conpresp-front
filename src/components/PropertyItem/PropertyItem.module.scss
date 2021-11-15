@@ -21,7 +21,14 @@
     color: black;
 
     .propertyColumn {
-      display: block;
+      h4,
+      span {
+        display: block;
+        max-width: 14.5vw;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
     }
 
     .columnTitle {
