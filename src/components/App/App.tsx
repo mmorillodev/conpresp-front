@@ -6,7 +6,7 @@ import styles from './App.module.scss'
 const App = () => (
   <div className={styles.App}>
     <BrowserRouter>
-      <Route component={Home} path="/" />
+      <Route component={Home} path="/patrimonios" />
       <Route component={Login} path="/login" />
     </BrowserRouter>
   </div>

@@ -1,28 +1,31 @@
+import type { FC } from 'react'
 import styles from './PropertyItem.module.scss'
 
-const PropertyItem = () => (
+interface PropertyItemProps {
+  id: string
+  resolution: string
+  denomination: string
+  conservationDegree: string
+  conservationState: string
+  user: string
+}
+
+const PropertyItem: FC<PropertyItemProps> = ({
+  id,
+  resolution,
+  denomination,
+  conservationDegree,
+  conservationState,
+  user,
+}) => (
   <li className={styles.PropertyItem}>
     <a className={styles.callToAction} href="/">
-      <div className={styles.propertyColumn}>
-        <h4 className={styles.columnTitle}>Número</h4>
-        <span>100006</span>
-      </div>
-      <div className={styles.propertyColumn}>
-        <h4 className={styles.columnTitle}>Denominação</h4>
-        <span>Igreja São Luiz</span>
-      </div>
-      <div className={styles.propertyColumn}>
-        <h4 className={styles.columnTitle}>Grau de alteração</h4>
-        <span>Alterado</span>
-      </div>
-      <div className={styles.propertyColumn}>
-        <h4 className={styles.columnTitle}>Estado de conservação</h4>
-        <span>Regular</span>
-      </div>
-      <div className={styles.propertyColumn}>
-        <h4 className={styles.columnTitle}>Responsável pelo preenchimento</h4>
-        <span>Matheus Morillo</span>
-      </div>
+      <span>{id}</span>
+      <span>{resolution}</span>
+      <span>{denomination}</span>
+      <span>{conservationDegree}</span>
+      <span>{conservationState}</span>
+      <span>{user}</span>
     </a>
   </li>
 )

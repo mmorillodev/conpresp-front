@@ -2,5 +2,25 @@
 }
 
 .mainContent {
-  padding: 1rem 4rem;
+  padding: 2rem 4rem;
+
+  h1 {
+    font-size: 3rem;
+  }
+
+  .pageDescr {
+    display: block;
+    padding: 2rem 0;
+    width: 50%;
+    text-align: justify;
+    line-height: 1.5rem;
+  }
+
+  hr {
+    background-color: #cccccc;
+    height: 1px;
+    border: 0;
+    margin: 0;
+    margin-bottom: 4rem;
+  }
 }
