@@ -1,10 +1,10 @@
 import Header from '../../components/Header/Header'
 import PropertyList from '../../components/PropertyList/PropertyList'
 
-import styles from './Home.module.scss'
+import styles from './PropertyPage.module.scss'
 
-const Home = () => (
-  <div className={styles.Home}>
+const PropertyPage = () => (
+  <div className={styles.Property}>
     <Header />
     <main className={styles.mainContent}>
       <h1>Patrimônios</h1>
@@ -20,4 +20,4 @@ const Home = () => (
   </div>
 )
 
-export default Home
+export default PropertyPage
