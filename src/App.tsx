@@ -1,9 +1,9 @@
 import { Route, Switch } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
-import Header from '../Header/Header'
-import PropertyPage from '../../pages/PatrimonyPage/PatrimonyPage'
-import Login from '../../pages/Login/Login'
+import Header from './components/Header/Header'
+import PropertyPage from './pages/PatrimonyPage/PatrimonyPage'
+import Login from './pages/Login/Login'
 import styles from './App.module.scss'
 
 const queryClient = new QueryClient()
