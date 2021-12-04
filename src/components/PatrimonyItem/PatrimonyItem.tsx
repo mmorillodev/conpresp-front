@@ -19,7 +19,12 @@ const PatrimonyItem: FC<PatrimonyItemProps> = ({
   },
 }) => (
   <li className={styles.PatrimonyItem}>
-    <span className={styles.tag}>{conservationLevel}</span>
+    <Link
+      className={styles.tag}
+      to={`/patrimonios?conservationLevel=${conservationLevel}`}
+    >
+      {conservationLevel}
+    </Link>
     <div>
       <div className={styles.patrimonyHeading}>
         <h2>{denomination}</h2>
@@ -27,7 +32,9 @@ const PatrimonyItem: FC<PatrimonyItemProps> = ({
       </div>
       <span className={styles.comment}>{conservationLevelComment}</span>
     </div>
-    <Link to={`/patrimonios/${id}`}>Ver mais</Link>
+    <Link to={`/patrimonios/${id}`} className={styles.seeMore}>
+      Ver mais
+    </Link>
   </li>
 )
 

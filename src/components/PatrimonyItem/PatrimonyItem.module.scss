@@ -1,6 +1,7 @@
 .PatrimonyItem {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
 
   padding: 26px;
   border-radius: 0.5rem;
@@ -17,15 +18,6 @@
 
     margin-bottom: 2rem;
   }
-
-  a {
-    color: #1da6d1;
-    font-size: 14px;
-    text-transform: uppercase;
-    text-decoration: none;
-
-    margin-top: auto;
-  }
 }
 
 .tag {
@@ -33,9 +25,11 @@
   color: #db2e62;
   vertical-align: middle;
   text-align: center;
+  padding: 3px 14px;
 
   font-size: 10px;
   line-height: 20px;
+  text-decoration: none;
 
   border-radius: 69px;
 
@@ -66,4 +60,13 @@
   text-overflow: ellipsis;
 
   text-align: justify;
+}
+
+.seeMore {
+  color: #1da6d1;
+  font-size: 14px;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  margin-top: auto;
 }
