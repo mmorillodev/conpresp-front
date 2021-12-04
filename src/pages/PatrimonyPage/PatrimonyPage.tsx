@@ -1,16 +1,25 @@
+import { useEffect } from 'react'
 import { useQuery } from 'react-query'
 
 import { PageableResponse } from '../../types/PageableResponse'
 import { PatrimonyGeneral } from '../../types/PatrimonyGeneral'
 import PatrimonyList from '../../components/PatrimonyList/PatrimonyList'
+import useURLSearchParams from '../../hooks/useURLSearchParams'
 import api from '../../apis/default'
 
 import styles from './PatrimonyPage.module.scss'
 
 const PropertyPage = () => {
-  const { isLoading, data } = useQuery('propertyList', () =>
-    api.get<PageableResponse<PatrimonyGeneral>>('/patrimony')
+  const params = useURLSearchParams()
+  const { isLoading, data, refetch } = useQuery('propertyList', () =>
+    api.get<PageableResponse<PatrimonyGeneral>>(
+      `/patrimony?${params.toString()}`
+    )
   )
+
+  useEffect(() => {
+    refetch()
+  }, [params])
 
   return (
     <div className={styles.Property}>
@@ -25,7 +34,7 @@ const PropertyPage = () => {
         </span>
         <hr />
         {isLoading ? (
-          <span>Loading</span>
+          <span>Carregando...</span>
         ) : (
           <PatrimonyList patrimonies={data?.data.content ?? []} />
         )}
