@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useQuery } from 'react-query'
 
 import { PageableResponse } from '../../types/PageableResponse'
@@ -12,10 +11,6 @@ const PropertyPage = () => {
   const { isLoading, data } = useQuery('propertyList', () =>
     api.get<PageableResponse<PatrimonyGeneral>>('/patrimony')
   )
-
-  useEffect(() => {
-    console.log(data?.data)
-  }, [isLoading, data])
 
   return (
     <div className={styles.Property}>
