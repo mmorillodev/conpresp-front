@@ -1,32 +1,39 @@
 import { useEffect } from 'react'
 import { useQuery } from 'react-query'
-import ContentLoader from 'react-content-loader'
 
+import { PageableResponse } from '../../types/PageableResponse'
+import { PatrimonyGeneral } from '../../types/PatrimonyGeneral'
+import PatrimonyList from '../../components/PatrimonyList/PatrimonyList'
 import api from '../../apis/default'
 
 import styles from './PatrimonyPage.module.scss'
 
 const PropertyPage = () => {
   const { isLoading, data } = useQuery('propertyList', () =>
-    api.get('/patrimony')
+    api.get<PageableResponse<PatrimonyGeneral>>('/patrimony')
   )
 
   useEffect(() => {
-    console.log(data)
+    console.log(data?.data)
   }, [isLoading, data])
 
   return (
     <div className={styles.Property}>
+      <div className={styles.pageBanner} />
       <main className={styles.mainContent}>
         <h1>Patrimônios</h1>
         <span className={styles.pageDescr}>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio neque
-          reprehenderit libero, aspernatur consequatur laudantium et in quas
-          quaerat, omnis illo. Pariatur voluptatum obcaecati distinctio nihil
-          aut nemo dolores amet?
+          Pharetra aenean tellus mauris, viverra tortor morbi sit. Viverra nunc
+          neque dignissim vulputate. Eu hendrerit et tincidunt hendrerit
+          malesuada felis, felis sem purus. Placerat pharetra pretium massa
+          viverra. Blandit commodo ultrices feugiat tellus.
         </span>
         <hr />
-        {isLoading && <span>Loading</span>}
+        {isLoading ? (
+          <span>Loading</span>
+        ) : (
+          <PatrimonyList patrimonies={data?.data.content ?? []} />
+        )}
       </main>
     </div>
   )
