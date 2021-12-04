@@ -2,9 +2,31 @@
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 50px 50px;
-  background-color: #4690f3;
+  justify-content: start;
+  padding: 16px 32px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  background-color: white;
+}
+
+.navItems {
+  display: flex;
+  font-weight: 700;
+
+  li {
+    color: #696774;
+
+    a {
+      text-decoration: none;
+    }
+  }
+
+  li:first-child {
+    margin-left: 64px;
+  }
+
+  li:not(:last-child) {
+    margin-right: 64px;
+  }
 }
 
 .logo {
