@@ -27,7 +27,7 @@ const PatrimonyItem: FC<PatrimonyItemProps> = ({
       </div>
       <span className={styles.comment}>{conservationLevelComment}</span>
     </div>
-    <Link to={`/patrimonio/${id}`}>Ver mais</Link>
+    <Link to={`/patrimonios/${id}`}>Ver mais</Link>
   </li>
 )
 
