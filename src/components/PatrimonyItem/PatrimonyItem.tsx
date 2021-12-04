@@ -1,6 +1,8 @@
 import type { FC } from 'react'
 import { Link } from 'react-router-dom'
 
+import Tag from '../Tag/Tag'
+
 import { PatrimonyGeneral } from '../../types/PatrimonyGeneral'
 
 import styles from './PatrimonyItem.module.scss'
@@ -23,7 +25,7 @@ const PatrimonyItem: FC<PatrimonyItemProps> = ({
       className={styles.tag}
       to={`/patrimonios?conservationLevel=${conservationLevel}`}
     >
-      {conservationLevel}
+      <Tag text={conservationLevel} />
     </Link>
     <div>
       <div className={styles.patrimonyHeading}>

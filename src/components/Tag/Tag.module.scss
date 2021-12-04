@@ -1,0 +1,18 @@
+.Tag {
+  --background: #e5e5e5;
+  --color: #383838;
+
+  background-color: var(--background);
+  color: var(--color);
+  vertical-align: middle;
+  text-align: center;
+  padding: 3px 14px;
+
+  font-size: 10px;
+  line-height: 20px;
+  text-decoration: none;
+
+  border-radius: 69px;
+
+  max-width: 25%;
+}
