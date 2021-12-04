@@ -1,6 +1,9 @@
 import { useEffect } from 'react'
 import { useQuery } from 'react-query'
 
+import Button from '@mui/material/Button'
+import FilterListIcon from '@mui/icons-material/FilterList'
+
 import { PageableResponse } from '../../types/PageableResponse'
 import { PatrimonyGeneral } from '../../types/PatrimonyGeneral'
 import PatrimonyList from '../../components/PatrimonyList/PatrimonyList'
@@ -33,6 +36,17 @@ const PropertyPage = () => {
           viverra. Blandit commodo ultrices feugiat tellus.
         </span>
         <hr />
+        <Button
+          variant="outlined"
+          sx={{
+            borderRadius: '2rem',
+            marginBottom: '2rem',
+            marginLeft: 'auto',
+          }}
+          startIcon={<FilterListIcon sx={{ color: '#1976d2' }} />}
+        >
+          Filtrar
+        </Button>
         {isLoading ? (
           <span>Carregando...</span>
         ) : (
