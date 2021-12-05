@@ -7,6 +7,10 @@
   background-color: #b6b6be;
 }
 
+.Button {
+  margin-top: 7px;
+}
+
 .mainContent {
   padding: 2rem 4rem;
 
@@ -21,5 +25,24 @@
     text-align: justify;
     line-height: 1.5rem;
     color: #9b99a6;
+  }
+
+  .UserFooter {
+    display: flex;
+
+    padding: 15px;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    background-color: #fafafa;
+
+    .Select {
+      margin-right: 50%;
+    }
+
+    h4 {
+      margin-top: 15px;
+      margin-right: 5px;
+      font-weight: normal;
+    }
   }
 }

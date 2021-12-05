@@ -1,5 +1,6 @@
 .UserList {
     background-color: #ffffff;
+    margin-bottom: 3px;
 }
 
 .UserHeader {
@@ -15,17 +16,22 @@
   }
 
   .UserFooter {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(8vw, 10fr));
-    gap: 30px;
+    display: flex;
 
-    padding: 26px;
+    padding: 15px;
     border-bottom-left-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
     background-color: #fafafa;
 
+    .Select {
+        margin-right: 50%;
+    }
+
     h4 {
-      font-weight: 400;
+        margin-left: 5px;
+        margin-top: 15px;
+        margin-right: 10px;
+        font-weight: normal;
     }
   }
 

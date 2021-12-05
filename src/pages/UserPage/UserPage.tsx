@@ -31,13 +31,10 @@ const UserPage = () => {
       <main className={styles.mainContent}>
         <h1>Usuários</h1>
         <span className={styles.pageDescr}>
-          Pharetra aenean tellus mauris, viverra tortor morbi sit. Viverra nunc
-          neque dignissim vulputate. Eu hendrerit et tincidunt hendrerit
-          malesuada felis, felis sem purus. Placerat pharetra pretium massa
-          viverra. Blandit commodo ultrices feugiat tellus.
+          Página dedicada para gerenciar os usuários do sistema. Aqui você pode adicionar, atualizar, excluir e contrultar todos os usuários cadastrados.
         </span>
         <hr />
-        <Button
+        <Button className={styles.Button}
           variant="outlined"
           sx={{
             borderRadius: '2rem',
@@ -52,7 +49,7 @@ const UserPage = () => {
         {isLoading ? (
           <span>Carregando...</span>
         ) : (
-          <UserList users={data?.data.content ?? []} size={data?.data.size} />
+          <UserList users={data?.data.content ?? []} data={data?.data} />
         )}
       </main>
     </div>
