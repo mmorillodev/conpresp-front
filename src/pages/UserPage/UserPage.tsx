@@ -38,6 +38,7 @@ const UserPage = () => {
           variant="outlined"
           sx={{
             borderRadius: '2rem',
+            marginTop: '1rem',
             marginBottom: '2rem',
             marginLeft: 'auto',
           }}
