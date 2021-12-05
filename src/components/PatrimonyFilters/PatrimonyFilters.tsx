@@ -74,7 +74,7 @@ const PatrimonyFilters: FC<PatrimonyFiltersProps> = ({
       )
       .join('&')
 
-    history.push(`/patrimonios?${queryParams}`)
+    history.push(`${history.location.pathname}?${queryParams}`)
     onCloseRequested()
   }, [filters, history, onCloseRequested])
 
