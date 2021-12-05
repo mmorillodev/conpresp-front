@@ -1,14 +1,25 @@
 import type { FC } from 'react'
 import { Link } from 'react-router-dom'
 
-import Tag from '../Tag/Tag'
-
 import { PatrimonyGeneral } from '../../types/PatrimonyGeneral'
+import Tag, { TagLevel } from '../Tag/Tag'
 
 import styles from './PatrimonyItem.module.scss'
 
 interface PatrimonyItemProps {
   patrimony: PatrimonyGeneral
+}
+
+type PatrimonyConservationLevel =
+  | 'preservado'
+  | 'alterado'
+  | 'descaracterizado'
+  | string
+
+const tagLevelDict: { [key in PatrimonyConservationLevel]: TagLevel } = {
+  preservado: 'success',
+  alterado: 'warning',
+  descaracterizado: 'danger',
 }
 
 const PatrimonyItem: FC<PatrimonyItemProps> = ({
@@ -25,7 +36,10 @@ const PatrimonyItem: FC<PatrimonyItemProps> = ({
       className={styles.tag}
       to={`/patrimonios?conservationLevel=${conservationLevel}`}
     >
-      <Tag text={conservationLevel} />
+      <Tag
+        text={conservationLevel}
+        level={tagLevelDict[conservationLevel.toLowerCase()]}
+      />
     </Link>
     <div>
       <div className={styles.patrimonyHeading}>
