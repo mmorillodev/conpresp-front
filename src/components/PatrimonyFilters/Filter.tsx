@@ -1,5 +1,6 @@
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import { ChangeEvent, FC } from 'react'
 
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import {
   Accordion,
   AccordionDetails,
@@ -7,7 +8,6 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { ChangeEvent, FC } from 'react'
 
 interface FilterProps {
   label: string

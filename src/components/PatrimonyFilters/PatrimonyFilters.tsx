@@ -1,4 +1,4 @@
-import CancelIcon from '@mui/icons-material/Cancel'
+import CloseIcon from '@mui/icons-material/Close'
 import { Button, IconButton, Modal } from '@mui/material'
 import { Box } from '@mui/system'
 import { ChangeEvent, FC, useCallback, useState } from 'react'
@@ -67,7 +67,10 @@ const PatrimonyFilters: FC<PatrimonyFiltersProps> = ({
     const queryParams = Object.keys(filters)
       .filter(key => filters[key] > ' ')
       .map(
-        key => `${encodeURIComponent(key)}=${encodeURIComponent(filters[key])}`
+        key =>
+          `${encodeURIComponent(key)}=${encodeURIComponent(
+            filters[key].trim()
+          )}`
       )
       .join('&')
 
@@ -81,7 +84,7 @@ const PatrimonyFilters: FC<PatrimonyFiltersProps> = ({
         <div className={styles.header}>
           <h2>Filtros</h2>
           <IconButton onClick={onCloseRequested}>
-            <CancelIcon />
+            <CloseIcon />
           </IconButton>
         </div>
         <div className={styles.filters}>
@@ -168,10 +171,15 @@ const PatrimonyFilters: FC<PatrimonyFiltersProps> = ({
           <Button
             variant="outlined"
             onClick={() => setFilters(initialFilterState)}
+            sx={{ borderColor: '#1DA6D1', color: '#1DA6D1' }}
           >
             Limpar
           </Button>
-          <Button variant="contained" onClick={clickHandler}>
+          <Button
+            variant="contained"
+            onClick={clickHandler}
+            sx={{ backgroundColor: '#1DA6D1' }}
+          >
             Filtrar
           </Button>
         </div>
