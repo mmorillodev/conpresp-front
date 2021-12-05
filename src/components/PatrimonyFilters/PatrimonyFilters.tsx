@@ -63,7 +63,7 @@ const PatrimonyFilters: FC<PatrimonyFiltersProps> = ({
     [filters, setFilters]
   )
 
-  const handleClick = useCallback(() => {
+  const clickHandler = useCallback(() => {
     const queryParams = Object.keys(filters)
       .filter(key => filters[key] > ' ')
       .map(
@@ -73,7 +73,7 @@ const PatrimonyFilters: FC<PatrimonyFiltersProps> = ({
 
     history.push(`/patrimonios?${queryParams}`)
     onCloseRequested()
-  }, [filters, history])
+  }, [filters, history, onCloseRequested])
 
   return (
     <Modal open={open}>
@@ -171,7 +171,7 @@ const PatrimonyFilters: FC<PatrimonyFiltersProps> = ({
           >
             Limpar
           </Button>
-          <Button variant="contained" onClick={handleClick}>
+          <Button variant="contained" onClick={clickHandler}>
             Filtrar
           </Button>
         </div>
