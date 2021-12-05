@@ -1,18 +1,22 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 
-import Button from '@mui/material/Button'
 import FilterListIcon from '@mui/icons-material/FilterList'
+import Button from '@mui/material/Button'
 
 import { PageableResponse } from '../../types/PageableResponse'
 import { PatrimonyGeneral } from '../../types/PatrimonyGeneral'
+
 import PatrimonyList from '../../components/PatrimonyList/PatrimonyList'
+import PatrimonyFilters from '../../components/PatrimonyFilters/PatrimonyFilters'
+
 import useURLSearchParams from '../../hooks/useURLSearchParams'
 import api from '../../apis/default'
 
 import styles from './PatrimonyPage.module.scss'
 
 const PropertyPage = () => {
+  const [filterOpen, setFilterOpen] = useState(false)
   const params = useURLSearchParams()
   const { isLoading, data, refetch } = useQuery('propertyList', () =>
     api.get<PageableResponse<PatrimonyGeneral>>(
@@ -26,6 +30,10 @@ const PropertyPage = () => {
 
   return (
     <div className={styles.Property}>
+      <PatrimonyFilters
+        open={filterOpen}
+        onCloseRequested={() => setFilterOpen(false)}
+      />
       <div className={styles.pageBanner} />
       <main className={styles.mainContent}>
         <h1>Patrimônios</h1>
@@ -43,6 +51,7 @@ const PropertyPage = () => {
             marginBottom: '2rem',
             marginLeft: 'auto',
           }}
+          onClick={() => setFilterOpen(true)}
           startIcon={<FilterListIcon sx={{ color: '#1976d2' }} />}
         >
           Filtrar
