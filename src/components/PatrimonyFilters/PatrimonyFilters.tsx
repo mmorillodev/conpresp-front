@@ -2,6 +2,7 @@ import CancelIcon from '@mui/icons-material/Cancel'
 import { Button, IconButton, Modal } from '@mui/material'
 import { Box } from '@mui/system'
 import { ChangeEvent, FC, useCallback, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import Filter from './Filter'
 
@@ -26,6 +27,7 @@ interface FilterState {
   regionalHall: string
   resolution: string
   createdBy: string
+  [key: string]: string
 }
 
 const initialFilterState: FilterState = {
@@ -49,6 +51,7 @@ const PatrimonyFilters: FC<PatrimonyFiltersProps> = ({
   onCloseRequested,
 }) => {
   const [filters, setFilters] = useState<FilterState>(initialFilterState)
+  const history = useHistory()
 
   const changeHandler = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -59,6 +62,18 @@ const PatrimonyFilters: FC<PatrimonyFiltersProps> = ({
     },
     [filters, setFilters]
   )
+
+  const handleClick = useCallback(() => {
+    const queryParams = Object.keys(filters)
+      .filter(key => filters[key] > ' ')
+      .map(
+        key => `${encodeURIComponent(key)}=${encodeURIComponent(filters[key])}`
+      )
+      .join('&')
+
+    history.push(`/patrimonios?${queryParams}`)
+    onCloseRequested()
+  }, [filters, history])
 
   return (
     <Modal open={open}>
@@ -156,7 +171,9 @@ const PatrimonyFilters: FC<PatrimonyFiltersProps> = ({
           >
             Limpar
           </Button>
-          <Button variant="contained">Filtrar</Button>
+          <Button variant="contained" onClick={handleClick}>
+            Filtrar
+          </Button>
         </div>
       </Box>
     </Modal>
