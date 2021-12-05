@@ -74,12 +74,10 @@ const PropertyPage = () => {
   const [filterOpen, setFilterOpen] = useState(false)
   const params = useURLSearchParams()
 
-  const { isLoading, data, refetch, isRefetching } = useQuery(
-    'propertyList',
-    () =>
-      api.get<PageableResponse<PatrimonyGeneral>>(
-        `/patrimony?${params.toString()}`
-      )
+  const { isLoading, data, refetch } = useQuery('propertyList', () =>
+    api.get<PageableResponse<PatrimonyGeneral>>(
+      `/patrimony?${params.toString()}`
+    )
   )
 
   useEffect(() => {
@@ -115,7 +113,7 @@ const PropertyPage = () => {
         >
           Filtrar
         </Button>
-        {isLoading || isRefetching ? (
+        {isLoading ? (
           <span>Carregando...</span>
         ) : (
           <PatrimonyList patrimonies={data?.data.content ?? []} />

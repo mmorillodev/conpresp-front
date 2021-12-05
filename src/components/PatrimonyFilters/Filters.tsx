@@ -63,6 +63,7 @@ const PatrimonyFilters: FC<PatrimonyFiltersProps> = ({
         <div className={styles.filters}>
           {facets.map(({ name, label }) => (
             <Filter
+              key={name}
               label={label}
               name={name}
               value={filters[name] ?? ''}

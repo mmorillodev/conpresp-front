@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom'
+
+import Profile from '../Profile/Profile'
 import logo from '../../assets/logo.svg'
+
 import styles from './Header.module.scss'
 
 const Header = () => (
@@ -18,6 +21,7 @@ const Header = () => (
         </li>
       </ul>
     </nav>
+    <Profile />
   </header>
 )
 
