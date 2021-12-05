@@ -28,21 +28,25 @@ const UserItem: FC<UserItemProps> = ({
         status
     },
 }) => (
-    <div>
-        <li className={styles.UserItem}>
-            <h4> { } </h4>
-            <h4> {firstName + lastName} </h4>
-            <h4> {email} </h4>
-            <h4> {profile} </h4>
-            <Link
-                className={styles.tag}
-                to={`/users?status=${status}`}
-            >
-                <Tag text={status} />
-            </Link>
-            <h4> Ícones </h4>
-        </li>
-        <hr />
+    <div className={styles.ButtonEffect}>
+        <Link
+        className={styles.tag}
+        to={`/users/${id}`}>
+            <li className={styles.UserItem}>
+                <h4> { } </h4>
+                <h4> {firstName + lastName} </h4>
+                <h4> {email} </h4>
+                <h4> {profile} </h4>
+                <Link
+                    className={styles.tag}
+                    to={`/users?status=${status}`}
+                >
+                    <Tag text={status} />
+                </Link>
+                <h4> Ícones </h4>
+            </li>
+            <hr />
+        </Link>
     </div>
 )
 

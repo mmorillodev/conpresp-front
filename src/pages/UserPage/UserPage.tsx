@@ -14,19 +14,19 @@ import styles from './UserPage.module.scss'
 
 
 const UserPage = () => {
-    const params = useURLSearchParams()
-    const { isLoading, data, refetch } = useQuery('usersList', () =>
-        api.get<PageableResponse<UserGeneral>>(
-            `/users?${params.toString()}`
-        )
+  const params = useURLSearchParams()
+  const { isLoading, data, refetch } = useQuery('usersList', () =>
+    api.get<PageableResponse<UserGeneral>>(
+      `/users?${params.toString()}`
     )
+  )
 
-    useEffect(() => {
-        refetch()
-    }, [params])
+  useEffect(() => {
+    refetch()
+  }, [params])
 
-    return (
-        <div className={styles.User}>
+  return (
+    <div className={styles.User}>
       <div className={styles.pageBanner} />
       <main className={styles.mainContent}>
         <h1>Usuários</h1>
@@ -49,27 +49,14 @@ const UserPage = () => {
           Filtrar
         </Button>
 
-          <div className={styles.UserHeader}> 
-            <h4> ID </h4>
-            <h4> Nome </h4>
-            <h4> Email </h4>
-            <h4> Perfil </h4>
-            <h4> Status </h4>
-            <h4> Ações </h4>
-          </div>
-
         {isLoading ? (
           <span>Carregando...</span>
         ) : (
-          <UserList users={data?.data.content ?? []} />
+          <UserList users={data?.data.content ?? []} size={data?.data.size} />
         )}
-
-        <div className={styles.UserFooter}>
-          <h4> Itens por página: {data?.data.size}</h4>
-        </div>
       </main>
     </div>
-    )
+  )
 }
 
 export default UserPage

@@ -1,3 +1,7 @@
+.ButtonEffect:hover {
+    opacity: 0.7;
+}
+
 .UserItem {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(8vw, 10fr));
@@ -8,6 +12,12 @@
 
     h4 {
         font-weight: normal;
+        display: inline-block;
+        overflow: hidden;
+        max-width: 10vw;
+        text-overflow: ellipsis;
+
+        text-align: justify;
     }
 }
 
@@ -21,5 +31,4 @@ hr {
     height: 1px;
     border: 0;
     margin: 0;
-    margin-bottom: 2rem;
 }

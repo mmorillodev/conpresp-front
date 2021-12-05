@@ -2,3 +2,30 @@
     background-color: #ffffff;
 }
 
+.UserHeader {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8vw, 10fr));
+    gap: 30px;
+
+    padding: 26px;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    background-color: #fafafa;
+    margin-bottom: 3px;
+  }
+
+  .UserFooter {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8vw, 10fr));
+    gap: 30px;
+
+    padding: 26px;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    background-color: #fafafa;
+
+    h4 {
+      font-weight: 400;
+    }
+  }
+
