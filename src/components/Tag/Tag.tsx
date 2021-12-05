@@ -19,6 +19,10 @@ const background = (value: string) => {
       return '#FEEAEA'
     case 'Ruim':
       return '#FEEAEA'
+    case 'ACTIVE':
+      return '#D8F9D8'
+    case 'INACTIVE':
+      return '#FEEAEA'
     default:
       return '#e5e5e5'
   }
