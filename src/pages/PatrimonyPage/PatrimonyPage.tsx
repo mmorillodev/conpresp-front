@@ -95,10 +95,9 @@ const PropertyPage = () => {
       <main className={styles.mainContent}>
         <h1>Patrimônios</h1>
         <span className={styles.pageDescr}>
-          Pharetra aenean tellus mauris, viverra tortor morbi sit. Viverra nunc
-          neque dignissim vulputate. Eu hendrerit et tincidunt hendrerit
-          malesuada felis, felis sem purus. Placerat pharetra pretium massa
-          viverra. Blandit commodo ultrices feugiat tellus.
+          Página dedicada para gerenciar os patrimônios do sistema. Aqui você
+          pode adicionar, atualizar, excluir e contrultar todos os patrimônios
+          cadastrados.
         </span>
         <hr />
         <Button
