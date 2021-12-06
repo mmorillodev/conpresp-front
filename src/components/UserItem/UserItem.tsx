@@ -27,7 +27,10 @@ const UserItem: FC<UserItemProps> = ({
         <h4> {`${firstName} ${lastName}`} </h4>
         <h4> {email} </h4>
         <h4> {profile} </h4>
-        <Link className={styles.tag} to={`/usuarios?status=${status}`}>
+        <Link
+          className={styles.tag}
+          to={`/usuarios?status=${status}`}
+        >
           <Tag
             text={status}
             level={tagLevelDict[status.toLowerCase()]}

@@ -1,34 +1,38 @@
 .ButtonEffect:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 .UserItem {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(8vw, 10fr));
-    gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8vw, 10fr));
+  gap: 30px;
 
-    padding: 26px;
-    margin-bottom: 3px;
+  padding: 26px;
+  margin-bottom: 3px;
 
-    h4 {
-        font-weight: normal;
-        display: inline-block;
-        overflow: hidden;
-        max-width: 10vw;
-        text-overflow: ellipsis;
+  h4 {
+    font-weight: normal;
+    display: inline-block;
+    overflow: hidden;
+    max-width: 10vw;
+    text-overflow: ellipsis;
 
-        text-align: justify;
-    }
+    text-align: justify;
+  }
 }
 
 .tag {
     text-decoration: none;
     margin-bottom: 1rem;
-}
+  }
+
+  a {
+      width: 70px;
+  }
 
 hr {
-    background-color: rgba(0, 0, 0, 0.25);
-    height: 1px;
-    border: 0;
-    margin: 0;
+  background-color: rgba(0, 0, 0, 0.25);
+  height: 1px;
+  border: 0;
+  margin: 0;
 }
