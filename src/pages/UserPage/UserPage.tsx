@@ -1,24 +1,20 @@
-import { useEffect } from "react";
-import { useQuery } from 'react-query';
+import { useEffect } from 'react'
+import { useQuery } from 'react-query'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import Button from '@mui/material/Button'
-import { UserGeneral } from '../../types/UserGeneral';
+import { UserGeneral } from '../../types/UserGeneral'
 import UserList from '../../components/UserList/UserList'
 import useURLSearchParams from '../../hooks/useURLSearchParams'
-
 
 import api from '../../apis/default'
 import { PageableResponse } from '../../types/PageableResponse'
 
 import styles from './UserPage.module.scss'
 
-
 const UserPage = () => {
   const params = useURLSearchParams()
   const { isLoading, data, refetch } = useQuery('usersList', () =>
-    api.get<PageableResponse<UserGeneral>>(
-      `/users?${params.toString()}`
-    )
+    api.get<PageableResponse<UserGeneral>>(`/users?${params.toString()}`)
   )
 
   useEffect(() => {
@@ -31,10 +27,13 @@ const UserPage = () => {
       <main className={styles.mainContent}>
         <h1>Usuários</h1>
         <span className={styles.pageDescr}>
-          Página dedicada para gerenciar os usuários do sistema. Aqui você pode adicionar, atualizar, excluir e contrultar todos os usuários cadastrados.
+          Página dedicada para gerenciar os usuários do sistema. Aqui você pode
+          adicionar, atualizar, excluir e contrultar todos os usuários
+          cadastrados.
         </span>
         <hr />
-        <Button className={styles.Button}
+        <Button
+          className={styles.Button}
           variant="outlined"
           sx={{
             borderRadius: '2rem',

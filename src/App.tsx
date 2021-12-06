@@ -16,7 +16,7 @@ const App = () => (
       <Switch>
         <Route component={PropertyPage} path="/patrimonios" />
         <Route component={Login} path="/login" />
-        <Route component={User} path="/users" />
+        <Route component={User} path="/usuarios" />
       </Switch>
     </div>
   </QueryClientProvider>
