@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback, ChangeEvent } from 'react'
 import { useQuery } from 'react-query'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import Button from '@mui/material/Button'
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from '@mui/icons-material/Add'
 import { UserGeneral } from '../../types/UserGeneral'
 import UserList from '../../components/UserList/UserList'
 import useURLSearchParams from '../../hooks/useURLSearchParams'
 import Filters, { FilterFacet } from '../../components/PatrimonyFilters/Filters'
+import UserModal, { UserFacet } from '../../components/NewUser/UserModal'
 
 import api from '../../apis/default'
 import { PageableResponse } from '../../types/PageableResponse'
@@ -36,8 +37,32 @@ const filterFacets: FilterFacet[] = [
   },
 ]
 
+const newUserFacets: UserFacet[] = [
+  {
+    label: 'Nome',
+    name: 'name',
+  },
+  {
+    label: 'Sobrenome',
+    name: 'lastName',
+  },
+  {
+    label: 'E-mail',
+    name: 'email',
+  },
+  {
+    label: 'Senha',
+    name: 'password',
+  },
+  {
+    label: 'Conrfime a Senha',
+    name: 'confirmPassword',
+  },
+]
+
 const UserPage = () => {
   const [filterOpen, setFilterOpen] = useState(false)
+  const [addUser, setAddUser] = useState(false)
   const params = useURLSearchParams()
   const { isLoading, data, refetch } = useQuery('usersList', () =>
     api.get<PageableResponse<UserGeneral>>(`/users?${params.toString()}`)
@@ -53,6 +78,11 @@ const UserPage = () => {
         open={filterOpen}
         onCloseRequested={() => setFilterOpen(false)}
         facets={filterFacets}
+      />
+      <UserModal
+        open={addUser}
+        onCloseRequested={() => setAddUser(false)}
+        textFacets={newUserFacets}
       />
       <div className={styles.pageBanner} />
       <main className={styles.mainContent}>
@@ -83,17 +113,17 @@ const UserPage = () => {
               marginTop: '1rem',
               marginBottom: '2rem',
               marginLeft: 'auto',
-              background: '#1DA6D1'
+              background: '#1DA6D1',
             }}
-            onClick={() => setFilterOpen(true)}
-            startIcon={<AddIcon sx={{color: 'white'}} />}
+            onClick={() => setAddUser(true)}
+            startIcon={<AddIcon sx={{ color: 'white' }} />}
           >
             Novo Usuário
           </Button>
         </div>
 
         {isLoading ? (
-          <span>Carregando...</span>
+          <span> Carregando...</span>
         ) : (
           <UserList users={data?.data.content ?? []} data={data?.data} />
         )}
