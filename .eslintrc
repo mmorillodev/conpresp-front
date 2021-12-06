@@ -4,11 +4,7 @@
     "es2021": true,
     "jest": true
   },
-  "extends": [
-    "plugin:react/recommended",
-    "airbnb",
-    "prettier"
-  ],
+  "extends": ["plugin:react/recommended", "airbnb", "prettier"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -17,10 +13,7 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint"
-  ],
+  "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "semi": "off",
     "quotes": "warn",
@@ -75,10 +68,7 @@
       "error",
       {
         "required": {
-          "some": [
-            "nesting",
-            "id"
-          ]
+          "some": ["nesting", "id"]
         }
       }
     ],
@@ -86,10 +76,7 @@
       "error",
       {
         "required": {
-          "some": [
-            "nesting",
-            "id"
-          ]
+          "some": ["nesting", "id"]
         }
       }
     ]
@@ -97,13 +84,7 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "extensions": [
-          ".js",
-          ".jsx",
-          ".ts",
-          ".tsx",
-          ".scss"
-        ]
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".scss"]
       }
     }
   }

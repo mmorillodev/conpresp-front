@@ -1,9 +1,7 @@
 .Tag {
-  --background: #e5e5e5;
-  --color: #383838;
+  background-color: #e5e5e5;
+  color: #383838;
 
-  background-color: var(--background);
-  color: var(--color);
   vertical-align: middle;
   text-align: center;
   padding: 3px 14px;
@@ -15,4 +13,19 @@
   border-radius: 69px;
 
   max-width: 25%;
+}
+
+.Tag--danger {
+  background-color: #feeaea;
+  color: #db2e62;
+}
+
+.Tag--warning {
+  background-color: #fff6c9;
+  color: #e88d23;
+}
+
+.Tag--success {
+  background-color: #d8f9d8;
+  color: #1c9b4f;
 }

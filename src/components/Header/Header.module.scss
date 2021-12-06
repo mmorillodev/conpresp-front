@@ -8,6 +8,10 @@
   background-color: white;
 }
 
+.navigation {
+  margin-right: auto;
+}
+
 .navItems {
   display: flex;
   font-weight: 700;
@@ -16,6 +20,7 @@
     color: #696774;
 
     a {
+      color: #383838;
       text-decoration: none;
     }
   }
