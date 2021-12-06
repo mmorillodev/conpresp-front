@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import Button from '@mui/material/Button'
+import AddIcon from '@mui/icons-material/Add';
 import { UserGeneral } from '../../types/UserGeneral'
 import UserList from '../../components/UserList/UserList'
 import useURLSearchParams from '../../hooks/useURLSearchParams'
@@ -30,7 +31,7 @@ const filterFacets: FilterFacet[] = [
     name: 'profile',
   },
   {
-    label: 'status',
+    label: 'Status',
     name: 'status',
   },
 ]
@@ -62,20 +63,34 @@ const UserPage = () => {
           cadastrados.
         </span>
         <hr />
-        <Button
-          className={styles.Button}
-          variant="outlined"
-          sx={{
-            borderRadius: '2rem',
-            marginTop: '1rem',
-            marginBottom: '2rem',
-            marginLeft: 'auto',
-          }}
-          onClick={() => setFilterOpen(true)}
-          startIcon={<FilterListIcon sx={{ color: '#1976d2' }} />}
-        >
-          Filtrar
-        </Button>
+        <div className={styles.Button}>
+          <Button
+            variant="outlined"
+            sx={{
+              borderRadius: '2rem',
+              marginTop: '1rem',
+              marginBottom: '2rem',
+            }}
+            onClick={() => setFilterOpen(true)}
+            startIcon={<FilterListIcon sx={{ color: '#1976d2' }} />}
+          >
+            Filtrar
+          </Button>
+          <Button
+            variant="contained"
+            sx={{
+              borderRadius: '.5rem',
+              marginTop: '1rem',
+              marginBottom: '2rem',
+              marginLeft: 'auto',
+              background: '#1DA6D1'
+            }}
+            onClick={() => setFilterOpen(true)}
+            startIcon={<AddIcon sx={{color: 'white'}} />}
+          >
+            Novo Usuário
+          </Button>
+        </div>
 
         {isLoading ? (
           <span>Carregando...</span>
