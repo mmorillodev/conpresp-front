@@ -1,5 +1,5 @@
 import CloseIcon from '@mui/icons-material/Close'
-import { Button, IconButton, Modal } from '@mui/material'
+import { Button, IconButton, Modal, SelectChangeEvent } from '@mui/material'
 import { ChangeEvent, FC, useCallback, useState } from 'react'
 import { Box } from '@mui/system'
 
@@ -30,11 +30,19 @@ const UserModal: FC<UserModalProps> = ({
         ...field,
         [e.target.name]: e.target.value,
       })
-      console.log(field)
     },
     [field, setField]
   )
 
+  const handleChange = useCallback(
+    (e: SelectChangeEvent) => {
+      setField({
+        ...field,
+        [e.target.name]: e.target.value,
+      })
+    },
+    [field, setField]
+  )
   return (
     <Modal open={open}>
       <Box className={styles.modalBox}>
@@ -53,6 +61,7 @@ const UserModal: FC<UserModalProps> = ({
               name={name}
               value={field[name] ?? ''}
               onChange={changeHandler}
+              changeHandle={handleChange}
             />
           ))}
         </div>
@@ -64,7 +73,11 @@ const UserModal: FC<UserModalProps> = ({
           >
             Limpar
           </Button>
-          <Button variant="contained" sx={{ backgroundColor: '#1DA6D1' }}>
+          <Button
+            variant="contained"
+            onClick={() => console.log(field)}
+            sx={{ backgroundColor: '#1DA6D1' }}
+          >
             Adicionar
           </Button>
         </div>

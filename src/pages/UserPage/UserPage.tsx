@@ -39,6 +39,14 @@ const filterFacets: FilterFacet[] = [
 
 const newUserFacets: UserFacet[] = [
   {
+    label: 'Perfil',
+    name: 'profile',
+  },
+  {
+    label: 'Grupo',
+    name: 'group',
+  },
+  {
     label: 'Nome',
     name: 'name',
   },
@@ -55,7 +63,7 @@ const newUserFacets: UserFacet[] = [
     name: 'password',
   },
   {
-    label: 'Conrfime a Senha',
+    label: 'Confirme a Senha',
     name: 'confirmPassword',
   },
 ]
