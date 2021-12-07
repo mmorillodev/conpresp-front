@@ -7,13 +7,11 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import Slide from '@mui/material/Slide'
-import { TransitionProps } from '@mui/material/transitions'
 
 import api from '../../apis/default'
 
-import FormModal from './TextModal'
-import styles from './UserModal.module.scss'
+import FormModal from '../NewUser/TextModal'
+import styles from './UpdateUserModal.module.scss'
 
 export interface UserFacet {
   name: string
@@ -70,7 +68,7 @@ const UserModal: FC<UserModalProps> = ({
         'Access-Control-Allow-Origin': '*',
         Accept: 'application/json',
         Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiIxIiwiaWF0IjoxNjM4OTEwMDE2LCJleHAiOjE2Mzg5OTY0MTZ9.A1PQ_JwwKMsw3z0wS-o3EL0qSLdfNrPecLGrmywb2Mw',
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiJkNTFjNzgzOC1lMThiLTQ4N2ItOTIzNS0wOTZkYTIxMjQ3ZDEiLCJpYXQiOjE2Mzg4NTEwOTQsImV4cCI6MTYzODkzNzQ5NH0.uaFX13EYJPg8Yq_NWcqfxEF1c1bdXxZrWWbFE5oHoI4',
       },
     }
     api

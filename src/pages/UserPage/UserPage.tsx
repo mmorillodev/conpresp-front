@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, ChangeEvent } from 'react'
+import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import Button from '@mui/material/Button'
@@ -44,11 +44,11 @@ const newUserFacets: UserFacet[] = [
   },
   {
     label: 'Grupo',
-    name: 'group',
+    name: 'userGroup',
   },
   {
     label: 'Nome',
-    name: 'name',
+    name: 'firstName',
   },
   {
     label: 'Sobrenome',
