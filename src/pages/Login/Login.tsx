@@ -1,18 +1,29 @@
+import { Link } from 'react-router-dom'
+
+import background from '../../assets/background.svg'
+import anhembiLogo from '../../assets/anhembiLogo.svg'
+import roundedLogo from '../../assets/roundedLogo.svg'
+
 import styles from './Login.module.scss'
-import fundo from '../../assets/background.svg'
-import logoRedondo from '../../assets/logoRedondo.svg'
-import logoAnhembi from '../../assets/logoAnhembi.svg'
 
 const Login = () => (
-  <div className={styles.container}>
-    <div className={styles.logoFundo}>
-      <img src={fundo} alt="banner" />
-      {/* <img src={logoAnhembi} alt="logo Anhembi"/> */}
+  <div className={styles.Login}>
+    <div
+      className={styles.backgroundWrapper}
+      style={{ backgroundImage: `url(${background})` }}
+    >
+      <span>Ilustrações feitas por Mariana Cerqueira</span>
+      <img
+        className={styles.anhembiLogo}
+        src={anhembiLogo}
+        alt="anhembi logo"
+      />
     </div>
-    <div className={styles.login}>
-      <div className={styles.logoRedondo}>
-        <img src={logoRedondo} alt="logo redondo" />
-        <p className={styles.Slogan}>
+
+    <div className={styles.formWrapper}>
+      <div className={styles.roundedLogo}>
+        <img src={roundedLogo} alt="logo redondo" />
+        <p className={styles.slogan}>
           Banco de dados dos bens tombados da Cidade de São Paulo
         </p>
       </div>
@@ -20,24 +31,21 @@ const Login = () => (
       <form className={styles.form}>
         <div>
           <label htmlFor="email">E-mail:</label>
-          <input type="email" />
+          <input placeholder="Digite seu e-mail" />
         </div>
 
         <div>
           <label htmlFor="password">Senha:</label>
-          <input type="password" />
+          <input placeholder="Digite seu e-mail" />
+
+          <Link to="/" className={styles.forgotPassword}>
+            Esqueceu a senha?
+          </Link>
         </div>
 
-        <div>
-          <a href="./sla" className={styles.esqueceuSenha}>
-            Esqueceu a senha?
-          </a>
-          <input
-            className={styles.buttonLogin}
-            type="button"
-            value="Iniciar sessão"
-          />
-        </div>
+        <button className={styles.buttonLogin} type="button">
+          Iniciar sessão
+        </button>
       </form>
     </div>
   </div>

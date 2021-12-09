@@ -13,13 +13,11 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className={styles.App}>
-        {location.pathname !== '/login' && <Header />}
-        <Switch>
-          <Route component={PropertyPage} path="/patrimonios" />
-          <Route component={Login} path="/login" />
-        </Switch>
-      </div>
+      {location.pathname !== '/login' && <Header />}
+      <Switch>
+        <Route component={PropertyPage} path="/patrimonios" />
+        <Route component={Login} path="/login" />
+      </Switch>
     </QueryClientProvider>
   )
 }
