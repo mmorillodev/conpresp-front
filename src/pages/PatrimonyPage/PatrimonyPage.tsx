@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react'
-import { useQuery } from 'react-query'
-
+import { useState } from 'react'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import Button from '@mui/material/Button'
 
@@ -8,10 +6,9 @@ import { PageableResponse } from '../../types/PageableResponse'
 import { PatrimonyGeneral } from '../../types/PatrimonyGeneral'
 
 import PatrimonyList from '../../components/PatrimonyList/PatrimonyList'
-import Filters, { FilterFacet } from '../../components/PatrimonyFilters/Filters'
+import Filters, { FilterFacet } from '../../components/Filters/Filters'
 
-import useURLSearchParams from '../../hooks/useURLSearchParams'
-import api from '../../apis/default'
+import usePageFetch from '../../hooks/usePageFetch'
 
 import styles from './PatrimonyPage.module.scss'
 
@@ -72,17 +69,9 @@ const filterFacets: FilterFacet[] = [
 
 const PropertyPage = () => {
   const [filterOpen, setFilterOpen] = useState(false)
-  const params = useURLSearchParams()
 
-  const { isLoading, data, refetch } = useQuery('propertyList', () =>
-    api.get<PageableResponse<PatrimonyGeneral>>(
-      `/patrimony?${params.toString()}`
-    )
-  )
-
-  useEffect(() => {
-    refetch()
-  }, [params])
+  const { isLoading, data } =
+    usePageFetch<PageableResponse<PatrimonyGeneral>>('patrimony')
 
   return (
     <div className={styles.Property}>

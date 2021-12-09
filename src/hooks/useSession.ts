@@ -18,20 +18,20 @@ const useSession = () => {
     token: '',
     type: '',
   })
-  const [error, setError] = useState<undefined | string>(undefined)
+  const [error, setError] = useState<undefined | object>(undefined)
   const [isLoading, setIsLoading] = useState(false)
 
   const createSession = useCallback(
     (email: string, password: string) => {
       setIsLoading(true)
 
-      api
+      return api
         .post<AuthResponse>('/auth', { email, password })
         .then(({ data: { token, type } }) =>
           setSession({ isAuthenticated: true, token, type })
         )
         .catch((e: AxiosError<RequestError>) => {
-          setError(e.response?.data.cause)
+          setError(e.response?.data)
         })
         .finally(() => setIsLoading(false))
     },
