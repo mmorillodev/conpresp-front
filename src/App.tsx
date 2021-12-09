@@ -1,4 +1,4 @@
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, useLocation } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
 import Header from './components/Header/Header'
@@ -8,16 +8,18 @@ import styles from './App.module.scss'
 
 const queryClient = new QueryClient()
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <div className={styles.App}>
-      <Header />
+const App = () => {
+  const location = useLocation()
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      {location.pathname !== '/login' && <Header />}
       <Switch>
         <Route component={PropertyPage} path="/patrimonios" />
         <Route component={Login} path="/login" />
       </Switch>
-    </div>
-  </QueryClientProvider>
-)
+    </QueryClientProvider>
+  )
+}
 
 export default App
