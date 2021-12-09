@@ -14,7 +14,7 @@ import styles from './Login.module.scss'
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [snakbarOpen, setSnakbarOpen] = useState(false)
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
   const {
     createSession,
     session: { isAuthenticated },
@@ -39,9 +39,9 @@ const Login = () => {
 
   useEffect(() => {
     if (error) {
-      setSnakbarOpen(true)
+      setSnackbarOpen(true)
     }
-  }, [error, setSnakbarOpen])
+  }, [error, setSnackbarOpen])
 
   return (
     <div className={styles.Login}>
@@ -100,9 +100,9 @@ const Login = () => {
         </form>
       </div>
       <Snackbar
-        open={snakbarOpen}
+        open={snackbarOpen}
         autoHideDuration={6000}
-        onClose={() => setSnakbarOpen(false)}
+        onClose={() => setSnackbarOpen(false)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         message="Email e/ou senha inválidos"
       />
