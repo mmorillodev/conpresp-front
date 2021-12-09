@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 const useLocalStorage = <T>(key: string, initialValue: T) => {
   const [storedValue, setStoredValue] = useState<T>(() => {
@@ -10,7 +10,16 @@ const useLocalStorage = <T>(key: string, initialValue: T) => {
       return initialValue
     }
   })
-  return [storedValue, setStoredValue] as const
+
+  const setLocalStorage = useCallback(
+    (value: T) => {
+      window.localStorage.setItem(key, JSON.stringify(value))
+      setStoredValue(value)
+    },
+    [window.localStorage, setStoredValue]
+  )
+
+  return [storedValue, setLocalStorage] as const
 }
 
 export default useLocalStorage
