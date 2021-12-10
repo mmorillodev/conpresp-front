@@ -1,4 +1,5 @@
 import { useState } from 'react'
+
 import FilterListIcon from '@mui/icons-material/FilterList'
 import Button from '@mui/material/Button'
 
@@ -7,6 +8,7 @@ import { PatrimonyGeneral } from '../../types/PatrimonyGeneral'
 
 import PatrimonyList from '../../components/PatrimonyList/PatrimonyList'
 import Filters, { FilterFacet } from '../../components/Filters/Filters'
+import Paginator from '../../components/Pagination/Pagination'
 
 import usePageFetch from '../../hooks/usePageFetch'
 
@@ -107,6 +109,8 @@ const PropertyPage = () => {
         ) : (
           <PatrimonyList patrimonies={data?.data.content ?? []} />
         )}
+        <br />
+        <Paginator count={data?.data.totalPages} />
       </main>
     </div>
   )
