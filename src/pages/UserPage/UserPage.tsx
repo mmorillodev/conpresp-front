@@ -24,7 +24,7 @@ const filterFacets: FilterFacet[] = [
     name: 'lastName',
   },
   {
-    label: 'E-email',
+    label: 'E-mail',
     name: 'email',
   },
   {

@@ -7,13 +7,13 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import Slide from '@mui/material/Slide'
-import { TransitionProps } from '@mui/material/transitions'
+import { useQuery } from 'react-query'
 
 import api from '../../apis/default'
 
 import FormModal from './TextModal'
 import styles from './UserModal.module.scss'
+import { AxiosResponseHeaders } from 'axios'
 
 export interface UserFacet {
   name: string
@@ -32,8 +32,8 @@ const UserModal: FC<UserModalProps> = ({
   textFacets,
 }) => {
   const [field, setField] = useState<{ [x: string]: string }>({})
-  const [status, setStatus] = useState(Number)
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [errorOpen, setErrorOpen] = useState(false)
 
   const changeHandler = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -63,24 +63,37 @@ const UserModal: FC<UserModalProps> = ({
     setDialogOpen(false)
   }
 
-  function userPost(): any {
+  const clickErrorOpen = () => {
+    setErrorOpen(true)
+  }
+
+  const clickErrorClose = () => {
+    setErrorOpen(false)
+  }
+
+  async function userPost() {
     const axiosConfig = {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         Accept: 'application/json',
         Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiIxIiwiaWF0IjoxNjM4OTEwMDE2LCJleHAiOjE2Mzg5OTY0MTZ9.A1PQ_JwwKMsw3z0wS-o3EL0qSLdfNrPecLGrmywb2Mw',
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiIxIiwiaWF0IjoxNjM5MDg2MTcyLCJleHAiOjE2MzkxNzI1NzJ9._MobtUtRNCaZlmCMUKX1JcTljdSgtC662k3TPT7bEdU',
       },
     }
     api
-      .post(`/users`, field, axiosConfig)
-      .then(response => setStatus(response.status))
-
-    if (status === 201) {
-      setField({})
-      handleClickOpen()
-    }
+      .post('/users', field, axiosConfig)
+      .then(response => {
+        setField({})
+        handleClickOpen()
+      })
+      .catch(({ response }) => {
+       if (response.status === 400) {
+          clickErrorOpen()
+        } else {
+          clickErrorOpen()
+        }
+      })
   }
 
   return (
@@ -91,7 +104,7 @@ const UserModal: FC<UserModalProps> = ({
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Sucesso!</DialogTitle>
+        <DialogTitle id="alert-dialog-title">Sucesso</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Usuário adicionado com sucesso!
@@ -99,6 +112,23 @@ const UserModal: FC<UserModalProps> = ({
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Ok</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={errorOpen}
+        onClose={clickErrorClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Erro</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Houve um erro ao inserir o usuário, verifique os campos e tente
+            novamente.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={clickErrorClose}>Ok</Button>
         </DialogActions>
       </Dialog>
 

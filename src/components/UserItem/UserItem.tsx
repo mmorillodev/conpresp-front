@@ -58,33 +58,75 @@ const tagLevelDict: { [key in PatrimonyConservationLevel]: TagLevel } = {
 const UserItem: FC<UserItemProps> = ({
   user: { id, firstName, lastName, email, profile, status },
 }) => {
-  const [updateUser, serUpdateUser] = useState(false)
+  const [updateUser, setUpdateUser] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
-  const [userResponse, setUserResponse] = useState<UserDetails>()
-  const [statusCode, setStatusCode] = useState(Number)
+  const [errorOpen, setErrorOpen] = useState(false)
+  const [users, setUsers] = useState<UserDetails>()
 
-  function getUser() {
-    api
-      .get<UserDetails>(`/users/${id}`)
-      .then(response => setUserResponse(response.data))
-
-    serUpdateUser(true)
-  }
-
-  function deleteUser() {
+  async function getUser() {
     const axiosConfig = {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         Accept: 'application/json',
         Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiIxIiwiaWF0IjoxNjM4OTEwMDE2LCJleHAiOjE2Mzg5OTY0MTZ9.A1PQ_JwwKMsw3z0wS-o3EL0qSLdfNrPecLGrmywb2Mw',
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiIxIiwiaWF0IjoxNjM5MDg2MTcyLCJleHAiOjE2MzkxNzI1NzJ9._MobtUtRNCaZlmCMUKX1JcTljdSgtC662k3TPT7bEdU',
+      },
+    }
+    await api
+      .get<UserDetails>(`/users/${id}`, axiosConfig)
+      .then(response => {
+        setUsers(response.data)
+        console.log(users?.email)
+        updateModal()
+      })
+      .catch(({ response }) => {
+        if (response.status === 404) {
+          clickErrorOpen()
+          handleClose()
+        } else {
+          clickErrorOpen()
+          handleClose()
+        }
+      })
+  }
+
+  const updateModal = () => {
+    setUpdateUser(true)
+  }
+
+  const clickErrorOpen = () => {
+    setErrorOpen(true)
+  }
+
+  const clickErrorClose = () => {
+    setErrorOpen(false)
+  }
+
+  async function deleteUser() {
+    const axiosConfig = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        Accept: 'application/json',
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiIxIiwiaWF0IjoxNjM5MDg2MTcyLCJleHAiOjE2MzkxNzI1NzJ9._MobtUtRNCaZlmCMUKX1JcTljdSgtC662k3TPT7bEdU',
       },
     }
     api
       .delete(`/users/${id}`, axiosConfig)
-      .then(response => setStatusCode(response.status))
-      handleClose()
+      .then(response => {
+        handleClose()
+      })
+      .catch(({ response }) => {
+        if (response.status === 404) {
+          clickErrorOpen()
+          handleClose()
+        } else {
+          clickErrorOpen()
+          handleClose()
+        }
+      })
   }
 
   const handleClickOpen = () => {
@@ -106,25 +148,55 @@ const UserItem: FC<UserItemProps> = ({
         <DialogTitle id="alert-dialog-title">Confirmação!</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Deseja excluior o usuário selecionado?
+            Deseja excluir o usuário selecionado?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={ () => { deleteUser() }}>Sim</Button>
+          <Button
+            onClick={() => {
+              deleteUser()
+            }}
+          >
+            Sim
+          </Button>
         </DialogActions>
         <DialogActions>
           <Button onClick={handleClose}>Não</Button>
         </DialogActions>
       </Dialog>
 
+      <Dialog
+        open={errorOpen}
+        onClose={clickErrorClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Erro</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Houve um erro inesperado, atualize a página e tente novamente.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              clickErrorClose()
+            }}
+          >
+            Fechar
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <UpdateUserModal
         open={updateUser}
-        onCloseRequested={() => serUpdateUser(false)}
+        onCloseRequested={() => setUpdateUser(false)}
         textFacets={newUserFacets}
+        id={id}
       />
 
       <div className={styles.ButtonEffect}>
-        <Link className={styles.tag} to={`/usuarios/${id}`}>
+        <Link className={styles.tag} to="/usuarios">
           <li className={styles.UserItem}>
             <h4> </h4>
             <h4> {`${firstName} ${lastName}`} </h4>

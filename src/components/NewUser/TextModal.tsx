@@ -20,7 +20,7 @@ const Filter: FC<ModalProps> = ({
   changeHandle,
 }) => (
   <form>
-    {label === 'Perfil' || label === 'Grupo' ? (
+    {label === 'Perfil' || label === 'Grupo' || label === 'Status' ? (
       <Select
         margin="dense"
         label={label === 'Perfil' ? 'Perfil' : 'Grupo'}

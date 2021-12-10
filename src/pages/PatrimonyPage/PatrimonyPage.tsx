@@ -6,7 +6,7 @@ import { PageableResponse } from '../../types/PageableResponse'
 import { PatrimonyGeneral } from '../../types/PatrimonyGeneral'
 
 import PatrimonyList from '../../components/PatrimonyList/PatrimonyList'
-import Filters, { FilterFacet } from '../../components/Filters/Filters'
+import Filters, { FilterFacet } from '../../components/PatrimonyFilters/Filters'
 
 import usePageFetch from '../../hooks/usePageFetch'
 
