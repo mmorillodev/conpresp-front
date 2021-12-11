@@ -22,6 +22,7 @@ import { PageableResponse } from '../../types/PageableResponse'
 import styles from './UserPage.module.scss'
 import useSession from '../../hooks/useSession'
 import { truncate } from 'fs'
+import DeletePopupModal from '../../components/DeleteUserPopup/DeletePopup'
 
 const filterFacets: FilterFacet[] = [
   {
@@ -105,45 +106,6 @@ const UserPage = () => {
   return (
     <div className={styles.User}>
       <Dialog
-        open={deleteDialog}
-        onClose={() => {
-          setDeleteDialog(false)
-        }}
-      >
-        <DialogTitle id="statusCode200">Deseja realmente excluir?</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Aviso: após a exclusão, não será possível a recuperação desse
-            conteúdo
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            variant="contained"
-            sx={{
-              background: '#1DA6D1',
-              marginLeft: 'auto',
-              marginRight: '5rem',
-              marginBottom: '1rem',
-            }}
-            onClick={() => setDeleteDialog(false)}
-          >
-            Não excluir
-          </Button>
-          <Button
-            variant="outlined"
-            sx={{
-              marginRight: 'auto',
-              marginBottom: '1rem',
-            }}
-            onClick={() => deleteUser()}
-          >
-            Sim, excluir
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-      <Dialog
         open={dialogSucess}
         onClose={() => {
           setDialogSucess(false)
@@ -208,6 +170,12 @@ const UserPage = () => {
         onCloseRequested={() => setOpenUpdateModal(false)}
         token={token}
         user={user}
+      />
+
+      <DeletePopupModal
+      open={deleteDialog}
+      onCloseRequest={() => setDeleteDialog(false)}
+      deleteUser={() => deleteUser()}
       />
 
       <div className={styles.pageBanner} />
