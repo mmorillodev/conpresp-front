@@ -29,6 +29,8 @@ const PatrimonyItem: FC<PatrimonyItemProps> = ({
     denomination,
     addressStreet,
     conservationLevelComment,
+    type,
+    resolutions,
   },
 }) => (
   <li className={styles.PatrimonyItem}>
@@ -46,7 +48,23 @@ const PatrimonyItem: FC<PatrimonyItemProps> = ({
         <h2>{denomination}</h2>
         <span className={styles.street}>{addressStreet}</span>
       </div>
-      <span className={styles.comment}>{conservationLevelComment}</span>
+      <p className={styles.comment}>{conservationLevelComment}</p>
+    </div>
+    <div className={styles.patrimonyAdditionalInfo}>
+      <div>
+        <h5>Resolução</h5>
+        <span>
+          {
+            resolutions.find(
+              resolution => resolution.institution.toLowerCase() === 'conpresp'
+            )?.resolution
+          }
+        </span>
+      </div>
+      <div>
+        <h5>Tipo Imóvel</h5>
+        <span>{type}</span>
+      </div>
     </div>
     <Link to={`/patrimonios/${id}`} className={styles.seeMore}>
       Ver mais

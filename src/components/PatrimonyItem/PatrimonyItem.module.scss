@@ -18,6 +18,10 @@
 
     margin-bottom: 2rem;
   }
+
+  p {
+    margin: 0;
+  }
 }
 
 .tag {
@@ -56,4 +60,31 @@
   text-decoration: none;
 
   margin-top: auto;
+}
+
+.patrimonyAdditionalInfo {
+  display: flex !important;
+  flex-direction: row !important;
+  margin-bottom: 0 !important;
+
+  div {
+    h5 {
+      font-size: 9px;
+      color: #94a4b5;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    span {
+      font-weight: normal;
+      font-size: 12px;
+      color: #696774;
+    }
+
+    &:not(:last-child) {
+      margin-right: 32px;
+    }
+  }
 }

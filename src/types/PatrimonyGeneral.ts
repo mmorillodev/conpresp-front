@@ -3,8 +3,8 @@
 export interface PatrimonyGeneral {
   id: string
   denomination: string
-  resolution: Resolution[]
-  addressType: string
+  resolutions: Resolution[]
+  type: string
   addressStreet: string
   conservationLevel: string
   conservationLevelComment: string
