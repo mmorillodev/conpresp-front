@@ -1,39 +1,33 @@
 import CloseIcon from '@mui/icons-material/Close'
-import { Button, IconButton, Modal, SelectChangeEvent } from '@mui/material'
+import {
+  Button,
+  FormControl,
+  IconButton,
+  InputLabel,
+  Modal,
+  Select,
+  SelectChangeEvent,
+  MenuItem,
+  TextField,
+} from '@mui/material'
 import React, { ChangeEvent, FC, useCallback, useState } from 'react'
 import { Box } from '@mui/system'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
-import { useQuery } from 'react-query'
 
 import api from '../../apis/default'
 
-import FormModal from './TextModal'
 import styles from './UserModal.module.scss'
-import { AxiosResponseHeaders } from 'axios'
-
-export interface UserFacet {
-  name: string
-  label: string
-}
 
 interface UserModalProps {
   open: boolean
+  token: string
   onCloseRequested: () => void
-  textFacets: UserFacet[]
+  dialogSucess: (isOpen: boolean) => void
+  dialogError: (isOpen: boolean) => void
 }
 
-const UserModal: FC<UserModalProps> = ({
-  open,
-  onCloseRequested,
-  textFacets,
-}) => {
+const UserModal: FC<UserModalProps> = ({ open, token, onCloseRequested, dialogSucess, dialogError}) => {
   const [field, setField] = useState<{ [x: string]: string }>({})
-  const [dialogOpen, setDialogOpen] = useState(false)
-  const [errorOpen, setErrorOpen] = useState(false)
+  
 
   const changeHandler = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -55,124 +49,151 @@ const UserModal: FC<UserModalProps> = ({
     [field, setField]
   )
 
-  const handleClickOpen = () => {
-    setDialogOpen(true)
-  }
-
-  const handleClose = () => {
-    setDialogOpen(false)
-  }
-
-  const clickErrorOpen = () => {
-    setErrorOpen(true)
-  }
-
-  const clickErrorClose = () => {
-    setErrorOpen(false)
-  }
-
   async function userPost() {
     const axiosConfig = {
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         Accept: 'application/json',
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJDb25wcmVzcCBBUEkiLCJzdWIiOiIxIiwiaWF0IjoxNjM5MDg2MTcyLCJleHAiOjE2MzkxNzI1NzJ9._MobtUtRNCaZlmCMUKX1JcTljdSgtC662k3TPT7bEdU',
+        Authorization: `Bearer ${token}`,
       },
     }
-    api
+    await api
       .post('/users', field, axiosConfig)
       .then(response => {
         setField({})
-        handleClickOpen()
+        dialogSucess(true)
       })
       .catch(({ response }) => {
-       if (response.status === 400) {
-          clickErrorOpen()
+        if (response.status === 400) {
+          dialogError(true)
         } else {
-          clickErrorOpen()
+          dialogError(true)
         }
       })
   }
 
   return (
-    <div>
-      <Dialog
-        open={dialogOpen}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">Sucesso</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Usuário adicionado com sucesso!
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Ok</Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog
-        open={errorOpen}
-        onClose={clickErrorClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">Erro</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Houve um erro ao inserir o usuário, verifique os campos e tente
-            novamente.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={clickErrorClose}>Ok</Button>
-        </DialogActions>
-      </Dialog>
+    <Modal open={open}>
+      <Box className={styles.modalBox}>
+        <div className={styles.header}>
+          <h2>Adicionar Usuário</h2>
+          <IconButton onClick={onCloseRequested}>
+            <CloseIcon />
+          </IconButton>
+        </div>
+        <h3> Informações Gerais </h3>
+        <FormControl
+          required
+          className={styles.textFields}
+          sx={{ padding: 1.5 }}
+        >
+          <InputLabel className={styles.label}>Perfil</InputLabel>
+          <Select
+            name="profile"
+            value={field.profile ?? ''}
+            label="Perfil"
+            onChange={handleChange}
+            fullWidth
+          >
+            <MenuItem value="ADMINISTRATOR">Administrador</MenuItem>
+            <MenuItem value="MODERATOR">Moderador</MenuItem>
+            <MenuItem value="COMMON">Comum</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl
+          required
+          className={styles.textFields}
+          sx={{ padding: 1.5 }}
+        >
+          <InputLabel className={styles.label}>Grupo</InputLabel>
+          <Select
+            name="userGroup"
+            value={field.userGroup ?? ''}
+            label="Grupo"
+            onChange={handleChange}
+            fullWidth
+          >
+            <MenuItem value="DHP">DHP</MenuItem>
+            <MenuItem value="CONPRESP">CONPRESP</MenuItem>
+            <MenuItem value="UAM">UAM</MenuItem>
+          </Select>
+        </FormControl>
+        <br />
+        <FormControl
+          required
+          className={styles.textFields}
+          sx={{ padding: 1.5 }}
+        >
+          <TextField
+            required
+            type="text"
+            label="Nome"
+            name="firstName"
+            value={field.firstName ?? ''}
+            onChange={changeHandler}
+          />
+          <br />
+          <TextField
+            required
+            type="text"
+            label="Sobrenome"
+            name="lastName"
+            value={field.lastName ?? ''}
+            onChange={changeHandler}
+          />
+          <br />
+          <TextField
+            required
+            type="text"
+            label="E-mail"
+            name="email"
+            value={field.email ?? ''}
+            onChange={changeHandler}
+          />
+          <br />
+          <TextField
+            required
+            error={field.password !== field.confirmPassword}
+            type="password"
+            label="Senha"
+            name="password"
+            value={field.password ?? ''}
+            onChange={changeHandler}
+          />
+          <br />
+          <TextField
+            required
+            error={field.password !== field.confirmPassword}
+            type="password"
+            label="Confirme a Senha"
+            name="confirmPassword"
+            value={field.confirmPassword ?? ''}
+            onChange={changeHandler}
+          />
+          <br />
+        </FormControl>
 
-      <Modal open={open}>
-        <Box className={styles.modalBox}>
-          <div className={styles.header}>
-            <h2>Adicionar Usuário</h2>
-            <IconButton onClick={onCloseRequested}>
-              <CloseIcon />
-            </IconButton>
-          </div>
-          <div className={styles.TextFields}>
-            <h3> Informações Gerais </h3>
-            {textFacets.map(({ name, label }) => (
-              <FormModal
-                key={name}
-                label={label}
-                name={name}
-                value={field[name] ?? ''}
-                onChange={changeHandler}
-                changeHandle={handleChange}
-              />
-            ))}
-          </div>
-
-          <div className={styles.footer}>
-            <Button
-              variant="outlined"
-              onClick={() => setField({})}
-              sx={{ borderColor: '#1DA6D1', color: '#1DA6D1' }}
-            >
-              Limpar
-            </Button>
-            <Button
-              variant="contained"
-              onClick={() => userPost()}
-              sx={{ backgroundColor: '#1DA6D1' }}
-            >
-              Adicionar
-            </Button>
-          </div>
-        </Box>
-      </Modal>
-    </div>
+        <div className={styles.footer}>
+          <Button
+            variant="outlined"
+            onClick={() => setField({})}
+            sx={{ borderColor: '#1DA6D1', color: '#1DA6D1' }}
+          >
+            Limpar
+          </Button>
+          <Button
+            variant="contained"
+            sx={{ backgroundColor: '#1DA6D1' }}
+            onClick={() => {
+              userPost()
+            }}
+          >
+            Adicionar
+          </Button>
+        </div>
+      </Box>
+    </Modal>
   )
 }
 

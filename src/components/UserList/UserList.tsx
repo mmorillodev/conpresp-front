@@ -9,9 +9,20 @@ import styles from './UserList.module.scss'
 interface UserListProps {
   users: UserGeneral[]
   data: any
+  token: string
+  userId: (id: string) => void
+  openDeleteDialog: (isOpen: boolean) => void
+  openUpdateModal: (isOpen: boolean) => void
 }
 
-const UserList: FC<UserListProps> = ({ users, data }) => (
+const UserList: FC<UserListProps> = ({
+  users,
+  data,
+  token,
+  openDeleteDialog,
+  openUpdateModal,
+  userId,
+}) => (
   <div className={styles.UserListContainer}>
     <div className={styles.UserHeader}>
       <h4> ID </h4>
@@ -23,7 +34,14 @@ const UserList: FC<UserListProps> = ({ users, data }) => (
     </div>
     <ul className={styles.UserList}>
       {users.map(user => (
-        <UserItem key={user.id} user={user} />
+        <UserItem
+          key={user.id}
+          user={user}
+          token={token}
+          openDeleteDialog={openDeleteDialog}
+          openUpdateModal={openUpdateModal}
+          userId={userId}
+        />
       ))}
     </ul>
     <div className={styles.UserFooter}>
