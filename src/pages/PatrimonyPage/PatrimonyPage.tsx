@@ -1,4 +1,5 @@
 import { useState } from 'react'
+
 import FilterListIcon from '@mui/icons-material/FilterList'
 import Button from '@mui/material/Button'
 
@@ -6,7 +7,8 @@ import { PageableResponse } from '../../types/PageableResponse'
 import { PatrimonyGeneral } from '../../types/PatrimonyGeneral'
 
 import PatrimonyList from '../../components/PatrimonyList/PatrimonyList'
-import Filters, { FilterFacet } from '../../components/PatrimonyFilters/Filters'
+import Filters, { FilterFacet } from '../../components/Filters/Filters'
+import Paginator from '../../components/Pagination/Pagination'
 
 import usePageFetch from '../../hooks/usePageFetch'
 
@@ -105,6 +107,10 @@ const PropertyPage = () => {
           <span>Carregando...</span>
         ) : (
           <PatrimonyList patrimonies={data?.data.content ?? []} />
+        )}
+        <br />
+        {data?.data.totalPages && data.data.totalPages > 1 && (
+          <Paginator count={data?.data.totalPages} />
         )}
       </main>
     </div>

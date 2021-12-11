@@ -1,15 +1,17 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { AxiosError } from 'axios'
+import { DateTime } from 'luxon'
 
+import { RequestError } from '../types/RequestError'
 import AuthResponse from '../types/AuthResponse'
 import useLocalStorage from './useLocalStorage'
 import api from '../apis/default'
-import { RequestError } from '../types/RequestError'
 
 interface Session {
   isAuthenticated: boolean
   token: string
   type: string
+  createdAt?: string
 }
 
 const useSession = () => {
@@ -27,16 +29,35 @@ const useSession = () => {
 
       return api
         .post<AuthResponse>('/auth', { email, password })
-        .then(({ data: { token, type } }) =>
-          setSession({ isAuthenticated: true, token, type })
-        )
+        .then(({ data: { token, type } }) => {
+          setSession({
+            isAuthenticated: true,
+            token,
+            type,
+            createdAt: DateTime.now().toISO(),
+          })
+        })
         .catch((e: AxiosError<RequestError>) => {
           setError(e.response?.data)
         })
         .finally(() => setIsLoading(false))
     },
-    [session, setSession]
+    [api, session, setSession, setIsLoading, setError]
   )
+
+  useEffect(() => {
+    if (session.isAuthenticated && session.createdAt) {
+      const sessionExpiration = Number(
+        process.env.REACT_APP_SESSION_DURATION ?? 0
+      )
+
+      const sessionCreatedDateTime = DateTime.fromISO(session.createdAt)
+
+      if (sessionCreatedDateTime.plus(sessionExpiration) < DateTime.now()) {
+        setSession({ ...session, isAuthenticated: false })
+      }
+    }
+  }, [session, setSession])
 
   return { session, createSession, error, isLoading }
 }
