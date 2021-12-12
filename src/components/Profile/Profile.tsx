@@ -6,11 +6,13 @@ import useSession from '../../hooks/useSession'
 import styles from './Profile.module.scss'
 
 const Profile = () => {
-  const { session } = useSession()
+  const {
+    session: { isAuthenticated },
+  } = useSession()
 
   return (
     <div className={styles.Profile}>
-      {!session.isAuthenticated ? (
+      {!isAuthenticated ? (
         <Button variant="outlined">
           <Link to="/login">Login</Link>
         </Button>
