@@ -36,6 +36,7 @@ const PatrimonyItem: FC<PatrimonyItemProps> = ({
   <li className={styles.PatrimonyItem}>
     <Link
       className={styles.tag}
+      data-tooltip="Filtrar por:"
       to={`/patrimonios?conservationLevel=${conservationLevel}`}
     >
       <Tag

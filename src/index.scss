@@ -52,3 +52,31 @@ h6 {
 main {
   min-height: calc(100% - 93px - 201px);
 }
+
+a[data-tooltip] {
+  position: relative;
+
+  &::before {
+    display: none;
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    color: white;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    background-color: rgba(0, 0, 0, 0.7);
+
+    transform: scale(0);
+    transition: all 150ms ease-in-out;
+  }
+
+  &:hover::before {
+    display: block;
+    top: -165%;
+    transform: scale(1);
+  }
+}
