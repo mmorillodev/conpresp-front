@@ -25,7 +25,7 @@
     "test-nowatch": "react-scripts test --watchAll=false",
     "test-coverage": "react-scripts test --coverage",
     "eject": "react-scripts eject",
-    "pretty": "prettier --write \"./**/*.{ts,tsx,json}\""
+    "pretty": "prettier --write \"./**/*.{ts, tsx, json, scss}\""
   },
   "eslintConfig": {
     "extends": [
