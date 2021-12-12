@@ -15,11 +15,14 @@ interface Session {
 }
 
 const useSession = () => {
-  const [session, setSession] = useLocalStorage<Session>('session', {
-    isAuthenticated: false,
-    token: '',
-    type: '',
-  })
+  const [session, setSession, destroySession] = useLocalStorage<Session>(
+    'session',
+    {
+      isAuthenticated: false,
+      token: '',
+      type: '',
+    }
+  )
   const [error, setError] = useState<undefined | object>(undefined)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -59,7 +62,7 @@ const useSession = () => {
     }
   }, [session, setSession])
 
-  return { session, createSession, error, isLoading }
+  return { session, createSession, destroySession, error, isLoading }
 }
 
 export default useSession
