@@ -21,6 +21,7 @@ import styles from './UserPage.module.scss'
 import useSession from '../../hooks/useSession'
 
 import DeletePopupModal from '../../components/DeleteUserPopup/DeletePopup'
+import SucessModal from '../../components/SucessModal/SucessModal'
 
 const filterFacets: FilterFacet[] = [
   {
@@ -75,32 +76,15 @@ const UserPage = () => {
     refetch()
   }, [params])
 
-
-
   return (
     <div className={styles.User}>
-      <Dialog
+      <SucessModal
         open={dialogSucess}
-        onClose={() => {
-          setDialogSucess(false)
-        }}
-      >
-        <DialogTitle id="statusCode200">Sucesso</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Usuário adicionado com sucesso.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              setDialogSucess(false)
-            }}
-          >
-            Ok
-          </Button>
-        </DialogActions>
-      </Dialog>
+        onCloseRequest={() => setDialogSucess(false)}
+        addUser={() => setAddUser(false)}
+        refetch={refetch}
+      />
+
       <Dialog
         open={dialogError}
         onClose={() => {

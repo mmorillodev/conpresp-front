@@ -25,9 +25,14 @@ interface UserModalProps {
   dialogError: (isOpen: boolean) => void
 }
 
-const UserModal: FC<UserModalProps> = ({ open, token, onCloseRequested, dialogSucess, dialogError}) => {
+const UserModal: FC<UserModalProps> = ({
+  open,
+  token,
+  onCloseRequested,
+  dialogSucess,
+  dialogError,
+}) => {
   const [field, setField] = useState<{ [x: string]: string }>({})
-  
 
   const changeHandler = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {

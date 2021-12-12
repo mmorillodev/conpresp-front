@@ -42,7 +42,9 @@ const UpdateUserModal: FC<UserModalProps> = ({
       .put(`/users/${user.id}`, field, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then(() => {refetch()})
+      .then(() => {
+        refetch()
+      })
       .catch(() => {})
   }
 
@@ -165,12 +167,11 @@ const UpdateUserModal: FC<UserModalProps> = ({
         </FormControl>
 
         <div className={styles.footer}>
-        <Button
+          <Button
             variant="outlined"
             onClick={() => {
               onCloseRequested()
             }}
-
           >
             Fechar
           </Button>
