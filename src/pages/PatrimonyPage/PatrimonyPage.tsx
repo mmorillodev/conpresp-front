@@ -76,14 +76,14 @@ const PropertyPage = () => {
     usePageFetch<PageableResponse<PatrimonyGeneral>>('patrimony')
 
   return (
-    <div className={styles.Property}>
+    <>
       <Filters
         open={filterOpen}
         onCloseRequested={() => setFilterOpen(false)}
         facets={filterFacets}
       />
       <div className={styles.pageBanner} />
-      <main className={styles.mainContent}>
+      <section className={styles.mainContent}>
         <h1>Patrimônios</h1>
         <span className={styles.pageDescr}>
           Pharetra aenean tellus mauris, viverra tortor morbi sit. Viverra nunc
@@ -109,12 +109,8 @@ const PropertyPage = () => {
         ) : (
           <PatrimonyList patrimonies={data?.data.content ?? []} />
         )}
-        <br />
-        {data?.data.totalPages && data.data.totalPages > 1 && (
-          <Paginator count={data?.data.totalPages} />
-        )}
-      </main>
-    </div>
+      </section>
+    </>
   )
 }
 
