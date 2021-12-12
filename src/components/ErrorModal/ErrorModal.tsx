@@ -2,30 +2,28 @@ import { Button, Modal } from '@mui/material'
 import React, { FC } from 'react'
 import { Box } from '@mui/system'
 
-import styles from './SucessModal.module.scss'
-import sucess from '../../assets/sucess.svg'
+import styles from './ErrorModal.module.scss'
+import check from '../../assets/check.svg'
 
-interface SucessProp {
-  open: boolean
-  onCloseRequest: () => void
-  addUser: () => void
-  refetch: () => void
-}
+interface ErrorProp {
+    open: boolean
+    onCloseRequest: () => void
+    refetch: () => void
+  }
 
-const SucessModal: FC<SucessProp> = ({
-  open,
-  onCloseRequest,
-  addUser,
-  refetch,
-}) => (
-  <Modal open={open}>
+  const ErrorModal: FC<ErrorProp> = ({
+      open,
+      onCloseRequest,
+      refetch,
+  }) => (
+    <Modal open={open}>
     <Box className={styles.modalBox}>
       <div className={styles.image}>
-        <img src={sucess} alt="Ícone de confirmação" />
+        <img src={check} alt="Ícone de confirmação" />
       </div>
       <div className={styles.content}>
-        <h3>Sucesso!</h3>
-        <p>A requisição foi atendida com sucesso.</p>
+        <h3>Erro!</h3>
+        <p>Ops! Houve um erro inesperado, atualize a página e tente novamente.</p>
         <Button
           variant="contained"
           sx={{
@@ -35,7 +33,6 @@ const SucessModal: FC<SucessProp> = ({
             borderRadius: '8px',
           }}
           onClick={() => {
-            addUser()
             refetch()
             onCloseRequest()
           }}
@@ -45,6 +42,6 @@ const SucessModal: FC<SucessProp> = ({
       </div>
     </Box>
   </Modal>
-)
+  )
 
-export default SucessModal
+  export default ErrorModal

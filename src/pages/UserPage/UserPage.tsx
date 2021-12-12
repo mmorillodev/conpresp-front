@@ -1,18 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
+import { useHistory } from 'react-router-dom'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
-import DialogActions from '@mui/material/DialogActions'
-import DialogTitle from '@mui/material/DialogTitle'
-import Dialog from '@mui/material/Dialog'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
 import { UserGeneral } from '../../types/UserGeneral'
 import UserList from '../../components/UserList/UserList'
 import useURLSearchParams from '../../hooks/useURLSearchParams'
 import Filters, { FilterFacet } from '../../components/PatrimonyFilters/Filters'
-import UserModal from '../../components/NewUser/UserModal'
+import UserModal from '../../components/NewUserModal/UserModal'
 
 import api from '../../apis/default'
 import { PageableResponse } from '../../types/PageableResponse'
@@ -22,6 +18,7 @@ import useSession from '../../hooks/useSession'
 
 import DeletePopupModal from '../../components/DeleteUserPopup/DeletePopup'
 import SucessModal from '../../components/SucessModal/SucessModal'
+import ErrorModal from '../../components/ErrorModal/ErrorModal'
 
 const filterFacets: FilterFacet[] = [
   {
@@ -48,16 +45,9 @@ const filterFacets: FilterFacet[] = [
 
 const UserPage = () => {
   const {
-    session: { token },
+    session: { token, isAuthenticated },
   } = useSession()
-  const axiosConfig = {
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      Accept: 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  }
+  const history = useHistory()
   const [filterOpen, setFilterOpen] = useState(false)
   const [addUser, setAddUser] = useState(false)
   const [dialogSucess, setDialogSucess] = useState(false)
@@ -68,9 +58,15 @@ const UserPage = () => {
   const { isLoading, data, refetch } = useQuery('users', () =>
     api.get<PageableResponse<UserGeneral>>(
       `/users?${params.toString()}`,
-      axiosConfig
+      {headers: {
+        'Authorization': `Bearer ${token}`
+      }}
     )
   )
+
+  if (!isAuthenticated) {
+    history.push('/login')
+  }
 
   useEffect(() => {
     refetch()
@@ -85,28 +81,11 @@ const UserPage = () => {
         refetch={refetch}
       />
 
-      <Dialog
+      <ErrorModal
         open={dialogError}
-        onClose={() => {
-          setDialogError(false)
-        }}
-      >
-        <DialogTitle id="badRequestDialog">Erro</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Houve um erro inesperado, atualize a página e tente novamente.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => {
-              setDialogError(false)
-            }}
-          >
-            Ok
-          </Button>
-        </DialogActions>
-      </Dialog>
+        onCloseRequest={() => setDialogError(false)}
+        refetch={refetch}
+      />
 
       <Filters
         open={filterOpen}
@@ -116,7 +95,6 @@ const UserPage = () => {
 
       <UserModal
         open={addUser}
-        token={token}
         onCloseRequested={() => setAddUser(false)}
         dialogSucess={() => setDialogSucess(true)}
         dialogError={() => setDialogError(true)}
@@ -134,7 +112,7 @@ const UserPage = () => {
         <h1>Usuários</h1>
         <span className={styles.pageDescr}>
           Página dedicada para gerenciar os usuários do sistema. Aqui você pode
-          adicionar, atualizar, excluir e contrultar todos os usuários
+          adicionar, atualizar, excluir e consultar todos os usuários
           cadastrados.
         </span>
         <hr />

@@ -11,6 +11,7 @@ import {
   TextField,
 } from '@mui/material'
 import React, { ChangeEvent, FC, useCallback, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { Box } from '@mui/system'
 
 import api from '../../apis/default'
@@ -22,30 +23,33 @@ import { UserDetails } from '../../types/UserGeneral'
 interface UserModalProps {
   open: boolean
   user: UserDetails
+  sucessDialog: () => void
   onCloseRequested: () => void
-  refetch: () => void
 }
 
 const UpdateUserModal: FC<UserModalProps> = ({
   open,
   onCloseRequested,
   user,
-  refetch,
+  sucessDialog,
 }) => {
   const [field, setField] = useState(user)
   const {
-    session: { token },
+    session: { token, isAuthenticated },
   } = useSession()
+  const history = useHistory()
 
   async function updateUser() {
-    await api
-      .put(`/users/${user.id}`, field, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(() => {
-        refetch()
-      })
-      .catch(() => {})
+    if (isAuthenticated) {
+      await api
+        .put(`/users/${user.id}`, field, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then(() => {})
+        .catch(() => {})
+    } else {
+      history.push('/login')
+    }
   }
 
   const changeHandler = useCallback(
@@ -178,6 +182,7 @@ const UpdateUserModal: FC<UserModalProps> = ({
           <Button
             variant="contained"
             onClick={() => {
+              sucessDialog()
               updateUser()
               onCloseRequested()
             }}

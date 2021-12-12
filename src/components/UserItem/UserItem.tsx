@@ -13,6 +13,7 @@ import UpdateUserModal from '../UpdateUser/UserUpdateModal'
 import api from '../../apis/default'
 
 import styles from './UserItem.module.scss'
+import SucessModal from '../SucessModal/SucessModal'
 
 interface UserItemProps {
   user: UserGeneral
@@ -46,6 +47,7 @@ const UserItem: FC<UserItemProps> = ({
   }
   const [openUpdateModal, setOpenUpdateModal] = useState(false)
   const [user, setUser] = useState<UserDetails>()
+  const [dialogSucess, setDialogSucess] = useState(false)
 
   async function getUser() {
     await api
@@ -61,11 +63,18 @@ const UserItem: FC<UserItemProps> = ({
       {user && (
         <UpdateUserModal
           open={openUpdateModal}
+          sucessDialog={() => setDialogSucess(true)}
           onCloseRequested={() => setOpenUpdateModal(false)}
           user={user}
-          refetch={refetch}
         />
       )}
+
+      <SucessModal
+        open={dialogSucess}
+        onCloseRequest={() => setDialogSucess(false)}
+        addUser={() => setOpenUpdateModal(false)}
+        refetch={refetch}
+      />
 
       <div className={styles.ButtonEffect}>
         <li className={styles.UserItem}>

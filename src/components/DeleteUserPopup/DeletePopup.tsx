@@ -1,7 +1,8 @@
 import { Button, Modal } from '@mui/material'
 import React, { FC } from 'react'
 import { Box } from '@mui/system'
-import check from '../../assets/check.svg'
+import { useHistory } from 'react-router-dom'
+import warning from '../../assets/warning.svg'
 
 import styles from './DeletePopup.module.scss'
 
@@ -22,26 +23,31 @@ const DeletePopupModal: FC<DeletePopup> = ({
   userId,
 }) => {
   const {
-    session: { token },
+    session: { token, isAuthenticated },
   } = useSession()
+  const history = useHistory()
 
   async function deleteUser() {
-    await api
-      .delete(`/users/${userId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(() => {
-        refetch()
-        onCloseRequest()
-      })
-      .catch(() => {})
+    if (isAuthenticated) {
+      await api
+        .delete(`/users/${userId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then(() => {
+          refetch()
+          onCloseRequest()
+        })
+        .catch(() => {})
+    } else {
+      history.push('/login')
+    }
   }
 
   return (
     <Modal open={open}>
       <Box className={styles.modalBox}>
         <div className={styles.image}>
-          <img src={check} alt="Ícone de confirmação" />
+          <img src={warning} alt="Ícone de confirmação" />
         </div>
         <div className={styles.content}>
           <h3>Deseja realmente excluir?</h3>

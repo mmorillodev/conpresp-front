@@ -11,7 +11,10 @@ import {
   TextField,
 } from '@mui/material'
 import React, { ChangeEvent, FC, useCallback, useState } from 'react'
+import { useHistory } from 'react-router-dom'
+
 import { Box } from '@mui/system'
+import useSession from '../../hooks/useSession'
 
 import api from '../../apis/default'
 
@@ -19,7 +22,6 @@ import styles from './UserModal.module.scss'
 
 interface UserModalProps {
   open: boolean
-  token: string
   onCloseRequested: () => void
   dialogSucess: (isOpen: boolean) => void
   dialogError: (isOpen: boolean) => void
@@ -27,12 +29,15 @@ interface UserModalProps {
 
 const UserModal: FC<UserModalProps> = ({
   open,
-  token,
   onCloseRequested,
   dialogSucess,
   dialogError,
 }) => {
   const [field, setField] = useState<{ [x: string]: string }>({})
+  const {
+    session: { token, isAuthenticated },
+  } = useSession()
+  const history = useHistory()
 
   const changeHandler = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -55,27 +60,21 @@ const UserModal: FC<UserModalProps> = ({
   )
 
   async function userPost() {
-    const axiosConfig = {
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        Accept: 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
+    if (isAuthenticated) {
+      await api
+        .post('/users', field, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then(() => {
+          setField({})
+          dialogSucess(true)
+        })
+        .catch(() => {
+          dialogError(true)
+        })
+    } else {
+      history.push('/login')
     }
-    await api
-      .post('/users', field, axiosConfig)
-      .then(() => {
-        setField({})
-        dialogSucess(true)
-      })
-      .catch(({ response }) => {
-        if (response.status === 400) {
-          dialogError(true)
-        } else {
-          dialogError(true)
-        }
-      })
   }
 
   return (
