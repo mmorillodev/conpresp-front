@@ -76,14 +76,14 @@ const PropertyPage = () => {
     usePageFetch<PageableResponse<PatrimonyGeneral>>('patrimony')
 
   return (
-    <div className={styles.Property}>
+    <>
       <Filters
         open={filterOpen}
         onCloseRequested={() => setFilterOpen(false)}
         facets={filterFacets}
       />
       <div className={styles.pageBanner} />
-      <main className={styles.mainContent}>
+      <section className={styles.mainContent}>
         <h1>Patrimônios</h1>
         <span className={styles.pageDescr}>
           Página dedicada para gerenciar os patrimônios do sistema. Aqui você
@@ -112,8 +112,8 @@ const PropertyPage = () => {
         {data?.data.totalPages && data.data.totalPages > 1 && (
           <Paginator count={data?.data.totalPages} />
         )}
-      </main>
-    </div>
+      </section>
+    </>
   )
 }
 
