@@ -1,25 +1,17 @@
-import { Button } from '@mui/material'
-import { Link } from 'react-router-dom'
-
-import useSession from '../../hooks/useSession'
+import usePageFetch from '../../hooks/usePageFetch'
+import { UserDetails } from '../../types/UserDetails'
 
 import styles from './Profile.module.scss'
 
 const Profile = () => {
-  const {
-    session: { isAuthenticated },
-  } = useSession()
+  const { data, isLoading } = usePageFetch<UserDetails>('users/user-info')
+
+  if (isLoading) return <span>Carregando...</span>
 
   return (
-    <div className={styles.Profile}>
-      {!isAuthenticated ? (
-        <Button variant="outlined">
-          <Link to="/login">Login</Link>
-        </Button>
-      ) : (
-        <span>Olá Pessoa</span>
-      )}
-    </div>
+    <span className={styles.Profile}>
+      Olá, <b>{data?.data.firstName}</b>
+    </span>
   )
 }
 
