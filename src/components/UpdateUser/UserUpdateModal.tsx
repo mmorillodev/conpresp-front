@@ -14,26 +14,37 @@ import React, { ChangeEvent, FC, useCallback, useState } from 'react'
 import { Box } from '@mui/system'
 
 import api from '../../apis/default'
+import useSession from '../../hooks/useSession'
 
 import styles from './UpdateUserModal.module.scss'
 import { UserDetails } from '../../types/UserGeneral'
 
 interface UserModalProps {
   open: boolean
+  user: UserDetails
   onCloseRequested: () => void
-  id: string
-  token: string
-  user: UserDetails | undefined
+  refetch: () => void
 }
 
 const UpdateUserModal: FC<UserModalProps> = ({
   open,
   onCloseRequested,
-  id,
-  token,
-  user
+  user,
+  refetch,
 }) => {
-  const [field, setField] = useState<{ [x: string]: string }>({})
+  const [field, setField] = useState(user)
+  const {
+    session: { token },
+  } = useSession()
+
+  async function updateUser() {
+    await api
+      .put(`/users/${user.id}`, field, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(() => {refetch()})
+      .catch(() => {})
+  }
 
   const changeHandler = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -59,7 +70,7 @@ const UpdateUserModal: FC<UserModalProps> = ({
     <Modal open={open}>
       <Box className={styles.modalBox}>
         <div className={styles.header}>
-          <h2>Adicionar Usuário</h2>
+          <h2>Atualizar Usuário</h2>
           <IconButton onClick={onCloseRequested}>
             <CloseIcon />
           </IconButton>
@@ -70,10 +81,27 @@ const UpdateUserModal: FC<UserModalProps> = ({
           className={styles.textFields}
           sx={{ padding: 1.5 }}
         >
+          <InputLabel className={styles.label}>Status</InputLabel>
+          <Select
+            name="status"
+            value={field.status ?? ''}
+            label="Status"
+            onChange={handleChange}
+            fullWidth
+          >
+            <MenuItem value="ACTIVE">Ativo</MenuItem>
+            <MenuItem value="INACTIVE">Inativo</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl
+          required
+          className={styles.textFields}
+          sx={{ padding: 1.5 }}
+        >
           <InputLabel className={styles.label}>Perfil</InputLabel>
           <Select
             name="profile"
-            value={user?.profile ?? ''}
+            value={field.profile ?? ''}
             label="Perfil"
             onChange={handleChange}
             fullWidth
@@ -91,7 +119,7 @@ const UpdateUserModal: FC<UserModalProps> = ({
           <InputLabel className={styles.label}>Grupo</InputLabel>
           <Select
             name="userGroup"
-            value={user?.userGroup ?? ''}
+            value={field.userGroup ?? ''}
             label="Grupo"
             onChange={handleChange}
             fullWidth
@@ -112,7 +140,7 @@ const UpdateUserModal: FC<UserModalProps> = ({
             type="text"
             label="Nome"
             name="firstName"
-            value={user?.firstName ?? ''}
+            value={field.firstName ?? ''}
             onChange={changeHandler}
           />
           <br />
@@ -121,7 +149,7 @@ const UpdateUserModal: FC<UserModalProps> = ({
             type="text"
             label="Sobrenome"
             name="lastName"
-            value={user?.lastName ?? ''}
+            value={field.lastName ?? ''}
             onChange={changeHandler}
           />
           <br />
@@ -130,22 +158,31 @@ const UpdateUserModal: FC<UserModalProps> = ({
             type="text"
             label="E-mail"
             name="email"
-            value={user?.email ?? ''}
+            value={field.email ?? ''}
             onChange={changeHandler}
           />
           <br />
         </FormControl>
 
         <div className={styles.footer}>
-          <Button
+        <Button
             variant="outlined"
-            onClick={() => setField({})}
-            sx={{ borderColor: '#1DA6D1', color: '#1DA6D1' }}
+            onClick={() => {
+              onCloseRequested()
+            }}
+
           >
-            Limpar
+            Fechar
           </Button>
-          <Button variant="contained" sx={{ backgroundColor: '#1DA6D1' }}>
-            Atualizar
+          <Button
+            variant="contained"
+            onClick={() => {
+              updateUser()
+              onCloseRequested()
+            }}
+            sx={{ backgroundColor: '#1DA6D1' }}
+          >
+            Confirmar
           </Button>
         </div>
       </Box>

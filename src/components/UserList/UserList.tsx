@@ -12,7 +12,7 @@ interface UserListProps {
   token: string
   userId: (id: string) => void
   openDeleteDialog: (isOpen: boolean) => void
-  openUpdateModal: (isOpen: boolean) => void
+  refetch: () => void
 }
 
 const UserList: FC<UserListProps> = ({
@@ -20,8 +20,8 @@ const UserList: FC<UserListProps> = ({
   data,
   token,
   openDeleteDialog,
-  openUpdateModal,
   userId,
+  refetch,
 }) => (
   <div className={styles.UserListContainer}>
     <div className={styles.UserHeader}>
@@ -39,8 +39,8 @@ const UserList: FC<UserListProps> = ({
           user={user}
           token={token}
           openDeleteDialog={openDeleteDialog}
-          openUpdateModal={openUpdateModal}
           userId={userId}
+          refetch={refetch}
         />
       ))}
     </ul>

@@ -60,7 +60,7 @@ const UserModal: FC<UserModalProps> = ({ open, token, onCloseRequested, dialogSu
     }
     await api
       .post('/users', field, axiosConfig)
-      .then(response => {
+      .then(() => {
         setField({})
         dialogSucess(true)
       })
@@ -189,7 +189,7 @@ const UserModal: FC<UserModalProps> = ({ open, token, onCloseRequested, dialogSu
               userPost()
             }}
           >
-            Adicionar
+            Confirmar
           </Button>
         </div>
       </Box>
