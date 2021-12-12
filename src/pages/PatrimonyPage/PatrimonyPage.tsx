@@ -109,6 +109,10 @@ const PropertyPage = () => {
         ) : (
           <PatrimonyList patrimonies={data?.data.content ?? []} />
         )}
+        <br />
+        {data?.data.totalPages && data.data.totalPages > 1 && (
+          <Paginator count={data?.data.totalPages} />
+        )}
       </section>
     </>
   )
