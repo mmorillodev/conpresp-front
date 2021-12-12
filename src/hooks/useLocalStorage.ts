@@ -19,7 +19,12 @@ const useLocalStorage = <T>(key: string, initialValue: T) => {
     [setStoredValue, key]
   )
 
-  return [storedValue, setLocalStorage] as const
+  const destroy = useCallback(() => {
+    window.localStorage.setItem(key, JSON.stringify(initialValue))
+    setStoredValue(initialValue)
+  }, [setStoredValue, initialValue, key])
+
+  return [storedValue, setLocalStorage, destroy] as const
 }
 
 export default useLocalStorage

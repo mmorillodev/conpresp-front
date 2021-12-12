@@ -6,7 +6,6 @@ import Footer from './components/Footer/Footer'
 import PropertyPage from './pages/PatrimonyPage/PatrimonyPage'
 import Login from './pages/Login/Login'
 import User from './pages/UserPage/UserPage'
-import styles from './App.module.scss'
 
 const queryClient = new QueryClient()
 

@@ -46,5 +46,11 @@
 
   li {
     margin: 10px;
+
+    img {
+      display: inline-block;
+      height: 100%;
+      vertical-align: middle;
+    }
   }
 }
