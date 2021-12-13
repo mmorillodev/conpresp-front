@@ -71,7 +71,6 @@ const UserPage = () => {
       <ErrorModal
         open={dialogError}
         onCloseRequest={() => setDialogError(false)}
-        refetch={refetch}
       />
 
       <Filters

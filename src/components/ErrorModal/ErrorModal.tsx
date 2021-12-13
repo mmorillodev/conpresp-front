@@ -8,13 +8,11 @@ import check from '../../assets/check.svg'
 interface ErrorProp {
     open: boolean
     onCloseRequest: () => void
-    refetch: () => void
   }
 
   const ErrorModal: FC<ErrorProp> = ({
       open,
       onCloseRequest,
-      refetch,
   }) => (
     <Modal open={open}>
     <Box className={styles.modalBox}>
@@ -33,7 +31,6 @@ interface ErrorProp {
             borderRadius: '8px',
           }}
           onClick={() => {
-            refetch()
             onCloseRequest()
           }}
         >

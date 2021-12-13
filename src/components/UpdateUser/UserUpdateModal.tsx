@@ -45,7 +45,10 @@ const UpdateUserModal: FC<UserModalProps> = ({
         .put(`/users/${user.id}`, field, {
           headers: { Authorization: `Bearer ${token}` },
         })
-        .then(() => {})
+        .then(() => {
+          successDialog()
+          onCloseRequested()
+        })
         .catch(() => {})
     } else {
       history.push('/login')
@@ -182,9 +185,7 @@ const UpdateUserModal: FC<UserModalProps> = ({
           <Button
             variant="contained"
             onClick={() => {
-              successDialog()
               updateUser()
-              onCloseRequested()
             }}
             sx={{ backgroundColor: '#1DA6D1' }}
           >
