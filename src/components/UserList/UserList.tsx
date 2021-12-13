@@ -9,16 +9,12 @@ import styles from './UserList.module.scss'
 interface UserListProps {
   users: UserGeneral[]
   data: any
-  userId: (id: string) => void
-  openDeleteDialog: (isOpen: boolean) => void
   refetch: () => void
 }
 
 const UserList: FC<UserListProps> = ({
   users,
   data,
-  openDeleteDialog,
-  userId,
   refetch,
 }) => (
   <div className={styles.UserListContainer}>
@@ -35,8 +31,6 @@ const UserList: FC<UserListProps> = ({
         <UserItem
           key={user.id}
           user={user}
-          openDeleteDialog={openDeleteDialog}
-          userId={userId}
           refetch={refetch}
         />
       ))}

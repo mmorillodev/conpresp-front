@@ -14,7 +14,6 @@ import usePageFetch from '../../hooks/usePageFetch'
 import styles from './UserPage.module.scss'
 import useSession from '../../hooks/useSession'
 
-import DeletePopupModal from '../../components/DeleteUserPopup/DeletePopup'
 import SuccessModal from '../../components/SuccessModal/SuccessModal'
 import ErrorModal from '../../components/ErrorModal/ErrorModal'
 
@@ -50,8 +49,6 @@ const UserPage = () => {
   const [addUser, setAddUser] = useState(false)
   const [dialogSuccess, setDialogSuccess] = useState(false)
   const [dialogError, setDialogError] = useState(false)
-  const [deleteDialog, setDeleteDialog] = useState(false)
-  const [userId, setUserId] = useState(String)
   const { isLoading, data, refetch } =
     usePageFetch<PageableResponse<UserGeneral>>('users')
 
@@ -84,13 +81,6 @@ const UserPage = () => {
         onCloseRequested={() => setAddUser(false)}
         dialogSuccess={() => setDialogSuccess(true)}
         dialogError={() => setDialogError(true)}
-      />
-
-      <DeletePopupModal
-        open={deleteDialog}
-        onCloseRequest={() => setDeleteDialog(false)}
-        userId={userId}
-        refetch={refetch}
       />
 
       <div className={styles.pageBanner} />
@@ -135,13 +125,9 @@ const UserPage = () => {
           <span> Carregando...</span>
         ) : (
           <UserList
-            userId={setUserId}
             users={data?.data.content ?? []}
             data={data?.data}
             refetch={refetch}
-            openDeleteDialog={() => {
-              setDeleteDialog(true)
-            }}
           />
         )}
       </main>

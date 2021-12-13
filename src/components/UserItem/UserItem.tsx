@@ -14,12 +14,11 @@ import useSession from '../../hooks/useSession'
 import api from '../../apis/default'
 
 import styles from './UserItem.module.scss'
-import SucessModal from '../SuccessModal/SuccessModal'
+import SuccessModal from '../SuccessModal/SuccessModal'
+import DeletePopupModal from '../DeleteUserPopup/DeletePopup'
 
 interface UserItemProps {
   user: UserGeneral
-  userId: (id: string) => void
-  openDeleteDialog: (isOpen: boolean) => void
   refetch: () => void
 }
 
@@ -32,8 +31,6 @@ const tagLevelDict: { [key in PatrimonyConservationLevel]: TagLevel } = {
 
 const UserItem: FC<UserItemProps> = ({
   user: { id, firstName, lastName, email, profile, status },
-  openDeleteDialog,
-  userId,
   refetch,
 }) => {
   const {
@@ -43,6 +40,7 @@ const UserItem: FC<UserItemProps> = ({
   const [openUpdateModal, setOpenUpdateModal] = useState(false)
   const [user, setUser] = useState<UserDetails>()
   const [dialogSuccess, setDialogSuccess] = useState(false)
+  const [deleteDialog, setDeleteDialog] = useState(false)
 
   async function getUser() {
     if (isAuthenticated) {
@@ -70,7 +68,14 @@ const UserItem: FC<UserItemProps> = ({
         />
       )}
 
-      <SucessModal
+      <DeletePopupModal
+        open={deleteDialog}
+        onCloseRequest={() => setDeleteDialog(false)}
+        userId={id}
+        refetch={refetch}
+      />
+
+      <SuccessModal
         open={dialogSuccess}
         onCloseRequest={() => setDialogSuccess(false)}
         addUser={() => setOpenUpdateModal(false)}
@@ -99,8 +104,7 @@ const UserItem: FC<UserItemProps> = ({
             <IconButton
               className={styles.IconButton}
               onClick={() => {
-                openDeleteDialog(true)
-                userId(id)
+                setDeleteDialog(true)
               }}
             >
               <DeleteIcon sx={{ color: '#1976d2' }} />
