@@ -1,23 +1,21 @@
-import { useEffect, useState } from 'react'
-import { useQuery } from 'react-query'
+import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
 import { UserGeneral } from '../../types/UserGeneral'
 import UserList from '../../components/UserList/UserList'
-import useURLSearchParams from '../../hooks/useURLSearchParams'
 import Filters, { FilterFacet } from '../../components/PatrimonyFilters/Filters'
 import UserModal from '../../components/NewUserModal/UserModal'
 
-import api from '../../apis/default'
 import { PageableResponse } from '../../types/PageableResponse'
+import usePageFetch from '../../hooks/usePageFetch'
 
 import styles from './UserPage.module.scss'
 import useSession from '../../hooks/useSession'
 
 import DeletePopupModal from '../../components/DeleteUserPopup/DeletePopup'
-import SucessModal from '../../components/SucessModal/SucessModal'
+import SuccessModal from '../../components/SuccessModal/SuccessModal'
 import ErrorModal from '../../components/ErrorModal/ErrorModal'
 
 const filterFacets: FilterFacet[] = [
@@ -45,38 +43,27 @@ const filterFacets: FilterFacet[] = [
 
 const UserPage = () => {
   const {
-    session: { token, isAuthenticated },
+    session: { isAuthenticated },
   } = useSession()
   const history = useHistory()
   const [filterOpen, setFilterOpen] = useState(false)
   const [addUser, setAddUser] = useState(false)
-  const [dialogSucess, setDialogSucess] = useState(false)
+  const [dialogSuccess, setDialogSuccess] = useState(false)
   const [dialogError, setDialogError] = useState(false)
   const [deleteDialog, setDeleteDialog] = useState(false)
   const [userId, setUserId] = useState(String)
-  const params = useURLSearchParams()
-  const { isLoading, data, refetch } = useQuery('users', () =>
-    api.get<PageableResponse<UserGeneral>>(
-      `/users?${params.toString()}`,
-      {headers: {
-        'Authorization': `Bearer ${token}`
-      }}
-    )
-  )
+  const { isLoading, data, refetch } =
+    usePageFetch<PageableResponse<UserGeneral>>('users')
 
   if (!isAuthenticated) {
     history.push('/login')
   }
 
-  useEffect(() => {
-    refetch()
-  }, [params])
-
   return (
     <div className={styles.User}>
-      <SucessModal
-        open={dialogSucess}
-        onCloseRequest={() => setDialogSucess(false)}
+      <SuccessModal
+        open={dialogSuccess}
+        onCloseRequest={() => setDialogSuccess(false)}
         addUser={() => setAddUser(false)}
         refetch={refetch}
       />
@@ -96,15 +83,15 @@ const UserPage = () => {
       <UserModal
         open={addUser}
         onCloseRequested={() => setAddUser(false)}
-        dialogSucess={() => setDialogSucess(true)}
+        dialogSuccess={() => setDialogSuccess(true)}
         dialogError={() => setDialogError(true)}
       />
 
       <DeletePopupModal
         open={deleteDialog}
         onCloseRequest={() => setDeleteDialog(false)}
-        refetch={refetch}
         userId={userId}
+        refetch={refetch}
       />
 
       <div className={styles.pageBanner} />
@@ -152,7 +139,6 @@ const UserPage = () => {
             userId={setUserId}
             users={data?.data.content ?? []}
             data={data?.data}
-            token={token}
             refetch={refetch}
             openDeleteDialog={() => {
               setDeleteDialog(true)

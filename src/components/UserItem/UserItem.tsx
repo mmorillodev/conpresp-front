@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import React, { useState } from 'react'
 
@@ -10,14 +10,14 @@ import Tag, { TagLevel } from '../Tag/Tag'
 import { UserGeneral, UserDetails } from '../../types/UserGeneral'
 import UpdateUserModal from '../UpdateUser/UserUpdateModal'
 
+import useSession from '../../hooks/useSession'
 import api from '../../apis/default'
 
 import styles from './UserItem.module.scss'
-import SucessModal from '../SucessModal/SucessModal'
+import SucessModal from '../SuccessModal/SuccessModal'
 
 interface UserItemProps {
   user: UserGeneral
-  token: string
   userId: (id: string) => void
   openDeleteDialog: (isOpen: boolean) => void
   refetch: () => void
@@ -32,30 +32,31 @@ const tagLevelDict: { [key in PatrimonyConservationLevel]: TagLevel } = {
 
 const UserItem: FC<UserItemProps> = ({
   user: { id, firstName, lastName, email, profile, status },
-  token,
   openDeleteDialog,
   userId,
   refetch,
 }) => {
-  const axiosConfig = {
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      Accept: 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  }
+  const {
+    session: { token, isAuthenticated },
+  } = useSession()
+  const history = useHistory()
   const [openUpdateModal, setOpenUpdateModal] = useState(false)
   const [user, setUser] = useState<UserDetails>()
-  const [dialogSucess, setDialogSucess] = useState(false)
+  const [dialogSuccess, setDialogSuccess] = useState(false)
 
   async function getUser() {
-    await api
-      .get<UserDetails>(`/users/${id}`, axiosConfig)
-      .then(response => {
-        setUser(response.data)
-      })
-      .catch(({ response }) => {})
+    if (isAuthenticated) {
+      await api
+        .get<UserDetails>(`/users/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then(response => {
+          setUser(response.data)
+        })
+        .catch(() => {})
+    } else {
+      history.push('/login')
+    }
   }
 
   return (
@@ -63,15 +64,15 @@ const UserItem: FC<UserItemProps> = ({
       {user && (
         <UpdateUserModal
           open={openUpdateModal}
-          sucessDialog={() => setDialogSucess(true)}
+          successDialog={() => setDialogSuccess(true)}
           onCloseRequested={() => setOpenUpdateModal(false)}
           user={user}
         />
       )}
 
       <SucessModal
-        open={dialogSucess}
-        onCloseRequest={() => setDialogSucess(false)}
+        open={dialogSuccess}
+        onCloseRequest={() => setDialogSuccess(false)}
         addUser={() => setOpenUpdateModal(false)}
         refetch={refetch}
       />

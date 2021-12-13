@@ -23,7 +23,7 @@ import { UserDetails } from '../../types/UserGeneral'
 interface UserModalProps {
   open: boolean
   user: UserDetails
-  sucessDialog: () => void
+  successDialog: () => void
   onCloseRequested: () => void
 }
 
@@ -31,7 +31,7 @@ const UpdateUserModal: FC<UserModalProps> = ({
   open,
   onCloseRequested,
   user,
-  sucessDialog,
+  successDialog,
 }) => {
   const [field, setField] = useState(user)
   const {
@@ -182,7 +182,7 @@ const UpdateUserModal: FC<UserModalProps> = ({
           <Button
             variant="contained"
             onClick={() => {
-              sucessDialog()
+              successDialog()
               updateUser()
               onCloseRequested()
             }}

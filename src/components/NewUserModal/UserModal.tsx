@@ -23,14 +23,14 @@ import styles from './UserModal.module.scss'
 interface UserModalProps {
   open: boolean
   onCloseRequested: () => void
-  dialogSucess: (isOpen: boolean) => void
+  dialogSuccess: (isOpen: boolean) => void
   dialogError: (isOpen: boolean) => void
 }
 
 const UserModal: FC<UserModalProps> = ({
   open,
   onCloseRequested,
-  dialogSucess,
+  dialogSuccess,
   dialogError,
 }) => {
   const [field, setField] = useState<{ [x: string]: string }>({})
@@ -67,7 +67,7 @@ const UserModal: FC<UserModalProps> = ({
         })
         .then(() => {
           setField({})
-          dialogSucess(true)
+          dialogSuccess(true)
         })
         .catch(() => {
           dialogError(true)

@@ -2,17 +2,17 @@ import { Button, Modal } from '@mui/material'
 import React, { FC } from 'react'
 import { Box } from '@mui/system'
 
-import styles from './SucessModal.module.scss'
-import sucess from '../../assets/sucess.svg'
+import styles from './SuccessModal.module.scss'
+import success from '../../assets/success.svg'
 
-interface SucessProp {
+interface SuccessProp {
   open: boolean
   onCloseRequest: () => void
   addUser: () => void
   refetch: () => void
 }
 
-const SucessModal: FC<SucessProp> = ({
+const SuccessModal: FC<SuccessProp> = ({
   open,
   onCloseRequest,
   addUser,
@@ -21,7 +21,7 @@ const SucessModal: FC<SucessProp> = ({
   <Modal open={open}>
     <Box className={styles.modalBox}>
       <div className={styles.image}>
-        <img src={sucess} alt="Ícone de confirmação" />
+        <img src={success} alt="Ícone de confirmação" />
       </div>
       <div className={styles.content}>
         <h3>Sucesso!</h3>
@@ -47,4 +47,4 @@ const SucessModal: FC<SucessProp> = ({
   </Modal>
 )
 
-export default SucessModal
+export default SuccessModal
