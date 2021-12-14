@@ -14,7 +14,7 @@ import useSession from '../../hooks/useSession'
 import api from '../../apis/default'
 
 import styles from './UserItem.module.scss'
-import SuccessModal from '../SuccessModal/SuccessModal'
+import ModalDialog from '../ModalDialog/ModalDialog'
 import DeletePopupModal from '../DeleteUserPopup/DeletePopup'
 
 interface UserItemProps {
@@ -41,6 +41,7 @@ const UserItem: FC<UserItemProps> = ({
   const [user, setUser] = useState<UserDetails>()
   const [dialogSuccess, setDialogSuccess] = useState(false)
   const [deleteDialog, setDeleteDialog] = useState(false)
+  const [dialogError, setDialogError] = useState(false)
 
   async function getUser() {
     if (isAuthenticated) {
@@ -63,6 +64,7 @@ const UserItem: FC<UserItemProps> = ({
         <UpdateUserModal
           open={openUpdateModal}
           successDialog={() => setDialogSuccess(true)}
+          errorDialog={() => setDialogError(true)}
           onCloseRequested={() => setOpenUpdateModal(false)}
           user={user}
         />
@@ -75,10 +77,25 @@ const UserItem: FC<UserItemProps> = ({
         refetch={refetch}
       />
 
-      <SuccessModal
+      <ModalDialog
         open={dialogSuccess}
+        messageType="success"
+        title="Sucesso."
+        message={`O usuário ${firstName} foi atualizado com sucesso.`}
+        buttonMessage="Confirmar"
         onCloseRequest={() => setDialogSuccess(false)}
-        addUser={() => setOpenUpdateModal(false)}
+        closeFunction={() => setOpenUpdateModal(false)}
+        refetch={refetch}
+      />
+
+      <ModalDialog
+        open={dialogError}
+        messageType="error"
+        title="Erro."
+        message="Houve um erro inesperado, por favor verifique os campos e tente novamente."
+        buttonMessage="Confirmar"
+        onCloseRequest={() => setDialogError(false)}
+        closeFunction={() => {setOpenUpdateModal(false)}}
         refetch={refetch}
       />
 

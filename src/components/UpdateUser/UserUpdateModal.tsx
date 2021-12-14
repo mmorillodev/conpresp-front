@@ -24,12 +24,14 @@ interface UserModalProps {
   open: boolean
   user: UserDetails
   successDialog: () => void
+  errorDialog: () => void
   onCloseRequested: () => void
 }
 
 const UpdateUserModal: FC<UserModalProps> = ({
   open,
   onCloseRequested,
+  errorDialog,
   user,
   successDialog,
 }) => {
@@ -49,7 +51,9 @@ const UpdateUserModal: FC<UserModalProps> = ({
           successDialog()
           onCloseRequested()
         })
-        .catch(() => {})
+        .catch(() => {
+          errorDialog()
+        })
     } else {
       history.push('/login')
     }

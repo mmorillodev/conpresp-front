@@ -14,8 +14,7 @@ import usePageFetch from '../../hooks/usePageFetch'
 import styles from './UserPage.module.scss'
 import useSession from '../../hooks/useSession'
 
-import SuccessModal from '../../components/SuccessModal/SuccessModal'
-import ErrorModal from '../../components/ErrorModal/ErrorModal'
+import ModalDialog from '../../components/ModalDialog/ModalDialog'
 
 const filterFacets: FilterFacet[] = [
   {
@@ -58,16 +57,26 @@ const UserPage = () => {
 
   return (
     <div className={styles.User}>
-      <SuccessModal
+      <ModalDialog
         open={dialogSuccess}
+        messageType="success"
+        title="Sucesso."
+        message="O usuário foi adicionado com sucesso."
+        buttonMessage="Confirmar"
         onCloseRequest={() => setDialogSuccess(false)}
-        addUser={() => setAddUser(false)}
+        closeFunction={() => setAddUser(false)}
         refetch={refetch}
       />
 
-      <ErrorModal
+      <ModalDialog
         open={dialogError}
+        messageType="error"
+        title="Erro."
+        message="Houve um erro inesperado, por favor verifique os campos e tente novamente."
+        buttonMessage="Confirmar"
         onCloseRequest={() => setDialogError(false)}
+        closeFunction={() => {}}
+        refetch={refetch}
       />
 
       <Filters

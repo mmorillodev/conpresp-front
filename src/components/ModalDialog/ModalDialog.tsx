@@ -2,30 +2,37 @@ import { Button, Modal } from '@mui/material'
 import React, { FC } from 'react'
 import { Box } from '@mui/system'
 
-import styles from './SuccessModal.module.scss'
-import success from '../../assets/success.svg'
+import styles from './ModalDialog.module.scss'
 
-interface SuccessProp {
+interface DialogProp {
   open: boolean
+  messageType: string
+  title: string
+  message: string
+  buttonMessage: string
   onCloseRequest: () => void
-  addUser: () => void
+  closeFunction: () => void
   refetch: () => void
 }
 
-const SuccessModal: FC<SuccessProp> = ({
+const ModalDialog: FC<DialogProp> = ({
   open,
+  messageType,
+  title,
+  message,
+  buttonMessage,
   onCloseRequest,
-  addUser,
+  closeFunction,
   refetch,
 }) => (
   <Modal open={open}>
     <Box className={styles.modalBox}>
       <div className={styles.image}>
-        <img src={success} alt="Ícone de confirmação" />
+        <img src={`/images/${messageType}.svg`} alt="Ícone de confirmação" />
       </div>
       <div className={styles.content}>
-        <h3>Sucesso!</h3>
-        <p>A requisição foi atendida com sucesso.</p>
+        <h3>{title}</h3>
+        <p>{message}</p>
         <Button
           variant="contained"
           sx={{
@@ -35,16 +42,16 @@ const SuccessModal: FC<SuccessProp> = ({
             borderRadius: '8px',
           }}
           onClick={() => {
-            addUser()
+            closeFunction()
             refetch()
             onCloseRequest()
           }}
         >
-          Confirmar
+          {buttonMessage}
         </Button>
       </div>
     </Box>
   </Modal>
 )
 
-export default SuccessModal
+export default ModalDialog

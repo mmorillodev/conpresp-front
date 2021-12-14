@@ -2,7 +2,6 @@ import { Button, Modal } from '@mui/material'
 import React, { FC } from 'react'
 import { Box } from '@mui/system'
 import { useHistory } from 'react-router-dom'
-import warning from '../../assets/warning.svg'
 
 import styles from './DeletePopup.module.scss'
 
@@ -47,7 +46,7 @@ const DeletePopupModal: FC<DeletePopup> = ({
     <Modal open={open}>
       <Box className={styles.modalBox}>
         <div className={styles.image}>
-          <img src={warning} alt="Ícone de confirmação" />
+          <img src="/images/warning.svg" alt="Ícone de confirmação" />
         </div>
         <div className={styles.content}>
           <h3>Deseja realmente excluir?</h3>
