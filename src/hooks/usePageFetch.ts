@@ -21,7 +21,7 @@ const usePageFetch = <T>(resourceName: string) => {
     refetch()
   }, [params])
 
-  return { isLoading, data }
+  return { isLoading, data, refetch }
 }
 
 export default usePageFetch
