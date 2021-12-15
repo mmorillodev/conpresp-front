@@ -35,7 +35,14 @@ const Profile = () => {
         <KeyboardArrowDownIcon />
       </button>
       <Menu open={open} onClose={() => setOpen(false)} anchorEl={anchorEl}>
-        <MenuItem onClick={() => destroySession()}>Logout</MenuItem>
+        <MenuItem
+          onClick={() => {
+            destroySession()
+            window.location.reload()
+          }}
+        >
+          Logout
+        </MenuItem>
       </Menu>
     </span>
   )
