@@ -6,6 +6,7 @@ import Footer from './components/Footer/Footer'
 import PropertyPage from './pages/PatrimonyPage/PatrimonyPage'
 import Login from './pages/Login/Login'
 import UserPage from './pages/UserPage/UserPage'
+import PatrimonyDetailsPage from './pages/PatrimonyDetailsPage/PatrimonyDetailsPage'
 
 const queryClient = new QueryClient()
 
@@ -17,9 +18,14 @@ const App = () => {
       {location.pathname !== '/login' && <Header />}
       <main>
         <Switch>
-          <Route component={PropertyPage} path="/patrimonios" />
-          <Route component={UserPage} path="/usuarios" />
-          <Route component={Login} path="/login" />
+          <Route exact component={PropertyPage} path="/patrimonios" />
+          <Route
+            exact
+            component={PatrimonyDetailsPage}
+            path="/patrimonios/:id"
+          />
+          <Route exact component={UserPage} path="/usuarios" />
+          <Route exact component={Login} path="/login" />
         </Switch>
       </main>
       {location.pathname !== '/login' && <Footer />}
