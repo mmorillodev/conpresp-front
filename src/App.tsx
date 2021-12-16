@@ -22,7 +22,7 @@ const App = () => {
           <Route component={Login} path="/login" />
         </Switch>
       </main>
-      <Footer />
+      {location.pathname !== '/login' && <Footer />}
     </QueryClientProvider>
   )
 }
