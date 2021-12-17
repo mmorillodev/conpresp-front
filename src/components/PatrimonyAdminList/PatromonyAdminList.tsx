@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import PatrimonyAdminItem from '../PatrimonyAdminItem/PatrimonyAdminItem'
+import Paginator from '../Pagination/Pagination'
 
 import { PatrimonyGeneral } from '../../types/PatrimonyGeneral'
 
@@ -8,10 +9,11 @@ import styles from './PatrimonyAdminList.module.scss'
 
 interface PatromonyListProps {
   patrimony: PatrimonyGeneral[]
+  data: any
   refetch: () => void
 }
 
-const PatromonyAdminList: FC<PatromonyListProps> = ({ patrimony, refetch }) => (
+const PatromonyAdminList: FC<PatromonyListProps> = ({ patrimony, refetch, data }) => (
   <div className={styles.UserListContainer}>
     <div className={styles.UserHeader}>
       <h4> ID </h4>
@@ -31,7 +33,7 @@ const PatromonyAdminList: FC<PatromonyListProps> = ({ patrimony, refetch }) => (
       ))}
     </ul>
     <div className={styles.UserFooter}>
-      <h4> Itens por página </h4>
+      <Paginator count={data.totalPages} />
     </div>
   </div>
 )

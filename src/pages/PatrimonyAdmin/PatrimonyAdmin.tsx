@@ -130,6 +130,7 @@ const PatrimonyAdmin = () => {
           <PatrimonyAdminList
             patrimony={data?.data.content ?? []}
             refetch={refetch}
+            data={data?.data}
           />
         )}
       </main>
