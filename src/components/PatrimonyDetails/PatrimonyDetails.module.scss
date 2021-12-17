@@ -1,0 +1,188 @@
+.PatrimonyDetails {
+  padding: 1rem;
+  max-height: 87vh;
+  overflow-y: auto;
+
+  h4 {
+    font-weight: bold;
+    font-size: 9px;
+    line-height: 12px;
+
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+
+    color: #94a4b5;
+    margin-bottom: 2px;
+
+    padding: 0;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    margin: 0;
+
+    color: #25272f;
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 23px;
+
+    color: #696774;
+
+    padding: 0;
+    padding-bottom: 1rem;
+  }
+
+  section {
+    margin-bottom: 2rem;
+  }
+}
+
+.resolutionItem {
+  margin-bottom: 1rem;
+}
+
+.resolutionItemTitle {
+  display: block;
+  background: rgba(196, 196, 196, 0.2);
+  padding: 3px 0;
+  margin-bottom: 0.5rem;
+}
+
+.grayBgTitle {
+  display: block;
+  background: rgba(196, 196, 196, 0.2);
+  padding: 3px 0;
+  margin-bottom: 0.5rem;
+
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  color: #696774;
+}
+
+.resolutionItemDesc {
+  display: flex;
+  justify-content: space-between;
+
+  & > div {
+    flex: 1;
+
+    &:not(:last-child) {
+      margin-right: 2rem;
+    }
+  }
+}
+
+.modalBox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+
+  width: 50vw;
+  min-width: 735px;
+
+  box-shadow: 0px 12px 64px -6px rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0.5rem 1rem;
+    padding-right: 0.5rem;
+
+    border-bottom: 1px solid #dedede;
+
+    h2 {
+      color: black;
+    }
+
+    h3 {
+      color: #25272f;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 20px;
+    }
+  }
+}
+
+.patrimonyHeading {
+  display: flex;
+  margin-bottom: 52px;
+
+  img {
+    border-radius: 0.45rem;
+    margin-right: 22px;
+  }
+
+  .patrimonyName {
+    font-weight: bold;
+    font-size: 28px;
+    color: #696774;
+    margin-bottom: 12px;
+  }
+}
+
+.patrimonyHeadingDescr {
+  margin-bottom: 12px;
+}
+
+.patrimonyHeadingMetadata {
+  display: flex;
+  margin-bottom: 12px;
+
+  .item:not(:last-child) {
+    margin-right: 12px;
+  }
+}
+
+.generalData {
+  & > div {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.locationData {
+  .grayBgTitle {
+    margin-bottom: 1rem;
+  }
+}
+
+.address {
+  margin-bottom: 0.5rem;
+}
+
+.addressItens {
+  display: flex;
+
+  div {
+    flex: 1;
+  }
+}
+
+.technicalItens {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.descriptionData {
+  div {
+    margin-bottom: 1rem;
+  }
+}
