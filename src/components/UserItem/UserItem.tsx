@@ -95,7 +95,9 @@ const UserItem: FC<UserItemProps> = ({
         message="Houve um erro inesperado, por favor verifique os campos e tente novamente."
         buttonMessage="Confirmar"
         onCloseRequest={() => setDialogError(false)}
-        closeFunction={() => {setOpenUpdateModal(false)}}
+        closeFunction={() => {
+          setOpenUpdateModal(false)
+        }}
         refetch={refetch}
       />
 

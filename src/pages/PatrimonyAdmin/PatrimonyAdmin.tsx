@@ -1,18 +1,19 @@
 import { useState } from 'react'
-
+import { useHistory } from 'react-router-dom'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import Button from '@mui/material/Button'
+import AddIcon from '@mui/icons-material/Add'
 
 import { PageableResponse } from '../../types/PageableResponse'
 import { PatrimonyGeneral } from '../../types/PatrimonyGeneral'
 
-import PatrimonyList from '../../components/PatrimonyList/PatrimonyList'
+import PatrimonyAdminList from '../../components/PatrimonyAdminList/PatromonyAdminList'
+
 import Filters, { FilterFacet } from '../../components/PatrimonyFilters/Filters'
-import Paginator from '../../components/Pagination/Pagination'
 
 import usePageFetch from '../../hooks/usePageFetch'
 
-import styles from './PatrimonyPage.module.scss'
+import styles from './PatrimonyAdmin.module.scss'
 
 const filterFacets: FilterFacet[] = [
   {
@@ -69,53 +70,71 @@ const filterFacets: FilterFacet[] = [
   },
 ]
 
-const PropertyPage = () => {
+const PatrimonyAdmin = () => {
   const [filterOpen, setFilterOpen] = useState(false)
-
-  const { isLoading, data } =
+  const [addPatrimony, setAddPatrimony] = useState(false)
+  const { isLoading, data, refetch } =
     usePageFetch<PageableResponse<PatrimonyGeneral>>('patrimony')
 
   return (
-    <>
+    <div className={styles.patrimony}>
       <Filters
         open={filterOpen}
         onCloseRequested={() => setFilterOpen(false)}
         facets={filterFacets}
       />
+
       <div className={styles.pageBanner} />
-      <section className={styles.mainContent}>
+      <main className={styles.mainContent}>
         <h1>Patrimônios</h1>
         <span className={styles.pageDescr}>
-          Pharetra aenean tellus mauris, viverra tortor morbi sit. Viverra nunc
-          neque dignissim vulputate. Eu hendrerit et tincidunt hendrerit
-          malesuada felis, felis sem purus. Placerat pharetra pretium massa
-          viverra. Blandit commodo ultrices feugiat tellus.
+          Página dedicada para gerenciar os patrimônios do sistema. Aqui você
+          pode adicionar, atualizar, excluir e consultar todos os patrimônios
+          cadastrados.
         </span>
         <hr />
-        <Button
-          variant="outlined"
-          sx={{
-            borderRadius: '2rem',
-            marginBottom: '2rem',
-            marginLeft: 'auto',
-          }}
-          onClick={() => setFilterOpen(true)}
-          startIcon={<FilterListIcon sx={{ color: '#1976d2' }} />}
-        >
-          Filtrar
-        </Button>
+        <div className={styles.button}>
+          <Button
+            variant="outlined"
+            sx={{
+              borderRadius: '2rem',
+              marginTop: '1rem',
+              marginBottom: '2rem',
+            }}
+            onClick={() => setFilterOpen(true)}
+            startIcon={<FilterListIcon sx={{ color: '#1976d2' }} />}
+          >
+            Filtrar
+          </Button>
+          <Button
+            variant="contained"
+            sx={{
+              borderRadius: '.5rem',
+              marginTop: '1rem',
+              marginBottom: '2rem',
+              marginLeft: 'auto',
+              background: '#1DA6D1',
+            }}
+            startIcon={<AddIcon sx={{ color: 'white' }} />}
+            onClick={() => {
+              setAddPatrimony(true)
+            }}
+          >
+            Novo Patrimônio
+          </Button>
+        </div>
+
         {isLoading ? (
-          <span>Carregando...</span>
+          <span> Carregando...</span>
         ) : (
-          <PatrimonyList patrimonies={data?.data.content ?? []} />
+          <PatrimonyAdminList
+            patrimony={data?.data.content ?? []}
+            refetch={refetch}
+          />
         )}
-        <br />
-        {data?.data.totalPages && data.data.totalPages > 1 && (
-          <Paginator count={data?.data.totalPages} />
-        )}
-      </section>
-    </>
+      </main>
+    </div>
   )
 }
 
-export default PropertyPage
+export default PatrimonyAdmin

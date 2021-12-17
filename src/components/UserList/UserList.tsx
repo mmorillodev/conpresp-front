@@ -1,8 +1,8 @@
-import { MenuItem, Select } from '@mui/material'
 import { FC } from 'react'
 
 import { UserGeneral } from '../../types/UserGeneral'
 import UserItem from '../UserItem/UserItem'
+import Paginator from '../Pagination/Pagination'
 
 import styles from './UserList.module.scss'
 
@@ -12,11 +12,7 @@ interface UserListProps {
   refetch: () => void
 }
 
-const UserList: FC<UserListProps> = ({
-  users,
-  data,
-  refetch,
-}) => (
+const UserList: FC<UserListProps> = ({ users, data, refetch }) => (
   <div className={styles.UserListContainer}>
     <div className={styles.UserHeader}>
       <h4> ID </h4>
@@ -28,26 +24,11 @@ const UserList: FC<UserListProps> = ({
     </div>
     <ul className={styles.UserList}>
       {users.map(user => (
-        <UserItem
-          key={user.id}
-          user={user}
-          refetch={refetch}
-        />
+        <UserItem key={user.id} user={user} refetch={refetch} />
       ))}
     </ul>
     <div className={styles.UserFooter}>
-      <h4> Itens por página </h4>
-      <Select
-        className={styles.Select}
-        labelId="demo-simple-select-autowidth-label"
-        id="demo-simple-select-autowidth"
-        value={data.size}
-        label="Age"
-      >
-        <MenuItem value={data.size}>{data.size}</MenuItem>
-        <MenuItem value={data.size + 10}>{data.size + 10}</MenuItem>
-        <MenuItem value={data.size + 20}>{data.size + 20}</MenuItem>
-      </Select>
+      <Paginator count={data.totalPages} />
     </div>
   </div>
 )
