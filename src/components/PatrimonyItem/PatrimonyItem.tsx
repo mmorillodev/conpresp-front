@@ -1,9 +1,6 @@
 import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Modal } from '@mui/material'
-import { Box } from '@mui/system'
-
 import PatrimonyDetails from '../PatrimonyDetails/PatrimonyDetails'
 import { PatrimonyGeneral } from '../../types/PatrimonyGeneral'
 import Tag, { TagLevel } from '../Tag/Tag'
