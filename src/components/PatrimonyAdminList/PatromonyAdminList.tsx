@@ -13,9 +13,13 @@ interface PatromonyListProps {
   refetch: () => void
 }
 
-const PatromonyAdminList: FC<PatromonyListProps> = ({ patrimony, refetch, data }) => (
-  <div className={styles.UserListContainer}>
-    <div className={styles.UserHeader}>
+const PatromonyAdminList: FC<PatromonyListProps> = ({
+  patrimony,
+  refetch,
+  data,
+}) => (
+  <div className={styles.PatrimonyListContainer}>
+    <div className={styles.PatrimonyHeader}>
       <h4> ID </h4>
       <h4> Resolução </h4>
       <h4> Denominação </h4>
@@ -23,16 +27,17 @@ const PatromonyAdminList: FC<PatromonyListProps> = ({ patrimony, refetch, data }
       <h4> Grau de Alteração </h4>
       <h4> Ações </h4>
     </div>
-    <ul className={styles.UserList}>
-      {patrimony.map(patrimonyItem => (
+    <ul className={styles.PatrimonyList}>
+      {patrimony.map((patrimonyItem, index) => (
         <PatrimonyAdminItem
           key={patrimonyItem.id}
+          index={index + 1}
           patrimony={patrimonyItem}
           refetch={refetch}
         />
       ))}
     </ul>
-    <div className={styles.UserFooter}>
+    <div className={styles.PatrimonyFooter}>
       <Paginator count={data.totalPages} />
     </div>
   </div>

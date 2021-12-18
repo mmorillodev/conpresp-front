@@ -1,40 +1,32 @@
 .deleteDialog {
-    margin: auto;
-    width: 550px;
-    height: 700px;
+  margin: auto;
+  width: 550px;
+  height: 700px;
+}
+
+.pageBanner {
+  width: 100%;
+  height: 190px;
+  background-color: #b6b6be;
+}
+
+.mainContent {
+  padding: 2rem 4rem;
+
+  h1 {
+    font-size: 3rem;
   }
-  
-  .pageBanner {
-    width: 100%;
-    height: 190px;
-    background-color: #b6b6be;
+
+  .pageDescr {
+    display: block;
+    padding: 2rem 0;
+    width: 50%;
+    text-align: justify;
+    line-height: 1.5rem;
+    color: #9b99a6;
   }
-  
-  .mainContent {
-    padding: 2rem 4rem;
-  
-    h1 {
-      font-size: 3rem;
-    }
-  
-    .pageDescr {
-      display: block;
-      padding: 2rem 0;
-      width: 50%;
-      text-align: justify;
-      line-height: 1.5rem;
-      color: #9b99a6;
-    }
-  
-    .button {
-      display: flex;
-  
-    }
-  
-    h4 {
-      margin-top: 15px;
-      margin-right: 5px;
-      font-weight: normal;
-    }
+
+  .button {
+    display: flex;
   }
-  
+}

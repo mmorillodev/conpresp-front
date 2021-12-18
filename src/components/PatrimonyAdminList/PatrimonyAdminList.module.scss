@@ -1,34 +1,38 @@
-.UserList {
-    background-color: #ffffff;
-    margin-bottom: 3px;
+.PatrimonyList {
+  background-color: #ffffff;
 }
 
-.UserHeader {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(8vw, 10fr));
-    gap: 30px;
-    margin-bottom: 3px;
+.PatrimonyHeader {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8vw, 10fr));
+  gap: 30px;
 
-    padding: 15px;
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-    background-color: #fafafa;
-    filter: drop-shadow(0px 0px 13px rgba(67, 86, 108, 0.22));
-    
+  padding: 1rem 2rem;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  background-color: #fafafa;
+  border-bottom: 1px solid #b5b9c9;
+
+  h4 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 160%;
+
+    color: #3d4044;
   }
+}
 
-  .UserFooter {
-    right: 10px;
+.PatrimonyFooter {
+  right: 10px;
 
-    padding: 15px;
-    border-bottom-left-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
-    background-color: #fafafa;
-    filter: drop-shadow(0px 0px 13px rgba(67, 86, 108, 0.22));
+  padding: 15px;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+  background-color: #fafafa;
+  border-top: 1px solid #b5b9c9;
 
-    .Select {
-        margin-right: 50%;
-    }
-
+  .Select {
+    margin-right: 50%;
   }
-
+}

@@ -1,7 +1,6 @@
+import { useState } from 'react'
 import type { FC } from 'react'
 import { Link } from 'react-router-dom'
-
-import React, { useState } from 'react'
 
 import IconButton from '@mui/material/IconButton'
 import BorderColorIcon from '@mui/icons-material/BorderColor'
@@ -14,7 +13,8 @@ import styles from './PatrimonyAdminItem.module.scss'
 import DeletePopupModal from '../DeleteUserPopup/DeletePopup'
 import PatrimonyDetails from '../PatrimonyDetails/PatrimonyDetails'
 
-interface UserItemProps {
+interface PatrimonyItemProps {
+  index: number
   patrimony: PatrimonyGeneral
   refetch: () => void
 }
@@ -39,7 +39,8 @@ const alterationLevelTag: { [key in PatrimonyAlterationLevel]: TagLevel } = {
   descaracterizado: 'danger',
 }
 
-const UserItem: FC<UserItemProps> = ({
+const PatrimonyItem: FC<PatrimonyItemProps> = ({
+  index,
   patrimony: {
     id,
     conservationLevel,
@@ -67,15 +68,17 @@ const UserItem: FC<UserItemProps> = ({
         refetch={refetch}
       />
       <div className={styles.ButtonEffect}>
-        <li className={styles.UserItem}>
-          <h4> </h4>
-          <h4> {
-                resolutions.find(
-                  resolution =>
-                    resolution.institution.toLowerCase() === 'conpresp'
-                )?.resolution
-              } </h4>
-          <h4> {denomination} </h4>
+        <li className={styles.PatrimonyItem}>
+          <p>{index}</p>
+          <p>
+            {
+              resolutions.find(
+                resolution =>
+                  resolution.institution.toLowerCase() === 'conpresp'
+              )?.resolution
+            }{' '}
+          </p>
+          <p> {denomination} </p>
           <Link
             className={styles.tag}
             to={`/patrimonios-admin?conservationLevel=${conservationLevel}`}
@@ -95,7 +98,10 @@ const UserItem: FC<UserItemProps> = ({
             />
           </Link>
           <div>
-            <IconButton onClick={() => setOpen(true)} className={styles.IconButton}>
+            <IconButton
+              onClick={() => setOpen(true)}
+              className={styles.IconButton}
+            >
               <VisibilityIcon sx={{ color: '#1976d2' }} />
             </IconButton>
             <IconButton className={styles.IconButton}>
@@ -112,4 +118,4 @@ const UserItem: FC<UserItemProps> = ({
   )
 }
 
-export default UserItem
+export default PatrimonyItem
