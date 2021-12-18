@@ -40,10 +40,12 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
 
   const getImagePairs = (arr: Graphic[]): Array<Array<Graphic>> => {
     const initial: Array<Array<Graphic>> = []
-    return arr.reduce((result, value, index, array) => {
-      if (index % 2 === 0) result.push(array.slice(index, index + 2))
-      return result
-    }, initial)
+    return arr
+      .filter(image => image.image > ' ')
+      .reduce((result, value, index, array) => {
+        if (index % 2 === 0) result.push(array.slice(index, index + 2))
+        return result
+      }, initial)
   }
 
   if (isLoading) return null
