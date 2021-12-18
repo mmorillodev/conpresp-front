@@ -16,6 +16,7 @@ import api from '../../apis/default'
 import styles from './UserItem.module.scss'
 import ModalDialog from '../ModalDialog/ModalDialog'
 import DeletePopupModal from '../DeleteUserPopup/DeletePopup'
+import { types } from 'util'
 
 interface UserItemProps {
   index: number
@@ -36,7 +37,7 @@ const UserItem: FC<UserItemProps> = ({
   refetch,
 }) => {
   const {
-    session: { token, isAuthenticated },
+    session: { type, token, isAuthenticated },
   } = useSession()
   const history = useHistory()
   const [openUpdateModal, setOpenUpdateModal] = useState(false)
@@ -49,7 +50,7 @@ const UserItem: FC<UserItemProps> = ({
     if (isAuthenticated && profile !== 'COMMON') {
       await api
         .get<UserDetails>(`/users/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `${type} ${token}` },
         })
         .then(response => {
           setUser(response.data)

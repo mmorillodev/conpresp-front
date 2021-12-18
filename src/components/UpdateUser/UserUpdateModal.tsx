@@ -37,7 +37,7 @@ const UpdateUserModal: FC<UserModalProps> = ({
 }) => {
   const [field, setField] = useState(user)
   const {
-    session: { token, isAuthenticated, profile },
+    session: { type, token, isAuthenticated, profile },
   } = useSession()
   const history = useHistory()
 
@@ -45,7 +45,7 @@ const UpdateUserModal: FC<UserModalProps> = ({
     if (isAuthenticated && profile !== 'COMMON') {
       await api
         .put(`/users/${user.id}`, field, {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `${type} ${token}` },
         })
         .then(() => {
           successDialog()
