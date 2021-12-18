@@ -10,10 +10,11 @@ import {
 } from '@mui/material'
 import { Box } from '@mui/system'
 import CloseIcon from '@mui/icons-material/Close'
+import Carousel from 'react-material-ui-carousel'
 
 import Tag, { TagLevel } from '../Tag/Tag'
 import usePageFetch from '../../hooks/usePageFetch'
-import { PatrimonyDetails } from '../../types/PatrimonyDetails'
+import { Graphic, PatrimonyDetails } from '../../types/PatrimonyDetails'
 
 import styles from './PatrimonyDetails.module.scss'
 
@@ -44,9 +45,17 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
     `patrimony/${id}`
   )
 
-  if (isLoading) return <p>Carregando...</p>
+  const getImagePairs = (arr: Graphic[]): Array<Array<Graphic>> => {
+    const initial: Array<Array<Graphic>> = []
+    return arr.reduce((result, value, index, array) => {
+      if (index % 2 === 0) result.push(array.slice(index, index + 2))
+      return result
+    }, initial)
+  }
 
-  if (error || !data) return <p>Erro!</p>
+  if (isLoading) return null
+
+  if (error || !data) return null
 
   return (
     <Modal open={open}>
@@ -252,30 +261,41 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
           </section>
           <section>
             <h3>Documentação Gráfica</h3>
-            <ImageList cols={2} rowHeight={121} variant="quilted">
-              {data.data.graphic.map(image => (
-                <ImageListItem key={image.imageName} cols={1} rows={1}>
-                  <img
-                    src={`data:image/png;base64,${image.image}`}
-                    alt="Documentação Gráfica"
-                  />
-                </ImageListItem>
-              ))}
-            </ImageList>
+            {data.data.graphic.length > 0 && (
+              <Carousel animation="slide">
+                {getImagePairs(data.data.graphic).map(pair => (
+                  <div className={styles.imageCarouselPair}>
+                    {pair.map(image => (
+                      <img
+                        src={`data:image/png;base64,${image.image}`}
+                        alt={image.imageName}
+                        loading="lazy"
+                      />
+                    ))}
+                  </div>
+                ))}
+              </Carousel>
+            )}
           </section>
           <section>
             <h3>Documentação fotográfica</h3>
-            <ImageList cols={2} rowHeight={365} variant="standard">
-              {data.data.photographicDocumentation.map(image => (
-                <ImageListItem key={image.imageName} cols={1} rows={1}>
-                  <img
-                    src={`data:image/png;base64,${image.image}`}
-                    alt={image.imageName}
-                    loading="lazy"
-                  />
-                </ImageListItem>
-              ))}
-            </ImageList>
+            {data.data.photographicDocumentation.length > 0 && (
+              <Carousel animation="slide">
+                {getImagePairs(data.data.photographicDocumentation).map(
+                  pair => (
+                    <div className={styles.imageCarouselPair}>
+                      {pair.map(image => (
+                        <img
+                          src={`data:image/png;base64,${image.image}`}
+                          alt={image.imageName}
+                          loading="lazy"
+                        />
+                      ))}
+                    </div>
+                  )
+                )}
+              </Carousel>
+            )}
           </section>
         </div>
       </Box>

@@ -1,5 +1,5 @@
 .PatrimonyDetails {
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   max-height: 87vh;
   overflow-y: auto;
 
@@ -190,5 +190,15 @@
 .descriptionData {
   div {
     margin-bottom: 1rem;
+  }
+}
+
+.imageCarouselPair {
+  display: flex;
+  justify-content: space-between;
+
+  img {
+    aspect-ratio: 1/1;
+    width: 325px;
   }
 }
