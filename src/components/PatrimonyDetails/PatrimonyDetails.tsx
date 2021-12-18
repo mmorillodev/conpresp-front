@@ -42,7 +42,7 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
     const initial: Array<Array<Graphic>> = []
     return arr
       .filter(image => image.image > ' ')
-      .reduce((result, value, index, array) => {
+      .reduce((result, _, index, array) => {
         if (index % 2 === 0) result.push(array.slice(index, index + 2))
         return result
       }, initial)
