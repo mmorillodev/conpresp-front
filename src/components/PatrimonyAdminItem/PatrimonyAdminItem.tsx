@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import React, { useState } from 'react'
 
@@ -10,8 +10,6 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 import Tag, { TagLevel } from '../Tag/Tag'
 import { PatrimonyGeneral } from '../../types/PatrimonyGeneral'
 
-import useSession from '../../hooks/useSession'
-import api from '../../apis/default'
 
 import styles from './PatrimonyAdminItem.module.scss'
 import DeletePopupModal from '../DeleteUserPopup/DeletePopup'
@@ -48,15 +46,7 @@ const UserItem: FC<UserItemProps> = ({
   },
   refetch,
 }) => {
-  const {
-    session: { isAuthenticated },
-  } = useSession()
-  const history = useHistory()
   const [deleteDialog, setDeleteDialog] = useState(false)
-
-  if (!isAuthenticated) {
-    history.push('/login')
-  }
 
   return (
     <div>

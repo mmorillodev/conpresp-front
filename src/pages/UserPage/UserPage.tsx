@@ -42,7 +42,7 @@ const filterFacets: FilterFacet[] = [
 
 const UserPage = () => {
   const {
-    session: { isAuthenticated },
+    session: { isAuthenticated, profile },
   } = useSession()
   const history = useHistory()
   const [filterOpen, setFilterOpen] = useState(false)
@@ -52,7 +52,7 @@ const UserPage = () => {
   const { isLoading, data, refetch } =
     usePageFetch<PageableResponse<UserGeneral>>('users')
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated || profile !== 'ADMINISTRATOR') {
     history.push('/login')
   }
 

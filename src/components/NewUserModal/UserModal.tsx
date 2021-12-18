@@ -35,7 +35,7 @@ const UserModal: FC<UserModalProps> = ({
 }) => {
   const [field, setField] = useState<{ [x: string]: string }>({})
   const {
-    session: { token, isAuthenticated },
+    session: { token, isAuthenticated, profile },
   } = useSession()
   const history = useHistory()
 
@@ -60,7 +60,7 @@ const UserModal: FC<UserModalProps> = ({
   )
 
   async function userPost() {
-    if (isAuthenticated) {
+    if (isAuthenticated && profile !== 'COMMON') {
       await api
         .post('/users', field, {
           headers: { Authorization: `Bearer ${token}` },

@@ -17,7 +17,7 @@ const Login = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false)
   const {
     createSession,
-    session: { isAuthenticated },
+    session: { isAuthenticated, profile },
     isLoading,
     error,
   } = useSession()
@@ -33,7 +33,11 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      history.push('/patrimonios')
+      if (profile !== 'COMMON') {
+        history.push('/patrimonios-admin')
+      } else {
+        history.push('/patrimonios')
+      }
     }
   }, [isAuthenticated, history])
 

@@ -24,12 +24,12 @@ const DeletePopupModal: FC<DeletePopup> = ({
   endpoint,
 }) => {
   const {
-    session: { token, isAuthenticated },
+    session: { token, isAuthenticated, profile },
   } = useSession()
   const history = useHistory()
 
   async function deleteUser() {
-    if (isAuthenticated) {
+    if (isAuthenticated && profile !== 'COMMON') {
       await api
         .delete(`/${endpoint}/${id}`, {
           headers: { Authorization: `Bearer ${token}` },

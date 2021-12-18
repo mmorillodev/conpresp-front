@@ -77,14 +77,14 @@ const filterFacets: FilterFacet[] = [
 
 const PatrimonyAdmin = () => {
   const {
-    session: { isAuthenticated },
+    session: { isAuthenticated, profile },
   } = useSession()
   const history = useHistory()
   const [filterOpen, setFilterOpen] = useState(false)
   const { isLoading, data, refetch } =
     usePageFetch<PageableResponse<PatrimonyGeneral>>('patrimony')
 
-    if (!isAuthenticated) {
+    if (!isAuthenticated || profile === 'COMMON') {
       history.push('/login')
     }
 

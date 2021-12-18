@@ -11,6 +11,7 @@ interface Session {
   isAuthenticated: boolean
   token: string
   type: string
+  profile: string
   createdAt?: string
 }
 
@@ -21,6 +22,7 @@ const useSession = () => {
       isAuthenticated: false,
       token: '',
       type: '',
+      profile: '',
     }
   )
   const [error, setError] = useState<undefined | object>(undefined)
@@ -32,12 +34,13 @@ const useSession = () => {
 
       return api
         .post<AuthResponse>('/auth', { email, password })
-        .then(({ data: { token, type } }) => {
+        .then(({ data: { token, type, profile } }) => {
           setSession({
             isAuthenticated: true,
             token,
             type,
             createdAt: DateTime.now().toISO(),
+            profile,
           })
         })
         .catch((e: AxiosError<RequestError>) => {

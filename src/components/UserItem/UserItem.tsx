@@ -44,7 +44,7 @@ const UserItem: FC<UserItemProps> = ({
   const [dialogError, setDialogError] = useState(false)
 
   async function getUser() {
-    if (isAuthenticated) {
+    if (isAuthenticated && profile !== 'COMMON') {
       await api
         .get<UserDetails>(`/users/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
