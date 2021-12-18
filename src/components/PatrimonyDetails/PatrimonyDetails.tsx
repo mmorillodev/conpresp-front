@@ -80,7 +80,7 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
                 </div>
                 <div className={styles.item}>
                   <h4>Grupo</h4>
-                  <p>Equipe UAM</p>
+                  <p>{data.data.userGroup}</p>
                 </div>
               </div>
               <Tag
@@ -176,8 +176,17 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
                 <p>{data.data.construction.constructor}</p>
               </div>
               <div>
-                <h4>Data de Construção (aproximada)</h4>
-                <p>{data.data.construction.constructionYear}</p>
+                {data.data.construction.approximateDate ? (
+                  <div>
+                    <h4>Data de Construção (aproximada)</h4>
+                    <p>{data.data.construction.constructionYear}</p>{' '}
+                  </div>
+                ) : (
+                  <div>
+                    <h4>Data de Construção</h4>
+                    <p>{data.data.construction.constructionYear}</p>{' '}
+                  </div>
+                )}
               </div>
               <div>
                 <h4>Estilo Arquitetônico</h4>
@@ -193,7 +202,7 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
               </div>
               <div>
                 <h4>Área do lote (m2)</h4>
-                <p>{data.data.construction.constructedArea}</p>
+                <p>{data.data.construction.areaLot}</p>
               </div>
               <div>
                 <h4>área construída(m2)</h4>
@@ -213,11 +222,11 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
               </div>
             </div>
             <div>
-              <h4>COMENTÁRIO DO GRAU DE ALTERAÇÃ0</h4>
+              <h4>Comentário do Grau de Alteração</h4>
               <p>{data.data.construction.modificationLevelComment}</p>
             </div>
             <div>
-              <h4>COMENTÁRIO DO estado de Conservação</h4>
+              <h4>Comentário do Estado de Conservação</h4>
               <p>{data.data.construction.conservationLevelComment}</p>
             </div>
             <div>

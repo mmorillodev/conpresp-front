@@ -16,6 +16,7 @@ export interface PatrimonyDetails {
   createdAt: string
   updatedAt: string
   updatedBy: string
+  userGroup: string
 }
 
 export interface AddressLot {
@@ -40,6 +41,7 @@ export interface Construction {
   constructiveTechnique: string
   floorQuantity: number
   constructedArea: number
+  areaLot: number
   heritageLevel: string
   modificationLevel: string
   modificationLevelComment: string
