@@ -38,11 +38,13 @@ const PatrimonyItem: FC<PatrimonyItemProps> = ({
 
   return (
     <>
-      <PatrimonyDetails
-        id={id}
-        open={open}
-        onCloseRequested={() => setOpen(false)}
-      />
+      {open && (
+        <PatrimonyDetails
+          id={id}
+          open={open}
+          onCloseRequested={() => setOpen(false)}
+        />
+      )}
       <li className={styles.PatrimonyItem}>
         <Link
           className={styles.tag}

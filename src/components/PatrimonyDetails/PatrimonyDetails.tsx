@@ -1,13 +1,6 @@
 import { FC } from 'react'
 
-import {
-  Card,
-  IconButton,
-  ImageList,
-  ImageListItem,
-  Modal,
-  Slide,
-} from '@mui/material'
+import { IconButton, Modal } from '@mui/material'
 import { Box } from '@mui/system'
 import CloseIcon from '@mui/icons-material/Close'
 import Carousel from 'react-material-ui-carousel'
