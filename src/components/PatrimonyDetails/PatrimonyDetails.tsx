@@ -74,19 +74,21 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
               width="150px"
             />
             <div className={styles.patrimonyHeadingDescr}>
-              <h2 className={styles.patrimonyName}>{data.data.denomination}</h2>
+              <h2 className={styles.patrimonyName}>
+                {data.data.denomination || '--'}
+              </h2>
               <div className={styles.patrimonyHeadingMetadata}>
                 <div className={styles.item}>
                   <h4>Responsável pelo preenchimento</h4>
-                  <p>{data.data.createdBy}</p>
+                  <p>{data.data.createdBy || '--'}</p>
                 </div>
                 <div className={styles.item}>
                   <h4>Grupo</h4>
-                  <p>{data.data.userGroup}</p>
+                  <p>{data.data.userGroup || '--'}</p>
                 </div>
               </div>
               <Tag
-                text={data.data.construction.modificationLevel ?? ''}
+                text={data.data.construction.modificationLevel ?? '--'}
                 level={
                   tagLevelDict[
                     data.data.construction.modificationLevel.toLowerCase() ?? ''
@@ -100,27 +102,27 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
             <div>
               <div>
                 <h4>Item na resolução</h4>
-                <p>{data.data.resolutionItem}</p>
+                <p>{data.data.resolutionItem ?? '--'}</p>
               </div>
               <div>
                 <h4>Denominação</h4>
-                <p>{data.data.denomination}</p>
+                <p>{data.data.denomination ?? '--'}</p>
               </div>
               <div>
                 <h4>Classificação</h4>
-                <p>{data.data.classification}</p>
+                <p>{data.data.classification ?? '--'}</p>
               </div>
               <div>
                 <h4>Propriedade</h4>
-                <p>{data.data.type}</p>
+                <p>{data.data.type ?? '--'}</p>
               </div>
               <div>
                 <h4>Uso atual</h4>
-                <p>{data.data.currentUsage}</p>
+                <p>{data.data.currentUsage ?? '--'}</p>
               </div>
               <div>
                 <h4>Uso original</h4>
-                <p>{data.data.originalUsage}</p>
+                <p>{data.data.originalUsage ?? '--'}</p>
               </div>
             </div>
           </section>
@@ -149,20 +151,20 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
             <div className={styles.grayBgTitle}>Título</div>
             <div className={styles.address}>
               <h4>Endereço</h4>
-              <p>{data.data.addressLot.address}</p>
+              <p>{data.data.addressLot.address ?? '--'}</p>
             </div>
             <div className={styles.addressItens}>
               <div>
                 <h4>Setor</h4>
-                <p>{data.data.addressLot.sector}</p>
+                <p>{data.data.addressLot.sector ?? '--'}</p>
               </div>
               <div>
                 <h4>Quadra</h4>
-                <p>{data.data.addressLot.block}</p>
+                <p>{data.data.addressLot.block ?? '--'}</p>
               </div>
               <div>
                 <h4>Lote</h4>
-                <p>{data.data.addressLot.lot}</p>
+                <p>{data.data.addressLot.lot ?? '--'}</p>
               </div>
             </div>
           </section>
@@ -171,96 +173,96 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
             <div className={styles.technicalItens}>
               <div>
                 <h4>Autor do projeto original</h4>
-                <p>{data.data.construction.author}</p>
+                <p>{data.data.construction.author || '--'}</p>
               </div>
               <div>
                 <h4>Construtor</h4>
-                <p>{data.data.construction.constructor}</p>
+                <p>{data.data.construction.constructor || '--'}</p>
               </div>
               <div>
                 {data.data.construction.approximateDate ? (
                   <div>
                     <h4>Data de Construção (aproximada)</h4>
-                    <p>{data.data.construction.constructionYear}</p>{' '}
+                    <p>{data.data.construction.constructionYear || '--'}</p>
                   </div>
                 ) : (
                   <div>
                     <h4>Data de Construção</h4>
-                    <p>{data.data.construction.constructionYear}</p>{' '}
+                    <p>{data.data.construction.constructionYear || '--'}</p>
                   </div>
                 )}
               </div>
               <div>
                 <h4>Estilo Arquitetônico</h4>
-                <p>{data.data.construction.architecturalStyle}</p>
+                <p>{data.data.construction.architecturalStyle || '--'}</p>
               </div>
               <div>
                 <h4>Técnica Construtiva</h4>
-                <p>{data.data.construction.constructiveTechnique}</p>
+                <p>{data.data.construction.constructiveTechnique || '--'}</p>
               </div>
               <div>
                 <h4>Número de Pavimentos</h4>
-                <p>{data.data.construction.floorQuantity}</p>
+                <p>{data.data.construction.floorQuantity || '--'}</p>
               </div>
               <div>
                 <h4>Área do lote (m2)</h4>
-                <p>{data.data.construction.areaLot}</p>
+                <p>{data.data.construction.areaLot || '--'}</p>
               </div>
               <div>
                 <h4>área construída(m2)</h4>
-                <p>{data.data.construction.constructedArea}</p>
+                <p>{data.data.construction.constructedArea || '--'}</p>
               </div>
               <div>
                 <h4>Grau de tombamento</h4>
-                <p>{data.data.construction.heritageLevel}</p>
+                <p>{data.data.construction.heritageLevel || '--'}</p>
               </div>
               <div>
                 <h4>Grau de alteração</h4>
-                <p>{data.data.construction.modificationLevel}</p>
+                <p>{data.data.construction.modificationLevel || '--'}</p>
               </div>
               <div>
                 <h4>Estado de conservação</h4>
-                <p>{data.data.construction.conservationLevel}</p>
+                <p>{data.data.construction.conservationLevel || '--'}</p>
               </div>
             </div>
             <div>
               <h4>Comentário do Grau de Alteração</h4>
-              <p>{data.data.construction.modificationLevelComment}</p>
+              <p>{data.data.construction.modificationLevelComment || '--'}</p>
             </div>
             <div>
               <h4>Comentário do Estado de Conservação</h4>
-              <p>{data.data.construction.conservationLevelComment}</p>
+              <p>{data.data.construction.conservationLevelComment || '--'}</p>
             </div>
             <div>
               <h4>Observações (pavimentos)</h4>
-              <p>{data.data.construction.floorObservation}</p>
+              <p>{data.data.construction.floorObservation || '--'}</p>
             </div>
           </section>
           <section className={styles.descriptionData}>
             <h3>Descrição</h3>
             <div>
               <h4>dados históricos</h4>
-              <p>{data.data.description.historicalData}</p>
+              <p>{data.data.description.historicalData || '--'}</p>
             </div>
             <div>
               <h4>dados arquitetônicos</h4>
-              <p>{data.data.description.architecturalData}</p>
+              <p>{data.data.description.architecturalData || '--'}</p>
             </div>
             <div>
               <h4>dados de ambiência</h4>
-              <p>{data.data.description.ambienceData}</p>
+              <p>{data.data.description.ambienceData || '--'}</p>
             </div>
             <div>
               <h4>fontes bibliográficas</h4>
-              <p>{data.data.description.bibliographicSource}</p>
+              <p>{data.data.description.bibliographicSource || '--'}</p>
             </div>
             <div>
               <h4>outras informações</h4>
-              <p>{data.data.description.otherInfo}</p>
+              <p>{data.data.description.otherInfo || '--'}</p>
             </div>
             <div>
               <h4>obervações</h4>
-              <p>{data.data.description.observation}</p>
+              <p>{data.data.description.observation || '--'}</p>
             </div>
           </section>
           <section>
