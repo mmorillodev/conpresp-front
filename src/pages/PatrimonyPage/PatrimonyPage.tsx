@@ -16,7 +16,7 @@ import styles from './PatrimonyPage.module.scss'
 
 const filterFacets: FilterFacet[] = [
   {
-    label: 'Resolução Conpresp',
+    label: 'Resolução',
     name: 'resolution',
   },
   {

@@ -18,6 +18,7 @@ import ModalDialog from '../ModalDialog/ModalDialog'
 import DeletePopupModal from '../DeleteUserPopup/DeletePopup'
 
 interface UserItemProps {
+  index: number
   user: UserGeneral
   refetch: () => void
 }
@@ -30,6 +31,7 @@ const tagLevelDict: { [key in PatrimonyConservationLevel]: TagLevel } = {
 }
 
 const UserItem: FC<UserItemProps> = ({
+  index,
   user: { id, firstName, lastName, email, profile, status },
   refetch,
 }) => {
@@ -104,10 +106,10 @@ const UserItem: FC<UserItemProps> = ({
 
       <div className={styles.ButtonEffect}>
         <li className={styles.UserItem}>
-          <h4> </h4>
-          <h4> {`${firstName} ${lastName}`} </h4>
-          <h4> {email} </h4>
-          <h4> {profile} </h4>
+          <p> {index} </p>
+          <p> {`${firstName} ${lastName}`} </p>
+          <p> {email} </p>
+          <p> {profile} </p>
           <Link className={styles.tag} to={`/usuarios?status=${status}`}>
             <Tag text={status} level={tagLevelDict[status.toLowerCase()]} />
           </Link>

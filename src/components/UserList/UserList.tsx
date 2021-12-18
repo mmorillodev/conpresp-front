@@ -23,8 +23,8 @@ const UserList: FC<UserListProps> = ({ users, data, refetch }) => (
       <h4> Ações </h4>
     </div>
     <ul className={styles.UserList}>
-      {users.map(user => (
-        <UserItem key={user.id} user={user} refetch={refetch} />
+      {users.map((user, index) => (
+        <UserItem key={user.id} index={index + 1} user={user} refetch={refetch} />
       ))}
     </ul>
     <div className={styles.UserFooter}>

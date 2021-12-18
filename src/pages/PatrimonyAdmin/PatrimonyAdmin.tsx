@@ -22,7 +22,7 @@ const filterFacets: FilterFacet[] = [
     name: 'createdBy',
   },
   {
-    label: 'Resolução Conpresp',
+    label: 'Resolução',
     name: 'resolution',
   },
   {
