@@ -10,9 +10,9 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 import Tag, { TagLevel } from '../Tag/Tag'
 import { PatrimonyGeneral } from '../../types/PatrimonyGeneral'
 
-
 import styles from './PatrimonyAdminItem.module.scss'
 import DeletePopupModal from '../DeleteUserPopup/DeletePopup'
+import PatrimonyDetails from '../PatrimonyDetails/PatrimonyDetails'
 
 interface UserItemProps {
   patrimony: PatrimonyGeneral
@@ -20,13 +20,17 @@ interface UserItemProps {
 }
 
 type PatrimonyConservationLevel = 'Baixo' | 'Regular' | 'Alto' | string
-type PatrimonyAlterationLevel = 'Decaracterizado' | 'Alterado' | 'Preservado' | string
+type PatrimonyAlterationLevel =
+  | 'Decaracterizado'
+  | 'Alterado'
+  | 'Preservado'
+  | string
 
 const conservationLevelTag: { [key in PatrimonyConservationLevel]: TagLevel } =
   {
-    alto: 'success',
+    bom: 'success',
     regular: 'warning',
-    baixo: 'danger',
+    ruim: 'danger',
   }
 
 const alterationLevelTag: { [key in PatrimonyAlterationLevel]: TagLevel } = {
@@ -41,15 +45,20 @@ const UserItem: FC<UserItemProps> = ({
     conservationLevel,
     denomination,
     modificationLevel,
-    type,
     resolutions,
   },
   refetch,
 }) => {
   const [deleteDialog, setDeleteDialog] = useState(false)
+  const [open, setOpen] = useState(false)
 
   return (
     <div>
+      <PatrimonyDetails
+        id={id}
+        open={open}
+        onCloseRequested={() => setOpen(false)}
+      />
       <DeletePopupModal
         open={deleteDialog}
         onCloseRequest={() => setDeleteDialog(false)}
@@ -60,11 +69,16 @@ const UserItem: FC<UserItemProps> = ({
       <div className={styles.ButtonEffect}>
         <li className={styles.UserItem}>
           <h4> </h4>
-          <h4> {resolutions.map(resolution => resolution.resolution)} </h4>
+          <h4> {
+                resolutions.find(
+                  resolution =>
+                    resolution.institution.toLowerCase() === 'conpresp'
+                )?.resolution
+              } </h4>
           <h4> {denomination} </h4>
           <Link
             className={styles.tag}
-            to={`/patrimonios-admin?denomination=${denomination}`}
+            to={`/patrimonios-admin?conservationLevel=${conservationLevel}`}
           >
             <Tag
               text={conservationLevel}
@@ -73,15 +87,15 @@ const UserItem: FC<UserItemProps> = ({
           </Link>
           <Link
             className={styles.tag}
-            to={`/patrimonios-admin?type=${modificationLevel}`}
+            to={`/patrimonios-admin?modificationLevel=${modificationLevel}`}
           >
             <Tag
               text={modificationLevel}
-              level={alterationLevelTag[type.toLowerCase()]}
+              level={alterationLevelTag[modificationLevel.toLowerCase()]}
             />
           </Link>
           <div>
-            <IconButton className={styles.IconButton}>
+            <IconButton onClick={() => setOpen(true)} className={styles.IconButton}>
               <VisibilityIcon sx={{ color: '#1976d2' }} />
             </IconButton>
             <IconButton className={styles.IconButton}>

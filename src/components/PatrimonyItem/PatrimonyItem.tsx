@@ -26,11 +26,11 @@ const tagLevelDict: { [key in PatrimonyConservationLevel]: TagLevel } = {
 const PatrimonyItem: FC<PatrimonyItemProps> = ({
   patrimony: {
     id,
-    conservationLevel,
+    modificationLevel,
     denomination,
-    addressStreet,
-    conservationLevelComment,
     type,
+    address,
+    conservationLevelComment,
     resolutions,
   },
 }) => {
@@ -47,17 +47,17 @@ const PatrimonyItem: FC<PatrimonyItemProps> = ({
         <Link
           className={styles.tag}
           data-tooltip="Filtrar por:"
-          to={`/patrimonios?conservationLevel=${conservationLevel}`}
+          to={`/patrimonios?modificationLevel=${modificationLevel}`}
         >
           <Tag
-            text={conservationLevel}
-            level={tagLevelDict[conservationLevel.toLowerCase()]}
+            text={modificationLevel}
+            level={tagLevelDict[modificationLevel.toLowerCase()]}
           />
         </Link>
         <div>
           <div className={styles.patrimonyHeading}>
             <h2>{denomination}</h2>
-            <span className={styles.street}>{addressStreet}</span>
+            <span className={styles.street}>{address}</span>
           </div>
           <p className={styles.comment}>{conservationLevelComment}</p>
         </div>

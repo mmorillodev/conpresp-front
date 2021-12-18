@@ -5,7 +5,7 @@ export interface PatrimonyGeneral {
   denomination: string
   resolutions: Resolution[]
   type: string
-  addressStreet: string
+  address: string
   conservationLevel: string
   conservationLevelComment: string
   modificationLevel: string
