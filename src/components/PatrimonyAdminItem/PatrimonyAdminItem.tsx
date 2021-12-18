@@ -67,53 +67,50 @@ const PatrimonyItem: FC<PatrimonyItemProps> = ({
         endpoint="patrimony"
         refetch={refetch}
       />
-      <div className={styles.ButtonEffect}>
-        <li className={styles.PatrimonyItem}>
-          <p>{index}</p>
-          <p>
-            {
-              resolutions.find(
-                resolution =>
-                  resolution.institution.toLowerCase() === 'conpresp'
-              )?.resolution
-            }{' '}
-          </p>
-          <p> {denomination} </p>
-          <Link
-            className={styles.tag}
-            to={`/patrimonios-admin?conservationLevel=${conservationLevel}`}
+      <li className={styles.PatrimonyItem}>
+        <p>{index}</p>
+        <p>
+          {
+            resolutions.find(
+              resolution => resolution.institution.toLowerCase() === 'conpresp'
+            )?.resolution
+          }{' '}
+        </p>
+        <p> {denomination} </p>
+        <Link
+          className={styles.tag}
+          to={`/patrimonios-admin?conservationLevel=${conservationLevel}`}
+        >
+          <Tag
+            text={conservationLevel}
+            level={conservationLevelTag[conservationLevel.toLowerCase()]}
+          />
+        </Link>
+        <Link
+          className={styles.tag}
+          to={`/patrimonios-admin?modificationLevel=${modificationLevel}`}
+        >
+          <Tag
+            text={modificationLevel}
+            level={alterationLevelTag[modificationLevel.toLowerCase()]}
+          />
+        </Link>
+        <div>
+          <IconButton
+            onClick={() => setOpen(true)}
+            className={styles.IconButton}
           >
-            <Tag
-              text={conservationLevel}
-              level={conservationLevelTag[conservationLevel.toLowerCase()]}
-            />
-          </Link>
-          <Link
-            className={styles.tag}
-            to={`/patrimonios-admin?modificationLevel=${modificationLevel}`}
-          >
-            <Tag
-              text={modificationLevel}
-              level={alterationLevelTag[modificationLevel.toLowerCase()]}
-            />
-          </Link>
-          <div>
-            <IconButton
-              onClick={() => setOpen(true)}
-              className={styles.IconButton}
-            >
-              <VisibilityIcon sx={{ color: '#1976d2' }} />
-            </IconButton>
-            <IconButton className={styles.IconButton}>
-              <BorderColorIcon sx={{ color: '#1976d2' }} />
-            </IconButton>
-            <IconButton onClick={() => setDeleteDialog(true)}>
-              <DeleteIcon sx={{ color: '#1976d2' }} />
-            </IconButton>
-          </div>
-        </li>
-        <hr />
-      </div>
+            <VisibilityIcon sx={{ color: '#1976d2' }} />
+          </IconButton>
+          <IconButton className={styles.IconButton}>
+            <BorderColorIcon sx={{ color: '#1976d2' }} />
+          </IconButton>
+          <IconButton onClick={() => setDeleteDialog(true)}>
+            <DeleteIcon sx={{ color: '#1976d2' }} />
+          </IconButton>
+        </div>
+      </li>
+      <hr />
     </div>
   )
 }
