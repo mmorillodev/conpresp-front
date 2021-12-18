@@ -16,10 +16,6 @@ import styles from './PatrimonyPage.module.scss'
 
 const filterFacets: FilterFacet[] = [
   {
-    label: 'Responsável pelo preenchimento',
-    name: 'createdBy',
-  },
-  {
     label: 'Resolução Conpresp',
     name: 'resolution',
   },
@@ -42,6 +38,10 @@ const filterFacets: FilterFacet[] = [
   {
     label: 'Logradouro',
     name: 'street',
+  },
+  {
+    label: 'Endereço',
+    name: 'address',
   },
   {
     label: 'Número de Endereço',

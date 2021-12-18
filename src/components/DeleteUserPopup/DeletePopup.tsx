@@ -10,16 +10,18 @@ import api from '../../apis/default'
 
 interface DeletePopup {
   open: boolean
-  userId: string
+  id: string
   onCloseRequest: () => void
   refetch: () => void
+  endpoint: string
 }
 
 const DeletePopupModal: FC<DeletePopup> = ({
   open,
   onCloseRequest,
   refetch,
-  userId,
+  id,
+  endpoint,
 }) => {
   const {
     session: { token, isAuthenticated },
@@ -29,7 +31,7 @@ const DeletePopupModal: FC<DeletePopup> = ({
   async function deleteUser() {
     if (isAuthenticated) {
       await api
-        .delete(`/users/${userId}`, {
+        .delete(`/${endpoint}/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then(() => {

@@ -20,7 +20,7 @@ const PatromonyAdminList: FC<PatromonyListProps> = ({ patrimony, refetch, data }
       <h4> Resolução </h4>
       <h4> Denominação </h4>
       <h4> Estado de Conservação </h4>
-      <h4> Tipo de Imóvel </h4>
+      <h4> Grau de Alteração </h4>
       <h4> Ações </h4>
     </div>
     <ul className={styles.UserList}>

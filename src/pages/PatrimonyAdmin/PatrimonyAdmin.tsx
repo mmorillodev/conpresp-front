@@ -12,6 +12,7 @@ import PatrimonyAdminList from '../../components/PatrimonyAdminList/PatromonyAdm
 import Filters, { FilterFacet } from '../../components/PatrimonyFilters/Filters'
 
 import usePageFetch from '../../hooks/usePageFetch'
+import useSession from '../../hooks/useSession'
 
 import styles from './PatrimonyAdmin.module.scss'
 
@@ -45,6 +46,10 @@ const filterFacets: FilterFacet[] = [
     name: 'street',
   },
   {
+    label: 'Endereço',
+    name: 'address',
+  },
+  {
     label: 'Número de Endereço',
     name: 'addressNumber',
   },
@@ -71,10 +76,17 @@ const filterFacets: FilterFacet[] = [
 ]
 
 const PatrimonyAdmin = () => {
+  const {
+    session: { isAuthenticated },
+  } = useSession()
+  const history = useHistory()
   const [filterOpen, setFilterOpen] = useState(false)
-  const [addPatrimony, setAddPatrimony] = useState(false)
   const { isLoading, data, refetch } =
     usePageFetch<PageableResponse<PatrimonyGeneral>>('patrimony')
+
+    if (!isAuthenticated) {
+      history.push('/login')
+    }
 
   return (
     <div className={styles.patrimony}>
@@ -116,9 +128,6 @@ const PatrimonyAdmin = () => {
               background: '#1DA6D1',
             }}
             startIcon={<AddIcon sx={{ color: 'white' }} />}
-            onClick={() => {
-              setAddPatrimony(true)
-            }}
           >
             Novo Patrimônio
           </Button>

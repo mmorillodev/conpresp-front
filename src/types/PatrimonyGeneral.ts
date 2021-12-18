@@ -8,6 +8,7 @@ export interface PatrimonyGeneral {
   addressStreet: string
   conservationLevel: string
   conservationLevelComment: string
+  modificationLevel: string
 }
 
 export interface Resolution {

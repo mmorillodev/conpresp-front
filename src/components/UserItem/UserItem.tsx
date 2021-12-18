@@ -73,7 +73,8 @@ const UserItem: FC<UserItemProps> = ({
       <DeletePopupModal
         open={deleteDialog}
         onCloseRequest={() => setDeleteDialog(false)}
-        userId={id}
+        id={id}
+        endpoint="users"
         refetch={refetch}
       />
 
