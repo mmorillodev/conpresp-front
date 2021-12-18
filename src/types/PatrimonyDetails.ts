@@ -59,7 +59,7 @@ export interface Description {
 
 export interface Graphic {
   id: number
-  imageName: null
+  imageName: string
   image: string
 }
 

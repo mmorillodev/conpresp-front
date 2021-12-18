@@ -11,7 +11,7 @@ const usePageFetch = <T>(resourceName: string) => {
     session: { token, type },
   } = useSession()
 
-  const { isLoading, data, refetch } = useQuery(resourceName, () =>
+  const { isLoading, data, refetch, error } = useQuery(resourceName, () =>
     api.get<T>(`/${resourceName}?${params.toString()}`, {
       headers: { Authorization: `${type} ${token}` },
     })
@@ -21,7 +21,7 @@ const usePageFetch = <T>(resourceName: string) => {
     refetch()
   }, [params])
 
-  return { isLoading, data, refetch }
+  return { isLoading, data, error, refetch }
 }
 
 export default usePageFetch

@@ -1,6 +1,13 @@
 import { FC } from 'react'
 
-import { IconButton, Modal } from '@mui/material'
+import {
+  Card,
+  IconButton,
+  ImageList,
+  ImageListItem,
+  Modal,
+  Slide,
+} from '@mui/material'
 import { Box } from '@mui/system'
 import CloseIcon from '@mui/icons-material/Close'
 
@@ -33,9 +40,13 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
   open,
   onCloseRequested,
 }) => {
-  const { data, isLoading } = usePageFetch<PatrimonyDetails>(`patrimony/${id}`)
+  const { data, isLoading, error } = usePageFetch<PatrimonyDetails>(
+    `patrimony/${id}`
+  )
 
-  if (isLoading) <p>Carregando...</p>
+  if (isLoading) return <p>Carregando...</p>
+
+  if (error || !data) return <p>Erro!</p>
 
   return (
     <Modal open={open}>
@@ -50,21 +61,20 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
           <div className={styles.patrimonyHeading}>
             <img
               src={
-                data?.data.photographicDocumentation[0].image !== ''
-                  ? `data:image/png;base64,${data?.data.photographicDocumentation[0].image}`
+                data.data.photographicDocumentation[0].image !== ''
+                  ? `data:image/png;base64,${data.data.photographicDocumentation[0].image}`
                   : 'https://via.placeholder.com/152'
               }
+              loading="lazy"
               alt="patrimony-main"
               width="150px"
             />
             <div className={styles.patrimonyHeadingDescr}>
-              <h2 className={styles.patrimonyName}>
-                {data?.data.denomination}
-              </h2>
+              <h2 className={styles.patrimonyName}>{data.data.denomination}</h2>
               <div className={styles.patrimonyHeadingMetadata}>
                 <div className={styles.item}>
                   <h4>Responsável pelo preenchimento</h4>
-                  <p>{data?.data.createdBy}</p>
+                  <p>{data.data.createdBy}</p>
                 </div>
                 <div className={styles.item}>
                   <h4>Grupo</h4>
@@ -72,11 +82,10 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
                 </div>
               </div>
               <Tag
-                text={data?.data.construction.modificationLevel ?? ''}
+                text={data.data.construction.modificationLevel ?? ''}
                 level={
                   tagLevelDict[
-                    data?.data.construction.modificationLevel.toLowerCase() ??
-                      ''
+                    data.data.construction.modificationLevel.toLowerCase() ?? ''
                   ]
                 }
               />
@@ -87,32 +96,32 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
             <div>
               <div>
                 <h4>Item na resolução</h4>
-                <p>{data?.data.resolutionItem}</p>
+                <p>{data.data.resolutionItem}</p>
               </div>
               <div>
                 <h4>Denominação</h4>
-                <p>{data?.data.denomination}</p>
+                <p>{data.data.denomination}</p>
               </div>
               <div>
                 <h4>Classificação</h4>
-                <p>{data?.data.classification}</p>
+                <p>{data.data.classification}</p>
               </div>
               <div>
                 <h4>Propriedade</h4>
-                <p>{data?.data.type}</p>
+                <p>{data.data.type}</p>
               </div>
               <div>
                 <h4>Uso atual</h4>
-                <p>{data?.data.currentUsage}</p>
+                <p>{data.data.currentUsage}</p>
               </div>
               <div>
                 <h4>Uso original</h4>
-                <p>{data?.data.originalUsage}</p>
+                <p>{data.data.originalUsage}</p>
               </div>
             </div>
           </section>
           <h3>Tombamento</h3>
-          {data?.data.heritageResolutions.map(resolutionInfo => (
+          {data.data.heritageResolutions.map(resolutionInfo => (
             <section>
               <div className={styles.resolutionItem}>
                 <div className={styles.grayBgTitle}>
@@ -136,20 +145,20 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
             <div className={styles.grayBgTitle}>Título</div>
             <div className={styles.address}>
               <h4>Endereço</h4>
-              <p>{data?.data.addressLot.address}</p>
+              <p>{data.data.addressLot.address}</p>
             </div>
             <div className={styles.addressItens}>
               <div>
                 <h4>Setor</h4>
-                <p>{data?.data.addressLot.sector}</p>
+                <p>{data.data.addressLot.sector}</p>
               </div>
               <div>
                 <h4>Quadra</h4>
-                <p>{data?.data.addressLot.block}</p>
+                <p>{data.data.addressLot.block}</p>
               </div>
               <div>
                 <h4>Lote</h4>
-                <p>{data?.data.addressLot.lot}</p>
+                <p>{data.data.addressLot.lot}</p>
               </div>
             </div>
           </section>
@@ -158,94 +167,115 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
             <div className={styles.technicalItens}>
               <div>
                 <h4>Autor do projeto original</h4>
-                <p>{data?.data.construction.author}</p>
+                <p>{data.data.construction.author}</p>
               </div>
               <div>
                 <h4>Construtor</h4>
-                <p>{data?.data.construction.constructor}</p>
+                <p>{data.data.construction.constructor}</p>
               </div>
               <div>
                 <h4>Data de Construção (aproximada)</h4>
-                <p>{data?.data.construction.constructionYear}</p>
+                <p>{data.data.construction.constructionYear}</p>
               </div>
               <div>
                 <h4>Estilo Arquitetônico</h4>
-                <p>{data?.data.construction.architecturalStyle}</p>
+                <p>{data.data.construction.architecturalStyle}</p>
               </div>
               <div>
                 <h4>Técnica Construtiva</h4>
-                <p>{data?.data.construction.constructiveTechnique}</p>
+                <p>{data.data.construction.constructiveTechnique}</p>
               </div>
               <div>
                 <h4>Número de Pavimentos</h4>
-                <p>{data?.data.construction.floorQuantity}</p>
+                <p>{data.data.construction.floorQuantity}</p>
               </div>
               <div>
                 <h4>Área do lote (m2)</h4>
-                <p>{data?.data.construction.constructedArea}</p>
+                <p>{data.data.construction.constructedArea}</p>
               </div>
               <div>
                 <h4>área construída(m2)</h4>
-                <p>{data?.data.construction.constructedArea}</p>
+                <p>{data.data.construction.constructedArea}</p>
               </div>
               <div>
                 <h4>Grau de tombamento</h4>
-                <p>{data?.data.construction.heritageLevel}</p>
+                <p>{data.data.construction.heritageLevel}</p>
               </div>
               <div>
                 <h4>Grau de alteração</h4>
-                <p>{data?.data.construction.modificationLevel}</p>
+                <p>{data.data.construction.modificationLevel}</p>
               </div>
               <div>
                 <h4>Estado de conservação</h4>
-                <p>{data?.data.construction.conservationLevel}</p>
+                <p>{data.data.construction.conservationLevel}</p>
               </div>
             </div>
             <div>
               <h4>COMENTÁRIO DO GRAU DE ALTERAÇÃ0</h4>
-              <p>{data?.data.construction.modificationLevelComment}</p>
+              <p>{data.data.construction.modificationLevelComment}</p>
             </div>
             <div>
               <h4>COMENTÁRIO DO estado de Conservação</h4>
-              <p>{data?.data.construction.conservationLevelComment}</p>
+              <p>{data.data.construction.conservationLevelComment}</p>
             </div>
             <div>
               <h4>Observações (pavimentos)</h4>
-              <p>{data?.data.construction.floorObservation}</p>
+              <p>{data.data.construction.floorObservation}</p>
             </div>
           </section>
           <section className={styles.descriptionData}>
             <h3>Descrição</h3>
             <div>
               <h4>dados históricos</h4>
-              <p>{data?.data.description.historicalData}</p>
+              <p>{data.data.description.historicalData}</p>
             </div>
             <div>
               <h4>dados arquitetônicos</h4>
-              <p>{data?.data.description.architecturalData}</p>
+              <p>{data.data.description.architecturalData}</p>
             </div>
             <div>
               <h4>dados de ambiência</h4>
-              <p>{data?.data.description.ambienceData}</p>
+              <p>{data.data.description.ambienceData}</p>
             </div>
             <div>
               <h4>fontes bibliográficas</h4>
-              <p>{data?.data.description.bibliographicSource}</p>
+              <p>{data.data.description.bibliographicSource}</p>
             </div>
             <div>
               <h4>outras informações</h4>
-              <p>{data?.data.description.otherInfo}</p>
+              <p>{data.data.description.otherInfo}</p>
             </div>
             <div>
               <h4>obervações</h4>
-              <p>{data?.data.description.observation}</p>
+              <p>{data.data.description.observation}</p>
             </div>
           </section>
           <section>
             <h3>Documentação Gráfica</h3>
+            <ImageList cols={2} rowHeight={121} variant="quilted">
+              {data.data.graphic.map(image => (
+                <ImageListItem key={image.imageName} cols={1} rows={1}>
+                  <img
+                    src={`data:image/png;base64,${image.image}`}
+                    alt="Documentação Gráfica"
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
           </section>
           <section>
             <h3>Documentação fotográfica</h3>
+            <ImageList cols={2} rowHeight={365} variant="standard">
+              {data.data.photographicDocumentation.map(image => (
+                <ImageListItem key={image.imageName} cols={1} rows={1}>
+                  <img
+                    src={`data:image/png;base64,${image.image}`}
+                    alt={image.imageName}
+                    loading="lazy"
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
           </section>
         </div>
       </Box>
