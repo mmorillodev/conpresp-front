@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { IconButton, Modal } from '@mui/material'
+import { CircularProgress, IconButton, Modal } from '@mui/material'
 import { Box } from '@mui/system'
 import CloseIcon from '@mui/icons-material/Close'
 import Carousel from 'react-material-ui-carousel'
@@ -13,7 +13,6 @@ import styles from './PatrimonyDetails.module.scss'
 
 interface PatrimonyDetailsProps {
   id: string
-  open: boolean
   onCloseRequested: () => void
 }
 
@@ -31,7 +30,6 @@ const tagLevelDict: { [key in PatrimonyConservationLevel]: TagLevel } = {
 
 const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
   id,
-  open,
   onCloseRequested,
 }) => {
   const { data, isLoading, error } = usePageFetch<PatrimonyDetails>(
@@ -48,12 +46,30 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
       }, initial)
   }
 
-  if (isLoading) return null
+  if (isLoading)
+    return (
+      <Modal open>
+        <Box
+          style={{
+            position: 'absolute',
+            left: '0',
+            right: '0',
+            bottom: '0',
+            top: '0',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <CircularProgress color="inherit" />
+        </Box>
+      </Modal>
+    )
 
   if (error || !data) return null
 
   return (
-    <Modal open={open}>
+    <Modal open>
       <Box className={styles.modalBox}>
         <div className={styles.header}>
           <h2>Dados do tombamento</h2>

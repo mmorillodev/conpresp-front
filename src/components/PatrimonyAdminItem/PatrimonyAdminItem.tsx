@@ -55,11 +55,9 @@ const PatrimonyItem: FC<PatrimonyItemProps> = ({
 
   return (
     <div>
-      <PatrimonyDetails
-        id={id}
-        open={open}
-        onCloseRequested={() => setOpen(false)}
-      />
+      {open && (
+        <PatrimonyDetails id={id} onCloseRequested={() => setOpen(false)} />
+      )}
       <DeletePopupModal
         open={deleteDialog}
         onCloseRequest={() => setDeleteDialog(false)}
