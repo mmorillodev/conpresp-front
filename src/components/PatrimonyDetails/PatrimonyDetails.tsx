@@ -23,8 +23,6 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
 }) => {
   const { data, isLoading } = usePageFetch<PatrimonyDetails>(`patrimony/${id}`)
 
-  console.log(data?.data)
-
   if (isLoading) <p>Carregando...</p>
 
   return (
@@ -38,15 +36,15 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
         </div>
         <div className={styles.PatrimonyDetails}>
           <div className={styles.patrimonyHeading}>
-            <img src="https://via.placeholder.com/152" alt="patrimony-main" />
+            <img src={data?.data.photographicDocumentation[0].image !== '' ? `data:image/png;base64,${data?.data.photographicDocumentation[0].image}` : 'https://via.placeholder.com/152'} alt="patrimony-main" width="150px" />
             <div className={styles.patrimonyHeadingDescr}>
               <h2 className={styles.patrimonyName}>
-                Laboratório de Preservação do Patrimônio Cultural
+                {data?.data.denomination}
               </h2>
               <div className={styles.patrimonyHeadingMetadata}>
                 <div className={styles.item}>
                   <h4>Responsável pelo preenchimento</h4>
-                  <p>Gary Rubio Fernandez</p>
+                  <p>{data?.data.createdBy}</p>
                 </div>
                 <div className={styles.item}>
                   <h4>Grupo</h4>
@@ -61,93 +59,67 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
             <div>
               <div>
                 <h4>Item na resolução</h4>
-                <p>02</p>
+                <p>{data?.data.resolutionItem}</p>
               </div>
               <div>
                 <h4>Denominação</h4>
-                <p>Equipe UAM</p>
+                <p>{data?.data.denomination}</p>
               </div>
               <div>
                 <h4>Classificação</h4>
-                <p>Equipe UAM</p>
+                <p>{data?.data.classification}</p>
               </div>
               <div>
                 <h4>Propriedade</h4>
-                <p>Equipe UAM</p>
+                <p>{data?.data.type}</p>
               </div>
               <div>
                 <h4>Uso atual</h4>
-                <p>Religioso</p>
+                <p>{data?.data.currentUsage}</p>
               </div>
               <div>
                 <h4>Uso original</h4>
-                <p>Religioso</p>
+                <p>{data?.data.originalUsage}</p>
               </div>
             </div>
           </section>
-          <section>
-            <h3>Tombamento</h3>
-            {/* react for */}
-            <div className={styles.resolutionItem}>
-              <div className={styles.grayBgTitle}>CONPRESP</div>
-              <div className={styles.resolutionItemDesc}>
-                <div>
-                  <h4>Resolução</h4>
-                  <p>02</p>
-                </div>
-                <div>
-                  <h4>Ano do tombamento</h4>
-                  <p>0</p>
-                </div>
-              </div>
-            </div>
-            <div className={styles.resolutionItem}>
-              <div className={styles.grayBgTitle}>CONDEPHAAT</div>
-              <div className={styles.resolutionItemDesc}>
-                <div>
-                  <h4>Resolução</h4>
-                  <p>Res. SC SN/70 de 9/4/70</p>
-                </div>
-                <div>
-                  <h4>Ano do tombamento</h4>
-                  <p>0</p>
+          <h3>Tombamento</h3>
+          {data?.data.heritageResolutions.map(resolutionInfo => (
+            <section>
+              <div className={styles.resolutionItem}>
+                <div className={styles.grayBgTitle}>{resolutionInfo.institution}</div>
+                <div className={styles.resolutionItemDesc}>
+                  <div>
+                    <h4>Resolução</h4>
+                    <p>{resolutionInfo.resolution}</p>
+                  </div>
+                  <div>
+                    <h4>Ano do Tombamento</h4>
+                    <p>{resolutionInfo.year}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={styles.resolutionItem}>
-              <div className={styles.grayBgTitle}>IPHAN</div>
-              <div className={styles.resolutionItemDesc}>
-                <div>
-                  <h4>Resolução</h4>
-                  <p>Res. SC SN/70 de 9/4/70</p>
-                </div>
-                <div>
-                  <h4>Ano do tombamento</h4>
-                  <p>0</p>
-                </div>
-              </div>
-            </div>
-            {/* end react for */}
-          </section>
+            </section>
+          ))}
           <section className={styles.locationData}>
             <h3>Localização</h3>
             <div className={styles.grayBgTitle}>Título</div>
             <div className={styles.address}>
               <h4>Endereço</h4>
-              <p>Praca do Patriarca, 49 - Sé, Sé</p>
+              <p>{data?.data.addressLot.address}</p>
             </div>
             <div className={styles.addressItens}>
               <div>
                 <h4>Setor</h4>
-                <p>5</p>
+                <p>{data?.data.addressLot.sector}</p>
               </div>
               <div>
                 <h4>Quadra</h4>
-                <p>3</p>
+                <p>{data?.data.addressLot.block}</p>
               </div>
               <div>
                 <h4>Lote</h4>
-                <p>3</p>
+                <p>{data?.data.addressLot.lot}</p>
               </div>
             </div>
           </section>
@@ -156,27 +128,27 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
             <div className={styles.technicalItens}>
               <div>
                 <h4>Autor do projeto original</h4>
-                <p>Fiéis Anônimos</p>
+                <p>{data?.data.construction.author}</p>
               </div>
               <div>
                 <h4>Construtor</h4>
-                <p>Fiéis Anônimos</p>
+                <p>{data?.data.construction.constructor}</p>
               </div>
               <div>
                 <h4>Data de Construção (aproximada)</h4>
-                <p>1590</p>
+                <p>{data?.data.construction.constructionYear}</p>
               </div>
               <div>
                 <h4>Estilo Arquitetônico</h4>
-                <p>––</p>
+                <p>{data?.data.construction.architecturalStyle}</p>
               </div>
               <div>
                 <h4>Técnica Construtiva</h4>
-                <p>Alvenaria de Tijolos</p>
+                <p>{data?.data.construction.constructiveTechnique}</p>
               </div>
               <div>
                 <h4>Número de Pavimentos</h4>
-                <p>03</p>
+                <p>{data?.data.construction.floorQuantity}</p>
               </div>
               <div>
                 <h4>Área do lote (m2)</h4>
@@ -184,19 +156,19 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
               </div>
               <div>
                 <h4>área construída(m2)</h4>
-                <p>0.00</p>
+                <p>{data?.data.construction.constructedArea}</p>
               </div>
               <div>
                 <h4>Grau de tombamento</h4>
-                <p>NP-2</p>
+                <p>{data?.data.construction.heritageLevel}</p>
               </div>
               <div>
                 <h4>Grau de alteração</h4>
-                <p>Alterado</p>
+                <p>{data?.data.construction.modificationLevel}</p>
               </div>
               <div>
                 <h4>Estado de conservação</h4>
-                <p>Regular</p>
+                <p>{data?.data.construction.conservationLevel}</p>
               </div>
             </div>
           </section>
@@ -204,60 +176,27 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
             <h3>Descrição</h3>
             <div>
               <h4>dados históricos</h4>
-              <p>
-                Nisl gravida cursus sed id quam dictum. Morbi nunc ipsum in
-                facilisis aenean sapien facilisi amet. Nulla nunc, ultrices
-                proin cursus sed sed. Netus enim risus quisque sagittis montes,
-                bibendum augue egestas purus. Ac et augue maecenas tempor nisl
-                mauris.
-              </p>
+              <p>{data?.data.description.historicalData}</p>
             </div>
             <div>
               <h4>dados arquitetônicos</h4>
-              <p>
-                Aliquet malesuada ligula in sed lectus et vel egestas
-                adipiscing. Bibendum tempor nisl porttitor duis et metus,
-                facilisis congue. Ornare nibh neque vitae praesent ornare
-                ultricies malesuada imperdiet. Tortor habitasse egestas nascetur
-                faucibus vel. Iaculis orci lobortis at sed tempor velit. Ante
-                morbi aliquet sit hendrerit suscipit eros, mollis dolor. Nulla
-                arcu, urna a sollicitudin. Nullam sed amet ut vel vitae feugiat.
-              </p>
+              <p>{data?.data.description.architecturalData}</p>
             </div>
             <div>
               <h4>dados de ambiência</h4>
-              <p>
-                Egestas sapien molestie tincidunt magna facilisis. Diam erat
-                posuere eget enim tortor. Tempor consequat sed amet dolor
-                aliquam lacus. Mattis facilisis dui quisque ac donec pharetra
-                auctor turpis
-              </p>
+              <p>{data?.data.description.ambienceData}</p>
             </div>
             <div>
               <h4>fontes bibliográficas</h4>
-              <p>
-                Penatibus ornare non amet aenean dignissim augue id dui sed.
-                Elit, eu purus cras nunc sed velit proin ac arcu. Bibendum
-                tortor, aliquam netus fames pulvinar ornare. Varius amet,
-                habitant amet egestas vel. Enim, a nulla cras lectus gravida
-                cursus nulla aliquam. Integer sed amet, faucibus leo. Adipiscing{' '}
-              </p>
+              <p>{data?.data.description.bibliographicSource}</p>
             </div>
             <div>
               <h4>outras informações</h4>
-              <p>
-                Suspendisse nunc sed tellus dictum egestas vitae mauris turpis
-                aenean. Netus nulla euismod vitae, vel neque, in egestas amet.
-                Turpis nullam egestas eu malesuada ut. Adipiscing rutrum eros,
-                in nunc pellentesque laoreet mauris lectus diam. Mi laoreet eget
-                praesent mi elit felis turpis ultricies. Iaculis diam vitae
-                vitae fringilla sapien vitae tincidunt nec pharetra. In interdum
-                sed vitae aliquam arcu lectus.
-              </p>
+              <p>{data?.data.description.otherInfo}</p>
             </div>
             <div>
               <h4>obervações</h4>
-              <p>Térreo, Coro e Torre</p>
+              <p>{data?.data.description.observation}</p>
             </div>
           </section>
           <section>

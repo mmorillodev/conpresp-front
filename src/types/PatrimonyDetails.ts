@@ -1,5 +1,6 @@
 export interface PatrimonyDetails {
   id: string
+  resolutionItem: string
   heritageResolutions: HeritageResolution[]
   denomination: string
   classification: string
@@ -21,6 +22,7 @@ export interface AddressLot {
   type: string
   title: string
   street: string
+  address: string
   number: string
   district: string
   regionalHall: string
