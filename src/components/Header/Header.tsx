@@ -24,11 +24,11 @@ const Header = () => {
               <Link to="/patrimonios">Patrimônios</Link>
             )}
           </li>
-          <li>
-            {isAuthenticated && profile === 'ADMINISTRATOR' && (
+          {isAuthenticated && profile === 'ADMINISTRATOR' && (
+            <li>
               <Link to="/usuarios">Usuários</Link>
-            )}
-          </li>
+            </li>
+          )}
           <li>
             <Link to="/glossario">Glossário</Link>
           </li>
