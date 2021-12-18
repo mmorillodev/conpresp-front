@@ -1,7 +1,7 @@
 export interface PatrimonyDetails {
   id: string
-  resolutionItem: string
   heritageResolutions: HeritageResolution[]
+  resolutionItem: string
   denomination: string
   classification: string
   currentUsage: string
@@ -33,6 +33,7 @@ export interface AddressLot {
 
 export interface Construction {
   constructionYear: string
+  approximateDate: null
   author: string
   constructor: string
   architecturalStyle: string
@@ -58,6 +59,7 @@ export interface Description {
 
 export interface Graphic {
   id: number
+  imageName: null
   image: string
 }
 

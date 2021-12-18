@@ -4,7 +4,7 @@ import { IconButton, Modal } from '@mui/material'
 import { Box } from '@mui/system'
 import CloseIcon from '@mui/icons-material/Close'
 
-import Tag from '../Tag/Tag'
+import Tag, { TagLevel } from '../Tag/Tag'
 import usePageFetch from '../../hooks/usePageFetch'
 import { PatrimonyDetails } from '../../types/PatrimonyDetails'
 
@@ -14,6 +14,18 @@ interface PatrimonyDetailsProps {
   id: string
   open: boolean
   onCloseRequested: () => void
+}
+
+type PatrimonyConservationLevel =
+  | 'preservado'
+  | 'alterado'
+  | 'descaracterizado'
+  | string
+
+const tagLevelDict: { [key in PatrimonyConservationLevel]: TagLevel } = {
+  preservado: 'success',
+  alterado: 'warning',
+  descaracterizado: 'danger',
 }
 
 const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
@@ -36,7 +48,15 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
         </div>
         <div className={styles.PatrimonyDetails}>
           <div className={styles.patrimonyHeading}>
-            <img src={data?.data.photographicDocumentation[0].image !== '' ? `data:image/png;base64,${data?.data.photographicDocumentation[0].image}` : 'https://via.placeholder.com/152'} alt="patrimony-main" width="150px" />
+            <img
+              src={
+                data?.data.photographicDocumentation[0].image !== ''
+                  ? `data:image/png;base64,${data?.data.photographicDocumentation[0].image}`
+                  : 'https://via.placeholder.com/152'
+              }
+              alt="patrimony-main"
+              width="150px"
+            />
             <div className={styles.patrimonyHeadingDescr}>
               <h2 className={styles.patrimonyName}>
                 {data?.data.denomination}
@@ -51,7 +71,15 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
                   <p>Equipe UAM</p>
                 </div>
               </div>
-              <Tag text="Preservado" level="success" />
+              <Tag
+                text={data?.data.construction.modificationLevel ?? ''}
+                level={
+                  tagLevelDict[
+                    data?.data.construction.modificationLevel.toLowerCase() ??
+                      ''
+                  ]
+                }
+              />
             </div>
           </div>
           <section className={styles.generalData}>
@@ -87,7 +115,9 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
           {data?.data.heritageResolutions.map(resolutionInfo => (
             <section>
               <div className={styles.resolutionItem}>
-                <div className={styles.grayBgTitle}>{resolutionInfo.institution}</div>
+                <div className={styles.grayBgTitle}>
+                  {resolutionInfo.institution}
+                </div>
                 <div className={styles.resolutionItemDesc}>
                   <div>
                     <h4>Resolução</h4>
@@ -152,7 +182,7 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
               </div>
               <div>
                 <h4>Área do lote (m2)</h4>
-                <p>0.00</p>
+                <p>{data?.data.construction.constructedArea}</p>
               </div>
               <div>
                 <h4>área construída(m2)</h4>
@@ -173,33 +203,15 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
             </div>
             <div>
               <h4>COMENTÁRIO DO GRAU DE ALTERAÇÃ0</h4>
-              <p>
-                Além da reconstrução da fachada, em 1899, verifica-se a
-                construção de um anexo conjugado no fundo do lote, onde
-                atualmente se localiza o velário. Há, também, a instalação de
-                esquadrias de tipologias diferenciadas, a exemplo de janelas
-                basculantes nos corredores laterais, massa duis eget nunc risus
-                ut sed ipsum. Leo sit vitae quis amet. Libero, urna, sed mattis
-                nisl in ultricies. Turpis lacus nunc venenatis, platea placerat
-                nisl amet. In at sed ac pharetra, blandit. Malesuada fames
-                cursus pulvinar in lectus donec. Consectetur amet et tellus orci
-                nulla nam leo aenean.
-              </p>
+              <p>{data?.data.construction.modificationLevelComment}</p>
             </div>
             <div>
               <h4>COMENTÁRIO DO estado de Conservação</h4>
-              <p>
-                A fachada apresenta patologias como desagregação da argamassa de
-                revestimento, trincas e dejetos de aves. A cimalha encontra-se
-                em estado agravante apresentando, além das patologias citadas,
-                forte incidência de umidade e crosta negra. No sócolo, o granito
-                tem, massa duis eget nunc risus ut sed ipsum. Leo sit vitae quis
-                amet. Libero, urna, sed mattis nisl in ultricies.
-              </p>
+              <p>{data?.data.construction.conservationLevelComment}</p>
             </div>
             <div>
               <h4>Observações (pavimentos)</h4>
-              <p>Térreo, Coro e Torre</p>
+              <p>{data?.data.construction.floorObservation}</p>
             </div>
           </section>
           <section className={styles.descriptionData}>
