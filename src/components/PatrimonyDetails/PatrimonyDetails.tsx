@@ -171,6 +171,36 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
                 <p>{data?.data.construction.conservationLevel}</p>
               </div>
             </div>
+            <div>
+              <h4>COMENTÁRIO DO GRAU DE ALTERAÇÃ0</h4>
+              <p>
+                Além da reconstrução da fachada, em 1899, verifica-se a
+                construção de um anexo conjugado no fundo do lote, onde
+                atualmente se localiza o velário. Há, também, a instalação de
+                esquadrias de tipologias diferenciadas, a exemplo de janelas
+                basculantes nos corredores laterais, massa duis eget nunc risus
+                ut sed ipsum. Leo sit vitae quis amet. Libero, urna, sed mattis
+                nisl in ultricies. Turpis lacus nunc venenatis, platea placerat
+                nisl amet. In at sed ac pharetra, blandit. Malesuada fames
+                cursus pulvinar in lectus donec. Consectetur amet et tellus orci
+                nulla nam leo aenean.
+              </p>
+            </div>
+            <div>
+              <h4>COMENTÁRIO DO estado de Conservação</h4>
+              <p>
+                A fachada apresenta patologias como desagregação da argamassa de
+                revestimento, trincas e dejetos de aves. A cimalha encontra-se
+                em estado agravante apresentando, além das patologias citadas,
+                forte incidência de umidade e crosta negra. No sócolo, o granito
+                tem, massa duis eget nunc risus ut sed ipsum. Leo sit vitae quis
+                amet. Libero, urna, sed mattis nisl in ultricies.
+              </p>
+            </div>
+            <div>
+              <h4>Observações (pavimentos)</h4>
+              <p>Térreo, Coro e Torre</p>
+            </div>
           </section>
           <section className={styles.descriptionData}>
             <h3>Descrição</h3>
