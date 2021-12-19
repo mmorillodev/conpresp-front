@@ -1,4 +1,4 @@
-import { Route, Switch, useLocation } from 'react-router-dom'
+import { Route, Switch, useLocation, Redirect } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
 import Header from './components/Header/Header'
@@ -13,6 +13,8 @@ const queryClient = new QueryClient()
 const App = () => {
   const location = useLocation()
 
+  const Index = () => <Redirect to="/patrimonios" />
+
   return (
     <QueryClientProvider client={queryClient}>
       {location.pathname !== '/login' && <Header />}
@@ -21,10 +23,11 @@ const App = () => {
           <Route exact component={PropertyPage} path="/patrimonios" />
           <Route exact component={UserPage} path="/usuarios" />
           <Route exact component={Login} path="/login" />
-          <Route component={PropertyPage} path="/patrimonios" />
-          <Route component={UserPage} path="/usuarios" />
-          <Route component={Login} path="/login" />
-          <Route component={PatrimonyAdmin} path="/patrimonios-admin" />
+          <Route exact component={PropertyPage} path="/patrimonios" />
+          <Route exact component={UserPage} path="/usuarios" />
+          <Route exact component={Login} path="/login" />
+          <Route exact component={PatrimonyAdmin} path="/patrimonios-admin" />
+          <Route exact component={Index} path="/*" />
         </Switch>
       </main>
       {location.pathname !== '/login' && <Footer />}
