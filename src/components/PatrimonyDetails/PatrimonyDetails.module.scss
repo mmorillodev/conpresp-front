@@ -88,8 +88,7 @@
   transform: translate(-50%, -50%);
   background-color: white;
 
-  width: 50vw;
-  min-width: 735px;
+  width: 735px;
 
   box-shadow: 0px 12px 64px -6px rgba(0, 0, 0, 0.4);
   border-radius: 20px;
@@ -194,7 +193,7 @@
 
 .imageCarouselPair {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 
   img {
     width: 325px;
