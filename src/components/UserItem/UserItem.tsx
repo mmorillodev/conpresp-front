@@ -111,7 +111,7 @@ const UserItem: FC<UserItemProps> = ({
           <p> {`${firstName} ${lastName}`} </p>
           <p> {email} </p>
           <p> {profile} </p>
-          <Link className={styles.tag} to={`/usuarios?status=${status}`}>
+          <Link className={styles.tag} data-tooltip="Filtrar por:" to={`/usuarios?status=${status}`}>
             <Tag text={status} level={tagLevelDict[status.toLowerCase()]} />
           </Link>
           <div>

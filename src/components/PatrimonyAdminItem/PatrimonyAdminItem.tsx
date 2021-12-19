@@ -12,6 +12,7 @@ import { PatrimonyGeneral } from '../../types/PatrimonyGeneral'
 import styles from './PatrimonyAdminItem.module.scss'
 import DeletePopupModal from '../DeleteUserPopup/DeletePopup'
 import PatrimonyDetails from '../PatrimonyDetails/PatrimonyDetails'
+import useSession from '../../hooks/useSession'
 
 interface PatrimonyItemProps {
   index: number
@@ -52,6 +53,9 @@ const PatrimonyItem: FC<PatrimonyItemProps> = ({
 }) => {
   const [deleteDialog, setDeleteDialog] = useState(false)
   const [open, setOpen] = useState(false)
+  const {
+    session: { profile },
+  } = useSession()
 
   return (
     <div>
@@ -77,6 +81,7 @@ const PatrimonyItem: FC<PatrimonyItemProps> = ({
         <p> {denomination} </p>
         <Link
           className={styles.tag}
+          data-tooltip="Filtrar por:"
           to={`/patrimonios-admin?conservationLevel=${conservationLevel}`}
         >
           <Tag
@@ -86,6 +91,7 @@ const PatrimonyItem: FC<PatrimonyItemProps> = ({
         </Link>
         <Link
           className={styles.tag}
+          data-tooltip="Filtrar por:"
           to={`/patrimonios-admin?modificationLevel=${modificationLevel}`}
         >
           <Tag
@@ -103,9 +109,11 @@ const PatrimonyItem: FC<PatrimonyItemProps> = ({
           <IconButton className={styles.IconButton}>
             <BorderColorIcon sx={{ color: '#1976d2' }} />
           </IconButton>
-          <IconButton onClick={() => setDeleteDialog(true)}>
-            <DeleteIcon sx={{ color: '#1976d2' }} />
-          </IconButton>
+          {profile === 'ADMINISTRATOR' && (
+            <IconButton onClick={() => setDeleteDialog(true)}>
+              <DeleteIcon sx={{ color: '#1976d2' }} />
+            </IconButton>
+          )}
         </div>
       </li>
       <hr />
