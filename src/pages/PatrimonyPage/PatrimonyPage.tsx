@@ -75,16 +75,15 @@ const filterFacets: FilterFacet[] = [
 const PropertyPage = () => {
   const [filterOpen, setFilterOpen] = useState(false)
   const {
-    isLoading: sessionLoading,
     session: { isAuthenticated },
   } = useSession()
 
   const { isLoading, data } =
     usePageFetch<PageableResponse<PatrimonyGeneral>>('patrimony')
 
-  if (sessionLoading || isLoading) return <Loading />
-
   if (!isAuthenticated) return <Redirect to="/login" />
+
+  if (isLoading) return <Loading />
 
   return (
     <>
