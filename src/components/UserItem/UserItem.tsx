@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import IconButton from '@mui/material/IconButton'
 import BorderColorIcon from '@mui/icons-material/BorderColor'
@@ -16,7 +16,6 @@ import api from '../../apis/default'
 import styles from './UserItem.module.scss'
 import ModalDialog from '../ModalDialog/ModalDialog'
 import DeletePopupModal from '../DeleteUserPopup/DeletePopup'
-import { types } from 'util'
 
 interface UserItemProps {
   index: number
@@ -111,7 +110,11 @@ const UserItem: FC<UserItemProps> = ({
           <p> {`${firstName} ${lastName}`} </p>
           <p> {email} </p>
           <p> {profile} </p>
-          <Link className={styles.tag} data-tooltip="Filtrar por:" to={`/usuarios?status=${status}`}>
+          <Link
+            className={styles.tag}
+            data-tooltip="Filtrar por:"
+            to={`/usuarios?status=${status}`}
+          >
             <Tag text={status} level={tagLevelDict[status.toLowerCase()]} />
           </Link>
           <div>
