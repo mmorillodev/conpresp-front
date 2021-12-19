@@ -147,12 +147,35 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
           ))}
           <section className={styles.locationData}>
             <h3>Localização</h3>
-            <div className={styles.grayBgTitle}>Título</div>
             <div className={styles.address}>
               <h4>Endereço</h4>
-              <p>{data.data.addressLot.address ?? '--'}</p>
+              <p>{`${data.data.addressLot.address}, ${data.data.addressLot.number}`}</p>
             </div>
             <div className={styles.addressItens}>
+              <div>
+                <h4>Tipo</h4>
+                <p>{data.data.addressLot.type ?? '--'}</p>
+              </div>
+              <div>
+                <h4>Título</h4>
+                <p>{data.data.addressLot.title ?? '--'}</p>
+              </div>
+              <div>
+                <h4>Logradouro</h4>
+                <p>{data.data.addressLot.street ?? '--'}</p>
+              </div>
+              <div>
+                <h4>Número</h4>
+                <p>{data.data.addressLot.number ?? '--'}</p>
+              </div>
+              <div>
+                <h4>Distrito</h4>
+                <p>{data.data.addressLot.district ?? '--'}</p>
+              </div>
+              <div>
+                <h4>Prefeitura Regional</h4>
+                <p>{data.data.addressLot.regionalHall ?? '--'}</p>
+              </div>
               <div>
                 <h4>Setor</h4>
                 <p>{data.data.addressLot.sector ?? '--'}</p>
