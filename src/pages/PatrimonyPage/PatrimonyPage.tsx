@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Redirect } from 'react-router-dom'
 
 import FilterListIcon from '@mui/icons-material/FilterList'
 import Button from '@mui/material/Button'
@@ -9,8 +10,10 @@ import { PatrimonyGeneral } from '../../types/PatrimonyGeneral'
 import PatrimonyList from '../../components/PatrimonyList/PatrimonyList'
 import Filters, { FilterFacet } from '../../components/PatrimonyFilters/Filters'
 import Paginator from '../../components/Pagination/Pagination'
+import Loading from '../../components/Loading/Loading'
 
 import usePageFetch from '../../hooks/usePageFetch'
+import useSession from '../../hooks/useSession'
 
 import styles from './PatrimonyPage.module.scss'
 
@@ -71,9 +74,17 @@ const filterFacets: FilterFacet[] = [
 
 const PropertyPage = () => {
   const [filterOpen, setFilterOpen] = useState(false)
+  const {
+    isLoading: sessionLoading,
+    session: { isAuthenticated },
+  } = useSession()
 
   const { isLoading, data } =
     usePageFetch<PageableResponse<PatrimonyGeneral>>('patrimony')
+
+  if (sessionLoading || isLoading) return <Loading />
+
+  if (!isAuthenticated) return <Redirect to="/login" />
 
   return (
     <>
@@ -104,11 +115,7 @@ const PropertyPage = () => {
         >
           Filtrar
         </Button>
-        {isLoading ? (
-          <span>Carregando...</span>
-        ) : (
-          <PatrimonyList patrimonies={data?.data.content ?? []} />
-        )}
+        <PatrimonyList patrimonies={data?.data.content ?? []} />
         <br />
         {data?.data.totalPages && data.data.totalPages > 1 && (
           <Paginator count={data?.data.totalPages} />

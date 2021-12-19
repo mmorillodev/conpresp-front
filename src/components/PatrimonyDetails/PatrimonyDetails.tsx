@@ -1,11 +1,12 @@
 import { FC } from 'react'
 
-import { CircularProgress, IconButton, Modal } from '@mui/material'
+import { IconButton, Modal } from '@mui/material'
 import { Box } from '@mui/system'
 import CloseIcon from '@mui/icons-material/Close'
 import Carousel from 'react-material-ui-carousel'
 
 import Tag, { TagLevel } from '../Tag/Tag'
+import Loading from '../Loading/Loading'
 import usePageFetch from '../../hooks/usePageFetch'
 import { Graphic, PatrimonyDetails } from '../../types/PatrimonyDetails'
 
@@ -46,25 +47,7 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
       }, initial)
   }
 
-  if (isLoading)
-    return (
-      <Modal open>
-        <Box
-          style={{
-            position: 'absolute',
-            left: '0',
-            right: '0',
-            bottom: '0',
-            top: '0',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <CircularProgress color="inherit" />
-        </Box>
-      </Modal>
-    )
+  if (isLoading) return <Loading />
 
   if (error || !data) return null
 
