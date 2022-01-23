@@ -7,6 +7,7 @@ import PropertyPage from './pages/PatrimonyPage/PatrimonyPage'
 import Login from './pages/Login/Login'
 import UserPage from './pages/UserPage/UserPage'
 import PatrimonyAdmin from './pages/PatrimonyAdmin/PatrimonyAdmin'
+import NewPatrimony from './components/NewPatrimony/NewPatrimony'
 
 const queryClient = new QueryClient()
 
@@ -27,6 +28,7 @@ const App = () => {
           <Route exact component={UserPage} path="/usuarios" />
           <Route exact component={Login} path="/login" />
           <Route exact component={PatrimonyAdmin} path="/patrimonios-admin" />
+          <Route exact component={NewPatrimony} path="/novo-patrimonio" />
           <Route exact component={Index} path="/*" />
         </Switch>
       </main>
