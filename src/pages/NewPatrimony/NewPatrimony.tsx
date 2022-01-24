@@ -21,11 +21,11 @@ const NewPatrimony: FC = () => (
           Informações básicas do técnico responsável pelo preenchimento
         </span>
         <label>
-          Responsável pelo preenchimento
+          <span>Responsável pelo preenchimento</span>
           <input disabled />
         </label>
         <label>
-          Grupo
+          <span>Grupo</span>
           <input disabled />
         </label>
       </section>
@@ -33,27 +33,27 @@ const NewPatrimony: FC = () => (
         <h2>Dados Gerais</h2>
         <span>Dados gerais do tombamento</span>
         <label>
-          Responsável pelo preenchimento
+          <span>Item na resolução</span>
           <input />
         </label>
         <label>
-          Responsável pelo preenchimento
+          <span>Denominação</span>
           <input />
         </label>
         <label>
-          Responsável pelo preenchimento
+          <span>Classificação</span>
           <input />
         </label>
         <label>
-          Responsável pelo preenchimento
+          <span>Propriedade</span>
           <input />
         </label>
         <label>
-          Responsável pelo preenchimento
+          <span>Uso atual</span>
           <input />
         </label>
         <label>
-          Responsável pelo preenchimento
+          <span>Uso original</span>
           <input />
         </label>
       </section>

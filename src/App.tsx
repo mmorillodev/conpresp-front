@@ -7,7 +7,7 @@ import PropertyPage from './pages/PatrimonyPage/PatrimonyPage'
 import Login from './pages/Login/Login'
 import UserPage from './pages/UserPage/UserPage'
 import PatrimonyAdmin from './pages/PatrimonyAdmin/PatrimonyAdmin'
-import NewPatrimony from './components/NewPatrimony/NewPatrimony'
+import NewPatrimony from './pages/NewPatrimony/NewPatrimony'
 
 const queryClient = new QueryClient()
 
