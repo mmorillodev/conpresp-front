@@ -184,3 +184,19 @@ form {
     display: none;
   }
 }
+
+.foatingButtonBar {
+  position: fixed;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+
+  height: 61px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+
+  padding-inline-end: 32px;
+}
