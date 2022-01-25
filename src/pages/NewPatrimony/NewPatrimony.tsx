@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import Select from '../../components/Select/Select'
+import copyIcon from '../../assets/copy_24px.svg'
 
 import styles from './NewPatrimony.module.scss'
 
@@ -301,6 +302,30 @@ const NewPatrimony: FC = () => (
         <label>
           <h4>Observações</h4>
           <textarea placeholder="Label" />
+        </label>
+      </section>
+      <section>
+        <div className={styles.sectionTitle}>
+          <h2>Documentação gráfica</h2>
+        </div>
+        <label className={styles.inputFile}>
+          <input type="file" multiple />
+          <img src={copyIcon} alt="File icon" />
+          <span className={styles.fileDesc}>
+            Clique aqui para selecionar suas fotos
+          </span>
+        </label>
+      </section>
+      <section>
+        <div className={styles.sectionTitle}>
+          <h2>Documentação fotográfica</h2>
+        </div>
+        <label className={styles.inputFile}>
+          <input type="file" multiple />
+          <img src={copyIcon} alt="File icon" />
+          <span className={styles.fileDesc}>
+            Clique aqui para selecionar suas fotos
+          </span>
         </label>
       </section>
     </form>
