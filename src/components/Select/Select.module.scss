@@ -1,0 +1,33 @@
+.wrapper {
+  position: relative;
+  appearance: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    display: block;
+    background-image: url("data:image/svg+xml,%3Csvg width='6' height='4' viewBox='0 0 6 4' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.255243 1.51143L2.41358 3.66976C2.73858 3.99476 3.26358 3.99476 3.58858 3.66976L5.74691 1.51143C6.27191 0.986426 5.89691 0.0864258 5.15524 0.0864258H0.838576C0.0969097 0.0864258 -0.269757 0.986426 0.255243 1.51143Z' fill='%2385879B'/%3E%3C/svg%3E%0A");
+    width: 6px;
+    height: 4px;
+    right: 22px;
+    bottom: 50%;
+    transform: translateY(50%);
+  }
+}
+
+.Select {
+  background: #ffffff;
+  border: 1px solid rgba(133, 135, 155, 0.48);
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 18px 12px 9px 12px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0em;
+  text-align: left;
+
+  width: 100%;
+  appearance: none;
+}

@@ -183,6 +183,126 @@ const NewPatrimony: FC = () => (
           </label>
         </div>
       </section>
+      <section>
+        <div className={styles.sectionTitle}>
+          <h2>Ficha técnica</h2>
+        </div>
+        <div className={styles.flexbox}>
+          <label>
+            <h4>Autor do projeto original</h4>
+            <input placeholder="Label" />
+          </label>
+          <label>
+            <h4>Construtor</h4>
+            <input placeholder="Label" />
+          </label>
+        </div>
+        <div className={styles.flexbox}>
+          <label>
+            <h4>Data de construção</h4>
+            <input placeholder="Label" />
+          </label>
+          <label>
+            <h4>&nbsp;</h4>
+            <input placeholder="Label" />
+          </label>
+        </div>
+        <div className={styles.flexbox}>
+          <label>
+            <h4>Estilo arquitetônico</h4>
+            <Select placeholder="Label">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </Select>
+          </label>
+          <label>
+            <h4>Técnica Construtiva</h4>
+            <Select placeholder="Label">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </Select>
+          </label>
+        </div>
+        <div className={styles.flexbox}>
+          <label>
+            <h4>Número de pavimentos</h4>
+            <input placeholder="Label" />
+          </label>
+          <label>
+            <h4>Área do lote (m2)</h4>
+            <input placeholder="Label" />
+          </label>
+        </div>
+        <div className={styles.flexbox}>
+          <label>
+            <h4>Área construída (m2)</h4>
+            <input placeholder="Label" />
+          </label>
+          <label>
+            <h4>Grau de tombamento</h4>
+            <input placeholder="Label" />
+          </label>
+          <label>
+            <h4>Grau de alteração</h4>
+            <Select placeholder="Label">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </Select>
+          </label>
+        </div>
+        <label>
+          <h4>Comentário do grau de alteração</h4>
+          <textarea placeholder="Label" />
+        </label>
+        <label>
+          <h4>Estado de conservação</h4>
+          <Select placeholder="Label">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </Select>
+        </label>
+        <label>
+          <h4>Comentário do estado de conservação</h4>
+          <textarea placeholder="Label" />
+        </label>
+        <label>
+          <h4>Observações (pavimentos)</h4>
+          <textarea placeholder="Label" />
+        </label>
+      </section>
+      <section>
+        <div className={styles.sectionTitle}>
+          <h2>Descrição</h2>
+        </div>
+        <label>
+          <h4>Dados históricos</h4>
+          <textarea placeholder="Label" />
+        </label>
+        <label>
+          <h4>Dados arquitetônicos</h4>
+          <textarea placeholder="Label" />
+        </label>
+        <label>
+          <h4>Dados de ambiência</h4>
+          <textarea placeholder="Label" />
+        </label>
+        <label>
+          <h4>Fontes bibliográficas</h4>
+          <textarea placeholder="Label" />
+        </label>
+        <label>
+          <h4>Outras informações</h4>
+          <textarea placeholder="Label" />
+        </label>
+        <label>
+          <h4>Observações</h4>
+          <textarea placeholder="Label" />
+        </label>
+      </section>
     </form>
   </>
 )

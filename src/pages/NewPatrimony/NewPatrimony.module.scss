@@ -41,6 +41,7 @@ form {
     margin-bottom: 4px;
   }
 
+  textarea,
   input {
     background: #ffffff;
     border: 1px solid rgba(133, 135, 155, 0.48);
@@ -119,6 +120,10 @@ form {
     & > *:not(:last-child) {
       margin-bottom: 24px;
     }
+  }
+
+  textarea {
+    resize: none;
   }
 }
 
