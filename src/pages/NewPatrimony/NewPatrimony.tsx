@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import Select from '../../components/Select/Select'
 
 import styles from './NewPatrimony.module.scss'
 
@@ -28,11 +29,11 @@ const NewPatrimony: FC = () => (
         </label>
         <label>
           <h4>Grupo</h4>
-          <select disabled>
+          <Select disabled>
             <option>Grupo UAM</option>
             <option>Conpresp</option>
             <option>DHP</option>
-          </select>
+          </Select>
         </label>
       </section>
       <section>
@@ -114,6 +115,72 @@ const NewPatrimony: FC = () => (
               <input placeholder="Label" />
             </div>
           </div>
+        </div>
+      </section>
+      <section>
+        <div className={styles.sectionTitle}>
+          <h2>Localização</h2>
+          <span>
+            Preencher os dados de localização d bem, utilizando as ferramentas
+            disponíveis em: <a href="/">GEOSAMPA</a> e{' '}
+            <a href="/">CADASTRO DE IMÓVEIS TOMBADOS</a>
+          </span>
+        </div>
+        <div className={styles.flexbox}>
+          <label>
+            <h4>Tipo</h4>
+            <input placeholder="Label" />
+          </label>
+          <label>
+            <h4>Título</h4>
+            <Select placeholder="Label">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </Select>
+          </label>
+        </div>
+        <div className={styles.flexbox}>
+          <label style={{ flex: 3 }}>
+            <h4>Logradouro</h4>
+            <input placeholder="Label" />
+          </label>
+          <label>
+            <h4>Número</h4>
+            <input placeholder="Label" />
+          </label>
+        </div>
+        <div className={styles.flexbox}>
+          <label>
+            <h4>Distrito</h4>
+            <Select placeholder="Label">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </Select>
+          </label>
+          <label>
+            <h4>Prefeitura Regional</h4>
+            <Select placeholder="Label">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+            </Select>
+          </label>
+        </div>
+        <div className={styles.flexbox}>
+          <label>
+            <h4>Setor</h4>
+            <input placeholder="Label" />
+          </label>
+          <label>
+            <h4>Quadra</h4>
+            <input placeholder="Label" />
+          </label>
+          <label>
+            <h4>Lote</h4>
+            <input placeholder="Label" />
+          </label>
         </div>
       </section>
     </form>
