@@ -1,12 +1,36 @@
+import { useQuery } from 'react-query'
 import { FC, FormEvent } from 'react'
 import { Button } from '@mui/material'
 
 import Select from '../../components/Select/Select'
 import copyIcon from '../../assets/copy_24px.svg'
+import { UserDetails } from '../../types/UserDetails'
+import Loading from '../../components/Loading/Loading'
+import useSession from '../../hooks/useSession'
+import api from '../../apis/default'
 
 import styles from './NewPatrimony.module.scss'
 
 const NewPatrimony: FC = () => {
+  const {
+    session: { token, type },
+  } = useSession()
+
+  const { isLoading, data } = useQuery(
+    'users/user-info',
+    () =>
+      api.get<UserDetails>('users/user-info', {
+        headers: { Authorization: `${type} ${token}` },
+      }),
+    {
+      refetchOnWindowFocus: false,
+      refetchInterval: 0,
+      refetchOnReconnect: false,
+      refetchOnMount: false,
+      refetchIntervalInBackground: false,
+    }
+  )
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     console.log(e)
   }
@@ -27,6 +51,8 @@ const NewPatrimony: FC = () => {
       }
     })
   }
+
+  if (isLoading) return <Loading />
 
   return (
     <>
@@ -50,14 +76,15 @@ const NewPatrimony: FC = () => {
           </div>
           <label>
             <h4>Responsável pelo preenchimento</h4>
-            <input disabled value="Matheus Morillo" />
+            <input
+              disabled
+              value={`${data?.data.firstName} ${data?.data.lastName}`}
+            />
           </label>
           <label>
             <h4>Grupo</h4>
             <Select disabled>
-              <option>Grupo UAM</option>
-              <option>Conpresp</option>
-              <option>DHP</option>
+              <option selected>{data?.data.userGroup}</option>
             </Select>
           </label>
         </section>
