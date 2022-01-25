@@ -84,9 +84,9 @@ const PatrimonyAdmin = () => {
   const { isLoading, data, refetch } =
     usePageFetch<PageableResponse<PatrimonyGeneral>>('patrimony')
 
-    if (!isAuthenticated || profile === 'COMMON') {
-      history.push('/login')
-    }
+  if (!isAuthenticated || profile === 'COMMON') {
+    history.push('/login')
+  }
 
   return (
     <div className={styles.patrimony}>
@@ -128,6 +128,7 @@ const PatrimonyAdmin = () => {
               background: '#1DA6D1',
             }}
             startIcon={<AddIcon sx={{ color: 'white' }} />}
+            onClick={() => history.push('/novo-patrimonio')}
           >
             Novo Patrimônio
           </Button>
