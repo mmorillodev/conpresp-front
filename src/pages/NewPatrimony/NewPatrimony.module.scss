@@ -25,7 +25,23 @@
 
 form {
   padding: 0 184px;
+  max-width: 80vw;
+  margin-inline: auto;
 
+  h4 {
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 110%;
+
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+
+    color: #25272f;
+
+    margin-bottom: 4px;
+  }
+
+  select,
   input {
     background: #ffffff;
     border: 1px solid rgba(133, 135, 155, 0.48);
@@ -39,11 +55,39 @@ form {
     letter-spacing: 0em;
     text-align: left;
 
+    width: 100%;
+
     &::placeholder {
       font-weight: normal;
       font-size: 16px;
       line-height: 21px;
       color: #85879b;
+    }
+
+    &:disabled {
+      background: #ededed;
+      color: #85879b;
+    }
+  }
+
+  .sectionTitle {
+    h2 {
+      font-weight: bold;
+      font-size: 24px;
+      line-height: 124%;
+      color: #25272f;
+      margin-bottom: 4px;
+    }
+
+    margin-bottom: 24px;
+  }
+
+  .flexbox {
+    display: flex;
+    gap: 29px;
+
+    & > * {
+      flex: 1;
     }
   }
 
@@ -65,8 +109,37 @@ form {
 
   section {
     margin-bottom: 72px;
-    & > * :not(:last-child) {
+    & > *:not(:last-child) {
       margin-bottom: 24px;
     }
   }
+}
+
+.grayBgTitle {
+  display: block;
+  background: rgba(196, 196, 196, 0.2);
+  padding: 3px 0;
+  margin-bottom: 0.5rem;
+
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 18px;
+  text-transform: uppercase;
+  color: #25272f;
+}
+
+.resolutionItemDesc {
+  display: flex;
+
+  & > div {
+    flex: 1;
+
+    &:not(:last-child) {
+      margin-right: 2rem;
+    }
+  }
+}
+
+.resolutionItem {
+  margin-bottom: 1rem;
 }
