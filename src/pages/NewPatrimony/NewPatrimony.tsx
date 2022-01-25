@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, FormEvent } from 'react'
 import { Button } from '@mui/material'
 
 import Select from '../../components/Select/Select'
@@ -7,17 +7,25 @@ import copyIcon from '../../assets/copy_24px.svg'
 import styles from './NewPatrimony.module.scss'
 
 const NewPatrimony: FC = () => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    console.log(e)
+  }
+
   const getBase64 = (fileList: FileList | null) => {
     if (!fileList) return
 
-    const reader = new FileReader()
-    reader.readAsDataURL(fileList[0])
-    reader.onload = () => {
-      console.log(reader.result)
-    }
-    reader.onerror = error => {
-      console.log('Error: ', error)
-    }
+    Array.from(fileList).forEach(file => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+
+      reader.onload = () => {
+        console.log(reader.result)
+      }
+
+      reader.onerror = error => {
+        console.log('Error: ', error)
+      }
+    })
   }
 
   return (
@@ -32,7 +40,7 @@ const NewPatrimony: FC = () => {
         </span>
         <hr />
       </section>
-      <form>
+      <form onSubmit={handleSubmit}>
         <section>
           <div className={styles.sectionTitle}>
             <h2>Responsável Técnico</h2>
@@ -327,6 +335,7 @@ const NewPatrimony: FC = () => {
           <label className={styles.inputFile}>
             <input
               type="file"
+              accept="image/*"
               multiple
               onChange={e => getBase64(e.target.files)}
             />
@@ -343,6 +352,7 @@ const NewPatrimony: FC = () => {
           <label className={styles.inputFile}>
             <input
               type="file"
+              accept="image/*"
               multiple
               onChange={e => getBase64(e.target.files)}
             />
