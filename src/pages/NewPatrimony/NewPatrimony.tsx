@@ -104,11 +104,11 @@ const NewPatrimony: FC = () => {
           <div className={styles.flexbox}>
             <label style={{ flexBasis: '149px', flexGrow: 0 }}>
               <h4>Item na resolução</h4>
-              <input placeholder="Número do bem" />
+              <input placeholder="Número do bem" name="resolutionItem" />
             </label>
             <label>
               <h4>Denominação</h4>
-              <input placeholder="Nome do bem" />
+              <input placeholder="Nome do bem" name="denomination" />
             </label>
           </div>
           <div className={styles.flexbox}>
@@ -463,7 +463,7 @@ const NewPatrimony: FC = () => {
             </label>
             <label>
               <h4>&nbsp;</h4>
-              <input placeholder="Label" />
+              <input placeholder="Label" name="approximateDate" />
             </label>
           </div>
           <div className={styles.flexbox}>
