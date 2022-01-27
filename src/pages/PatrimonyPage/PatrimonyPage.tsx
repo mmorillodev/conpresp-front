@@ -96,10 +96,9 @@ const PropertyPage = () => {
       <section className={styles.mainContent}>
         <h1>Patrimônios</h1>
         <span className={styles.pageDescr}>
-          Pharetra aenean tellus mauris, viverra tortor morbi sit. Viverra nunc
-          neque dignissim vulputate. Eu hendrerit et tincidunt hendrerit
-          malesuada felis, felis sem purus. Placerat pharetra pretium massa
-          viverra. Blandit commodo ultrices feugiat tellus.
+          Olá, esta é a página inicial. Nela você pode consultar e visualizar
+          todos os patrimônios cadastrados no sistema. Se quiser você também
+          pode fazer uma pesquisa para filtrar os resultados.
         </span>
         <hr />
         <Button

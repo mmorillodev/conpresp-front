@@ -11,6 +11,8 @@ import Loading from '../../components/Loading/Loading'
 import useSession from '../../hooks/useSession'
 import api from '../../apis/default'
 
+import ModalDialog from '../../components/ModalDialog/ModalDialog'
+
 import styles from './NewPatrimony.module.scss'
 import { CreatePatrimony, Graphic } from '../../types/CreatePatrimony'
 
@@ -30,6 +32,8 @@ const NewPatrimony: FC = () => {
   } = useSession()
 
   const history = useHistory()
+  const [dialogSuccess, setDialogSuccess] = useState(false)
+  const [errorDialog, setErrorDialog] = useState(false)
 
   const { isLoading, data } = useQuery(
     'users/user-info',
@@ -51,9 +55,17 @@ const NewPatrimony: FC = () => {
   const { mutate: fireCreatePatrimonyRequest } = useMutation(
     'create patrimony',
     (requestBody: CreatePatrimony) =>
-      api.post<CreatePatrimony>('/patrimony', requestBody)
+      api
+        .post<CreatePatrimony>('/patrimony', requestBody, {
+          headers: { Authorization: `${type} ${token}` },
+        })
+        .then(() => {
+          setDialogSuccess(true)
+        })
+        .catch(() => {
+          setErrorDialog(true)
+        })
   )
-
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const {
@@ -238,13 +250,36 @@ const NewPatrimony: FC = () => {
 
   return (
     <>
+      <ModalDialog
+        open={dialogSuccess}
+        messageType="success"
+        title="Sucesso."
+        message="O Patrimônio foi cadastrado com sucesso"
+        buttonMessage="Confirmar"
+        onCloseRequest={() => {
+          setDialogSuccess(false)
+        }}
+        closeFunction={() => {}}
+        refetch={() => {}}
+      />
+
+      <ModalDialog
+        open={errorDialog}
+        messageType="error"
+        title="Erro."
+        message="Houve um erro inesperado, por favor verifique os campos e tente novamente."
+        buttonMessage="Confirmar"
+        onCloseRequest={() => setErrorDialog(false)}
+        closeFunction={() => {}}
+        refetch={() => {}}
+      />
+
       <section className={styles.mainContent}>
         <h1>Adicionar novo</h1>
         <span className={styles.pageDescr}>
-          Pharetra aenean tellus mauris, viverra tortor morbi sit. Viverra nunc
-          neque dignissim vulputate. Eu hendrerit et tincidunt hendrerit
-          malesuada felis, felis sem purus. Placerat pharetra pretium massa
-          viverra. Blandit commodo ultrices feugiat tellus.
+          Página dedicada exclusivamente para a criação dos registros do
+          patrimônio, aqui você pode preencher e adicionar imagens para que o
+          bem fique cadastrado no sistema.
         </span>
         <hr />
       </section>
@@ -266,7 +301,9 @@ const NewPatrimony: FC = () => {
           <label>
             <h4>Grupo</h4>
             <Select disabled>
-              <option selected>{data?.data.userGroup}</option>
+              <option defaultValue={data?.data.userGroup}>
+                {data?.data.userGroup}
+              </option>
             </Select>
           </label>
         </section>
@@ -468,7 +505,7 @@ const NewPatrimony: FC = () => {
             </label>
             <label>
               <h4>Número</h4>
-              <input name="number" placeholder="49" type="number" />
+              <input name="number" placeholder="49" />
             </label>
           </div>
           <div className={styles.flexbox}>
@@ -656,7 +693,7 @@ const NewPatrimony: FC = () => {
             </label>
             <label>
               <h4>&nbsp;</h4>
-              <input placeholder="1590" name="constructionYear" />
+              <input type="number" placeholder="1590" name="constructionYear" />
             </label>
           </div>
           <div className={styles.flexbox}>
@@ -859,6 +896,9 @@ const NewPatrimony: FC = () => {
             type="button"
             variant="outlined"
             sx={{ borderColor: '#1DA6D1', color: '#1DA6D1', width: '148px' }}
+            onClick={() => {
+              history.push('/patrimonios-admin')
+            }}
           >
             Cancelar
           </Button>

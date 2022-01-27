@@ -64,8 +64,8 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
           <div className={styles.patrimonyHeading}>
             <img
               src={
-                data.data.photographicDocumentation[0].image !== ''
-                  ? `data:image/png;base64,${data.data.photographicDocumentation[0].image}`
+                data.data.photographicDocumentation[0]?.image
+                  ? data.data.photographicDocumentation[0].image
                   : 'https://via.placeholder.com/152'
               }
               loading="lazy"
@@ -295,7 +295,7 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
                   <div className={styles.imageCarouselPair}>
                     {pair.map(image => (
                       <img
-                        src={`data:image/png;base64,${image.image}`}
+                        src={`${image.image}`}
                         alt={image.imageName}
                         loading="lazy"
                       />
@@ -314,7 +314,7 @@ const PatrimonyDetailsPage: FC<PatrimonyDetailsProps> = ({
                     <div className={styles.imageCarouselPair}>
                       {pair.map(image => (
                         <img
-                          src={`data:image/png;base64,${image.image}`}
+                          src={`${image.image}`}
                           alt={image.imageName}
                           loading="lazy"
                         />

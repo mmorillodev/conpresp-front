@@ -8,7 +8,6 @@ import UserList from '../../components/UserList/UserList'
 import Filters, { FilterFacet } from '../../components/PatrimonyFilters/Filters'
 import UserModal from '../../components/NewUserModal/UserModal'
 
-
 import { PageableResponse } from '../../types/PageableResponse'
 import usePageFetch from '../../hooks/usePageFetch'
 
@@ -37,6 +36,10 @@ const filterFacets: FilterFacet[] = [
   {
     label: 'Status',
     name: 'status',
+  },
+  {
+    label: 'Grupo',
+    name: 'group',
   },
 ]
 
