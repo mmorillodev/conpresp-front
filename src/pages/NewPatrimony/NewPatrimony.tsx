@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import { FC, FormEvent, useState } from 'react'
 import { Button } from '@mui/material'
 
@@ -12,7 +12,7 @@ import useSession from '../../hooks/useSession'
 import api from '../../apis/default'
 
 import styles from './NewPatrimony.module.scss'
-import { CreatePatrimony } from '../../types/CreatePatrimony'
+import { CreatePatrimony, Graphic } from '../../types/CreatePatrimony'
 
 const NewPatrimony: FC = () => {
   const [photographicDocumentation, setPhotographicDocumentation] = useState<
@@ -38,127 +38,189 @@ const NewPatrimony: FC = () => {
       refetchOnReconnect: false,
       refetchOnMount: false,
       refetchIntervalInBackground: false,
+      retry: false,
+      retryOnMount: false,
+      retryDelay: 0,
     }
   )
+  const { mutate: fireCreatePatrimonyRequest } = useMutation(
+    'create patrimony',
+    (requestBody: CreatePatrimony) =>
+      api.post<CreatePatrimony>('/patrimony', requestBody)
+  )
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    const {
+      currentTarget: { elements },
+    } = e
+
     const requestBody: CreatePatrimony = {
-      resolutionItem: e.target.resolutionItem.value,
-      denomination: e.target.denomination.value,
-      classification: e.target.classification.value,
-      currentUsage: e.target.currentUsage.value,
-      type: e.target.type.value,
-      originalUsage: e.target.originalUsage.value,
+      resolutionItem: (elements.namedItem('resolutionItem') as HTMLInputElement)
+        .value,
+      denomination: (elements.namedItem('denomination') as HTMLInputElement)
+        .value,
+      classification: (elements.namedItem('classification') as HTMLInputElement)
+        .value,
+      currentUsage: (elements.namedItem('currentUsage') as HTMLInputElement)
+        .value,
+      type: (elements.namedItem('type') as HTMLInputElement).value,
+      originalUsage: (elements.namedItem('originalUsage') as HTMLInputElement)
+        .value,
       heritageResolutions: [
         {
-          resolution: e.target.conprespResolution.value,
+          resolution: (
+            elements.namedItem('conprespResolution') as HTMLInputElement
+          ).value,
           institution: 'CONPRESP',
-          year: e.target.conprespResolutionYear.value,
+          year: Number(
+            (elements.namedItem('conprespResolutionYear') as HTMLInputElement)
+              .value
+          ),
         },
         {
-          resolution: e.target.condepaatResolution.value,
+          resolution: (
+            elements.namedItem('condepaatResolution') as HTMLInputElement
+          ).value,
           institution: 'CONDEPAAT',
-          year: e.target.condepaatResolutionYear.value,
+          year: Number(
+            (elements.namedItem('condepaatResolutionYear') as HTMLInputElement)
+              .value
+          ),
         },
         {
-          resolution: e.target.iphanResolution.value,
+          resolution: (
+            elements.namedItem('iphanResolution') as HTMLInputElement
+          ).value,
           institution: 'IPHAN',
-          year: e.target.iphanResolutionYear.value,
+          year: Number(
+            (elements.namedItem('iphanResolutionYear') as HTMLInputElement)
+              .value
+          ),
         },
       ],
       addressLot: {
-        type: e.target.addressType.value,
-        title: e.target.addressTitle.value,
-        street: e.target.street.value,
-        number: e.target.number.value,
-        district: e.target.district.value,
-        regionalHall: e.target.regionalHall.value,
-        sector: e.target.sector.value,
-        block: e.target.block.value,
-        lot: e.target.lot.value,
+        type: (elements.namedItem('addressType') as HTMLInputElement).value,
+        title: (elements.namedItem('addressTitle') as HTMLInputElement).value,
+        street: (elements.namedItem('street') as HTMLInputElement).value,
+        number: (elements.namedItem('number') as HTMLInputElement).value,
+        district: (elements.namedItem('district') as HTMLInputElement).value,
+        regionalHall: (elements.namedItem('regionalHall') as HTMLInputElement)
+          .value,
+        sector: (elements.namedItem('sector') as HTMLInputElement).value,
+        block: (elements.namedItem('block') as HTMLInputElement).value,
+        lot: (elements.namedItem('lot') as HTMLInputElement).value,
       },
       construction: {
-        author: e.target.author.value,
-        constructor: e.target.constructor.value,
-        approximateDate: e.target.approximateDate.value,
-        constructionYear: e.target.constructionYear.value,
-        architecturalStyle: e.target.architecturalStyle.value,
-        constructiveTechnique: e.target.constructiveTechnique.value,
-        floorQuantity: e.target.floorQuantity.value,
-        areaLot: e.target.areaLot.value,
-        constructedArea: e.target.constructedArea.value,
-        heritageLevel: e.target.heritageLevel.value,
-        modificationLevel: e.target.modificationLevel.value,
-        modificationLevelComment: e.target.modificationLevelComment.value,
-        conservationLevel: e.target.conservationLevel.value,
-        conservationLevelComment: e.target.conservationLevelComment.value,
-        floorObservation: e.target.floorObservation.value,
+        author: (elements.namedItem('author') as HTMLInputElement).value,
+        constructor: (elements.namedItem('constructor') as HTMLInputElement)
+          .value,
+        approximateDate: !!(
+          elements.namedItem('approximateDate') as HTMLInputElement
+        ).value,
+        constructionYear: (
+          elements.namedItem('constructionYear') as HTMLInputElement
+        ).value,
+        architecturalStyle: (
+          elements.namedItem('architecturalStyle') as HTMLInputElement
+        ).value,
+        constructiveTechnique: (
+          elements.namedItem('constructiveTechnique') as HTMLInputElement
+        ).value,
+        floorQuantity: Number(
+          (elements.namedItem('floorQuantity') as HTMLInputElement).value
+        ),
+        areaLot: Number(
+          (elements.namedItem('areaLot') as HTMLInputElement).value
+        ),
+        constructedArea: Number(
+          (elements.namedItem('constructedArea') as HTMLInputElement).value
+        ),
+        heritageLevel: (elements.namedItem('heritageLevel') as HTMLInputElement)
+          .value,
+        modificationLevel: (
+          elements.namedItem('modificationLevel') as HTMLInputElement
+        ).value,
+        modificationLevelComment: (
+          elements.namedItem('modificationLevelComment') as HTMLInputElement
+        ).value,
+        conservationLevel: (
+          elements.namedItem('conservationLevel') as HTMLInputElement
+        ).value,
+        conservationLevelComment: (
+          elements.namedItem('conservationLevelComment') as HTMLInputElement
+        ).value,
+        floorObservation: (
+          elements.namedItem('floorObservation') as HTMLInputElement
+        ).value,
       },
       description: {
-        historicalData: e.target.historicalData.value,
-        architecturalData: e.target.architecturalData.value,
-        ambienceData: e.target.ambienceData.value,
-        bibliographicSource: e.target.bibliographicSource.value,
-        otherInfo: e.target.otherInfo.value,
-        observation: e.target.observation.value,
+        historicalData: (
+          elements.namedItem('historicalData') as HTMLInputElement
+        ).value,
+        architecturalData: (
+          elements.namedItem('architecturalData') as HTMLInputElement
+        ).value,
+        ambienceData: (elements.namedItem('ambienceData') as HTMLInputElement)
+          .value,
+        bibliographicSource: (
+          elements.namedItem('bibliographicSource') as HTMLInputElement
+        ).value,
+        otherInfo: (elements.namedItem('otherInfo') as HTMLInputElement).value,
+        observation: (elements.namedItem('observation') as HTMLInputElement)
+          .value,
       },
-      graphic: [
-        {
-          image: 'e.target.image.value',
-          imageName: 'e.target.imageName.value',
-        },
-      ],
-      photographicDocumentation: [
-        {
-          image: 'e.target.image.value',
-          imageName: 'e.target.imageName.value',
-        },
-      ],
+      graphic: graphicDocumentation.map<Graphic>(image => ({
+        image,
+        imageName: 'aaaa',
+      })),
+      photographicDocumentation: photographicDocumentation.map<Graphic>(
+        image => ({ image, imageName: 'bbbbb' })
+      ),
     }
     console.log(requestBody)
-    console.log(photographicDocumentation)
-    console.log(graphicDocumentation)
+
+    fireCreatePatrimonyRequest(requestBody)
   }
 
-  const getBase64Graphic = (fileList: FileList | null) => {
+  const getBase64Graphic = async (fileList: FileList | null) => {
     if (!fileList) return
 
-    Array.from(fileList).forEach(file => {
-      const reader = new FileReader()
-      reader.readAsDataURL(file)
+    const filesPromises = Array.from(fileList).map<Promise<any>>(
+      file =>
+        new Promise((resolve, reject) => {
+          const reader = new FileReader()
+          reader.readAsDataURL(file)
 
-      reader.onload = () => {
-        setGraphicDocumentation([
-          ...graphicDocumentation,
-          reader.result as string,
-        ])
-      }
+          reader.onload = resolve
 
-      reader.onerror = error => {
-        console.log('Error: ', error)
-      }
-    })
+          reader.onerror = reject
+        })
+    )
+
+    const files = await Promise.all(filesPromises)
+
+    setGraphicDocumentation(files.map(file => file?.currentTarget?.result))
   }
 
-  const getBase64Photographic = (fileList: FileList | null) => {
+  const getBase64Photographic = async (fileList: FileList | null) => {
     if (!fileList) return
 
-    Array.from(fileList).forEach(file => {
-      const reader = new FileReader()
-      reader.readAsDataURL(file)
+    const filesPromises = Array.from(fileList).map<Promise<any>>(
+      file =>
+        new Promise((resolve, reject) => {
+          const reader = new FileReader()
+          reader.readAsDataURL(file)
 
-      reader.onload = () => {
-        setPhotographicDocumentation([
-          ...photographicDocumentation,
-          reader.result as string,
-        ])
-      }
+          reader.onload = resolve
 
-      reader.onerror = error => {
-        console.log('Error: ', error)
-      }
-    })
+          reader.onerror = reject
+        })
+    )
+
+    const files = await Promise.all(filesPromises)
+
+    setPhotographicDocumentation(files.map(file => file?.currentTarget?.result))
   }
 
   if (!isAuthenticated || profile === 'COMMON') {
@@ -312,7 +374,11 @@ const NewPatrimony: FC = () => {
               </div>
               <div>
                 <h4>Ano do Tombamento</h4>
-                <input name="conprespResolutionYear" placeholder="0000" />
+                <input
+                  name="conprespResolutionYear"
+                  placeholder="0000"
+                  type="number"
+                />
               </div>
             </div>
           </div>
@@ -328,7 +394,12 @@ const NewPatrimony: FC = () => {
               </div>
               <div>
                 <h4>Ano do Tombamento</h4>
-                <input name="condepaatResolutionYear" placeholder="0000" />
+
+                <input
+                  name="condepaatResolutionYear"
+                  placeholder="0000"
+                  type="number"
+                />
               </div>
             </div>
           </div>
@@ -341,7 +412,11 @@ const NewPatrimony: FC = () => {
               </div>
               <div>
                 <h4>Ano do Tombamento</h4>
-                <input name="iphanResolutionYear" placeholder="0000" />
+                <input
+                  name="iphanResolutionYear"
+                  placeholder="0000"
+                  type="number"
+                />
               </div>
             </div>
           </div>
@@ -386,7 +461,7 @@ const NewPatrimony: FC = () => {
             </label>
             <label>
               <h4>Número</h4>
-              <input name="number" placeholder="49" />
+              <input name="number" placeholder="49" type="number" />
             </label>
           </div>
           <div className={styles.flexbox}>
@@ -608,17 +683,17 @@ const NewPatrimony: FC = () => {
           <div className={styles.flexbox}>
             <label>
               <h4>Número de pavimentos</h4>
-              <input name="floorQuantity" placeholder="3" />
+              <input name="floorQuantity" placeholder="3" type="number" />
             </label>
             <label>
               <h4>Área do lote (m2)</h4>
-              <input name="areaLot" placeholder="0.00" />
+              <input name="areaLot" placeholder="0.00" type="number" />
             </label>
           </div>
           <div className={styles.flexbox}>
             <label>
               <h4>Área construída (m2)</h4>
-              <input name="constructedArea" placeholder="0.00" />
+              <input name="constructedArea" placeholder="0.00" type="number" />
             </label>
             <label>
               <h4>Grau de tombamento</h4>

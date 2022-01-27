@@ -6,11 +6,20 @@ import App from './App'
 
 import './index.scss'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById('root')
-)
+async function setup() {
+  if (process.env.NODE_ENV === 'development') {
+    const worker = await import('./mock/browser')
+    worker.default.start()
+  }
+
+  ReactDOM.render(
+    <React.StrictMode>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </React.StrictMode>,
+    document.getElementById('root')
+  )
+}
+
+setup()

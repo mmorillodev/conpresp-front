@@ -36,6 +36,7 @@
     "react/require-default-props": "off",
     "object-curly-newline": "off",
     "import/prefer-default-export": 1,
+    "no-debugger": "warn",
     "import/extensions": [
       "error",
       "ignorePackages",
