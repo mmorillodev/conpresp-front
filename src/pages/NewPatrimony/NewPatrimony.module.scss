@@ -201,3 +201,32 @@
 
   padding-inline-end: 32px;
 }
+
+.radioSet {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: row !important;
+  align-items: center;
+
+  input {
+    width: auto !important;
+    margin: 0;
+    margin-right: 0.5rem;
+  }
+
+  span {
+    margin-bottom: 0 !important;
+  }
+}
+
+.insertedImage {
+  margin: 0;
+  width: 325px;
+}
+
+.insertedImageWrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 325px);
+  gap: 8px;
+}

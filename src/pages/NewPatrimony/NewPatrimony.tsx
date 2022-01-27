@@ -14,11 +14,16 @@ import api from '../../apis/default'
 import styles from './NewPatrimony.module.scss'
 import { CreatePatrimony, Graphic } from '../../types/CreatePatrimony'
 
+interface Image {
+  image: string
+  name?: string
+}
+
 const NewPatrimony: FC = () => {
   const [photographicDocumentation, setPhotographicDocumentation] = useState<
-    string[]
+    Image[]
   >([])
-  const [graphicDocumentation, setGraphicDocumentation] = useState<string[]>([])
+  const [graphicDocumentation, setGraphicDocumentation] = useState<Image[]>([])
 
   const {
     session: { token, type, isAuthenticated, profile },
@@ -115,9 +120,9 @@ const NewPatrimony: FC = () => {
         author: (elements.namedItem('author') as HTMLInputElement).value,
         constructor: (elements.namedItem('constructor') as HTMLInputElement)
           .value,
-        approximateDate: !!(
+        approximateDate: (
           elements.namedItem('approximateDate') as HTMLInputElement
-        ).value,
+        ).checked,
         constructionYear: (
           elements.namedItem('constructionYear') as HTMLInputElement
         ).value,
@@ -171,11 +176,11 @@ const NewPatrimony: FC = () => {
           .value,
       },
       graphic: graphicDocumentation.map<Graphic>(image => ({
-        image,
-        imageName: 'aaaa',
+        image: image.image,
+        imageName: image.name ?? '',
       })),
       photographicDocumentation: photographicDocumentation.map<Graphic>(
-        image => ({ image, imageName: 'bbbbb' })
+        image => ({ image: image.image, imageName: image.name ?? '' })
       ),
     }
     fireCreatePatrimonyRequest(requestBody)
@@ -198,7 +203,9 @@ const NewPatrimony: FC = () => {
 
     const files = await Promise.all(filesPromises)
 
-    setGraphicDocumentation(files.map(file => file?.currentTarget?.result))
+    setGraphicDocumentation(
+      files.map<Image>(file => ({ image: file?.currentTarget?.result }))
+    )
   }
 
   const getBase64Photographic = async (fileList: FileList | null) => {
@@ -218,7 +225,9 @@ const NewPatrimony: FC = () => {
 
     const files = await Promise.all(filesPromises)
 
-    setPhotographicDocumentation(files.map(file => file?.currentTarget?.result))
+    setPhotographicDocumentation(
+      files.map<Image>(file => ({ image: file?.currentTarget?.result }))
+    )
   }
 
   if (!isAuthenticated || profile === 'COMMON') {
@@ -640,11 +649,14 @@ const NewPatrimony: FC = () => {
           <div className={styles.flexbox}>
             <label>
               <h4>Data de construção</h4>
-              <input name="approximateDate" placeholder="1590" />
+              <label className={styles.radioSet}>
+                <input type="checkbox" name="approximateDate" />
+                <span> Data aproximada?</span>
+              </label>
             </label>
             <label>
               <h4>&nbsp;</h4>
-              <input placeholder="Label" name="constructionYear" />
+              <input placeholder="1590" name="constructionYear" />
             </label>
           </div>
           <div className={styles.flexbox}>
@@ -758,8 +770,7 @@ const NewPatrimony: FC = () => {
             <h4>Dados de ambiência</h4>
             <textarea
               name="ambienceData"
-              placeholder="FUPAM 
-Situada em meio de quadra na Praça do Patriarca"
+              placeholder="FUPAM Situada em meio de quadra na Praça do Patriarca"
             />
           </label>
           <label>
@@ -785,37 +796,63 @@ Situada em meio de quadra na Praça do Patriarca"
           <div className={styles.sectionTitle}>
             <h2>Documentação gráfica</h2>
           </div>
-          <label className={styles.inputFile}>
-            <input
-              name="graphicDocumentation"
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={e => getBase64Graphic(e.target.files)}
-            />
-            <img src={copyIcon} alt="File icon" />
-            <span className={styles.fileDesc}>
-              Clique aqui para selecionar suas fotos
-            </span>
-          </label>
+          {graphicDocumentation.length > 0 ? (
+            <div className={styles.insertedImageWrapper}>
+              {graphicDocumentation.map((image, index) => (
+                <img
+                  key={index}
+                  src={image.image}
+                  alt="inserted"
+                  className={styles.insertedImage}
+                />
+              ))}
+            </div>
+          ) : (
+            <label className={styles.inputFile}>
+              <input
+                name="graphicDocumentation"
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={e => getBase64Graphic(e.target.files)}
+              />
+              <img src={copyIcon} alt="File icon" />
+              <span className={styles.fileDesc}>
+                Clique aqui para selecionar suas fotos
+              </span>
+            </label>
+          )}
         </section>
         <section>
           <div className={styles.sectionTitle}>
             <h2>Documentação fotográfica</h2>
           </div>
-          <label className={styles.inputFile}>
-            <input
-              name="photographicDocumentation"
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={e => getBase64Photographic(e.target.files)}
-            />
-            <img src={copyIcon} alt="File icon" />
-            <span className={styles.fileDesc}>
-              Clique aqui para selecionar suas fotos
-            </span>
-          </label>
+          {photographicDocumentation.length > 0 ? (
+            <div className={styles.insertedImageWrapper}>
+              {photographicDocumentation.map((image, index) => (
+                <img
+                  key={index}
+                  src={image.image}
+                  alt="inserted"
+                  className={styles.insertedImage}
+                />
+              ))}
+            </div>
+          ) : (
+            <label className={styles.inputFile}>
+              <input
+                name="photographicDocumentation"
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={e => getBase64Photographic(e.target.files)}
+              />
+              <img src={copyIcon} alt="File icon" />
+              <span className={styles.fileDesc}>
+                Clique aqui para selecionar suas fotos
+              </span>
+            </label>
+          )}
         </section>
         <div className={styles.foatingButtonBar}>
           <Button
