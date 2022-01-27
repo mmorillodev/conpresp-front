@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query'
-import { FC, FormEvent } from 'react'
+import { FC, FormEvent, useState } from 'react'
 import { Button } from '@mui/material'
 
 import { useHistory } from 'react-router-dom'
@@ -12,8 +12,14 @@ import useSession from '../../hooks/useSession'
 import api from '../../apis/default'
 
 import styles from './NewPatrimony.module.scss'
+import { CreatePatrimony } from '../../types/CreatePatrimony'
 
 const NewPatrimony: FC = () => {
+  const [photographicDocumentation, setPhotographicDocumentation] = useState<
+    string[]
+  >([])
+  const [graphicDocumentation, setGraphicDocumentation] = useState<string[]>([])
+
   const {
     session: { token, type, isAuthenticated, profile },
   } = useSession()
@@ -35,11 +41,87 @@ const NewPatrimony: FC = () => {
     }
   )
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    console.log(e)
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+    const requestBody: CreatePatrimony = {
+      resolutionItem: e.target.resolutionItem.value,
+      denomination: e.target.denomination.value,
+      classification: e.target.classification.value,
+      currentUsage: e.target.currentUsage.value,
+      type: e.target.type.value,
+      originalUsage: e.target.originalUsage.value,
+      heritageResolutions: [
+        {
+          resolution: e.target.conprespResolution.value,
+          institution: 'CONPRESP',
+          year: e.target.conprespResolutionYear.value,
+        },
+        {
+          resolution: e.target.condepaatResolution.value,
+          institution: 'CONDEPAAT',
+          year: e.target.condepaatResolutionYear.value,
+        },
+        {
+          resolution: e.target.iphanResolution.value,
+          institution: 'IPHAN',
+          year: e.target.iphanResolutionYear.value,
+        },
+      ],
+      addressLot: {
+        type: e.target.addressType.value,
+        title: e.target.addressTitle.value,
+        street: e.target.street.value,
+        number: e.target.number.value,
+        district: e.target.district.value,
+        regionalHall: e.target.regionalHall.value,
+        sector: e.target.sector.value,
+        block: e.target.block.value,
+        lot: e.target.lot.value,
+      },
+      construction: {
+        author: e.target.author.value,
+        constructor: e.target.constructor.value,
+        approximateDate: e.target.approximateDate.value,
+        constructionYear: e.target.constructionYear.value,
+        architecturalStyle: e.target.architecturalStyle.value,
+        constructiveTechnique: e.target.constructiveTechnique.value,
+        floorQuantity: e.target.floorQuantity.value,
+        areaLot: e.target.areaLot.value,
+        constructedArea: e.target.constructedArea.value,
+        heritageLevel: e.target.heritageLevel.value,
+        modificationLevel: e.target.modificationLevel.value,
+        modificationLevelComment: e.target.modificationLevelComment.value,
+        conservationLevel: e.target.conservationLevel.value,
+        conservationLevelComment: e.target.conservationLevelComment.value,
+        floorObservation: e.target.floorObservation.value,
+      },
+      description: {
+        historicalData: e.target.historicalData.value,
+        architecturalData: e.target.architecturalData.value,
+        ambienceData: e.target.ambienceData.value,
+        bibliographicSource: e.target.bibliographicSource.value,
+        otherInfo: e.target.otherInfo.value,
+        observation: e.target.observation.value,
+      },
+      graphic: [
+        {
+          image: 'e.target.image.value',
+          imageName: 'e.target.imageName.value',
+        },
+      ],
+      photographicDocumentation: [
+        {
+          image: 'e.target.image.value',
+          imageName: 'e.target.imageName.value',
+        },
+      ],
+    }
+    console.log(requestBody)
+    console.log(photographicDocumentation)
+    console.log(graphicDocumentation)
   }
 
-  const getBase64 = (fileList: FileList | null) => {
+  const getBase64Graphic = (fileList: FileList | null) => {
     if (!fileList) return
 
     Array.from(fileList).forEach(file => {
@@ -47,7 +129,30 @@ const NewPatrimony: FC = () => {
       reader.readAsDataURL(file)
 
       reader.onload = () => {
-        console.log(reader.result)
+        setGraphicDocumentation([
+          ...graphicDocumentation,
+          reader.result as string,
+        ])
+      }
+
+      reader.onerror = error => {
+        console.log('Error: ', error)
+      }
+    })
+  }
+
+  const getBase64Photographic = (fileList: FileList | null) => {
+    if (!fileList) return
+
+    Array.from(fileList).forEach(file => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+
+      reader.onload = () => {
+        setPhotographicDocumentation([
+          ...photographicDocumentation,
+          reader.result as string,
+        ])
       }
 
       reader.onerror = error => {
@@ -74,7 +179,7 @@ const NewPatrimony: FC = () => {
         </span>
         <hr />
       </section>
-      <form onSubmit={handleSubmit}>
+      <form className={styles.patrimonyForm} onSubmit={handleSubmit}>
         <section>
           <div className={styles.sectionTitle}>
             <h2>Responsável Técnico</h2>
@@ -114,7 +219,7 @@ const NewPatrimony: FC = () => {
           <div className={styles.flexbox}>
             <label>
               <h4>Classificação</h4>
-              <Select placeholder="Label">
+              <Select name="classification" placeholder="Label">
                 <option value="Imóvel"> Imóvel </option>
                 <option value="Móvel"> Móvel </option>
                 <option value="Sítio Urbano"> Sítio Urbano </option>
@@ -123,7 +228,7 @@ const NewPatrimony: FC = () => {
             </label>
             <label>
               <h4>Propriedade</h4>
-              <Select placeholder="Label">
+              <Select name="type" placeholder="Label">
                 <option value="Pública"> Pública </option>
                 <option value="Particular"> Particular </option>
                 <option value="Religiosa"> Religiosa </option>
@@ -133,7 +238,7 @@ const NewPatrimony: FC = () => {
           <div className={styles.flexbox}>
             <label>
               <h4>Uso atual</h4>
-              <Select placeholder="Label">
+              <Select name="currentUsage" placeholder="Label">
                 <option value="Religioso"> Religioso </option>
                 <option value="Cemitério, Mausoléus e Túmulos">
                   {' '}
@@ -163,7 +268,7 @@ const NewPatrimony: FC = () => {
             </label>
             <label>
               <h4>Uso original</h4>
-              <Select placeholder="Label">
+              <Select name="originalUsage" placeholder="Label">
                 <option value="Religioso"> Religioso </option>
                 <option value="Cemitério, Mausoléus e Túmulos">
                   {' '}
@@ -203,11 +308,11 @@ const NewPatrimony: FC = () => {
             <div className={styles.resolutionItemDesc}>
               <div style={{ flex: 3 }}>
                 <h4>Resolução</h4>
-                <input placeholder="05/91" />
+                <input name="conprespResolution" placeholder="05/91" />
               </div>
               <div>
                 <h4>Ano do Tombamento</h4>
-                <input placeholder="0000" />
+                <input name="conprespResolutionYear" placeholder="0000" />
               </div>
             </div>
           </div>
@@ -216,11 +321,14 @@ const NewPatrimony: FC = () => {
             <div className={styles.resolutionItemDesc}>
               <div style={{ flex: 3 }}>
                 <h4>Resolução</h4>
-                <input placeholder="RES. SC SN/70 ou RES. SC 67/82" />
+                <input
+                  name="condepaatResolution"
+                  placeholder="RES. SC SN/70 ou RES. SC 67/82"
+                />
               </div>
               <div>
                 <h4>Ano do Tombamento</h4>
-                <input placeholder="0000" />
+                <input name="condepaatResolutionYear" placeholder="0000" />
               </div>
             </div>
           </div>
@@ -229,11 +337,11 @@ const NewPatrimony: FC = () => {
             <div className={styles.resolutionItemDesc}>
               <div style={{ flex: 3 }}>
                 <h4>Resolução</h4>
-                <input placeholder="nº 253 Ano 1951" />
+                <input name="iphanResolution" placeholder="nº 253 Ano 1951" />
               </div>
               <div>
                 <h4>Ano do Tombamento</h4>
-                <input placeholder="0000" />
+                <input name="iphanResolutionYear" placeholder="0000" />
               </div>
             </div>
           </div>
@@ -264,27 +372,27 @@ const NewPatrimony: FC = () => {
           <div className={styles.flexbox}>
             <label>
               <h4>Tipo</h4>
-              <input placeholder="Praça" />
+              <input name="addressType" placeholder="Praça" />
             </label>
             <label>
               <h4>Título</h4>
-              <input placeholder="..." />
+              <input name="addressTitle" placeholder="..." />
             </label>
           </div>
           <div className={styles.flexbox}>
             <label style={{ flex: 3 }}>
               <h4>Logradouro</h4>
-              <input placeholder="Do Patriarca" />
+              <input name="street" placeholder="Do Patriarca" />
             </label>
             <label>
               <h4>Número</h4>
-              <input placeholder="49" />
+              <input name="number" placeholder="49" />
             </label>
           </div>
           <div className={styles.flexbox}>
             <label>
               <h4>Distrito</h4>
-              <Select placeholder="Label">
+              <Select name="district" placeholder="Label">
                 <option value="Alto de Pinheiros">Alto de Pinheiros</option>
                 <option value="Anhanguera">Anhanguera</option>
                 <option value="Água Rasa">Água Rasa</option>
@@ -385,7 +493,7 @@ const NewPatrimony: FC = () => {
             </label>
             <label>
               <h4>Prefeitura Regional</h4>
-              <Select placeholder="Label">
+              <Select name="regionalHall" placeholder="Label">
                 <option value="Aricanduva/Vila Formosa">
                   Aricanduva/Vila Formosa
                 </option>
@@ -430,15 +538,15 @@ const NewPatrimony: FC = () => {
           <div className={styles.flexbox}>
             <label>
               <h4>Setor</h4>
-              <input placeholder="0" />
+              <input name="sector" placeholder="0" />
             </label>
             <label>
               <h4>Quadra</h4>
-              <input placeholder="0" />
+              <input name="block" placeholder="0" />
             </label>
             <label>
               <h4>Lote</h4>
-              <input placeholder="0" />
+              <input name="lot" placeholder="0" />
             </label>
           </div>
         </section>
@@ -449,27 +557,27 @@ const NewPatrimony: FC = () => {
           <div className={styles.flexbox}>
             <label>
               <h4>Autor do projeto original</h4>
-              <input placeholder="Fiéis Anônimos " />
+              <input name="author" placeholder="Fiéis Anônimos " />
             </label>
             <label>
               <h4>Construtor</h4>
-              <input placeholder="Fiéis Anônimos" />
+              <input name="constructor" placeholder="Fiéis Anônimos" />
             </label>
           </div>
           <div className={styles.flexbox}>
             <label>
               <h4>Data de construção</h4>
-              <input placeholder="1590" />
+              <input name="approximateDate" placeholder="1590" />
             </label>
             <label>
               <h4>&nbsp;</h4>
-              <input placeholder="Label" name="approximateDate" />
+              <input placeholder="Label" name="constructionYear" />
             </label>
           </div>
           <div className={styles.flexbox}>
             <label>
               <h4>Estilo arquitetônico</h4>
-              <Select placeholder="Label">
+              <Select name="architecturalStyle" placeholder="Label">
                 <option value="Art Deco">Art Deco</option>
                 <option value="Art Nouveau">Art Nouveau</option>
                 <option value="Bandeirista">Bandeirista</option>
@@ -483,7 +591,7 @@ const NewPatrimony: FC = () => {
             </label>
             <label>
               <h4>Técnica Construtiva</h4>
-              <Select placeholder="Label">
+              <Select name="constructiveTechnique" placeholder="Label">
                 <option value="Adobe">Adobe</option>
                 <option value="Alvenaria de tijolos">
                   Alvenaria de tijolos
@@ -500,25 +608,25 @@ const NewPatrimony: FC = () => {
           <div className={styles.flexbox}>
             <label>
               <h4>Número de pavimentos</h4>
-              <input placeholder="3" />
+              <input name="floorQuantity" placeholder="3" />
             </label>
             <label>
               <h4>Área do lote (m2)</h4>
-              <input placeholder="0.00" />
+              <input name="areaLot" placeholder="0.00" />
             </label>
           </div>
           <div className={styles.flexbox}>
             <label>
               <h4>Área construída (m2)</h4>
-              <input placeholder="0.00" />
+              <input name="constructedArea" placeholder="0.00" />
             </label>
             <label>
               <h4>Grau de tombamento</h4>
-              <input placeholder="NP-2" />
+              <input name="heritageLevel" placeholder="NP-2" />
             </label>
             <label>
               <h4>Grau de alteração</h4>
-              <Select placeholder="Label">
+              <Select name="modificationLevel" placeholder="Label">
                 <option value="Preservado"> Preservado</option>
                 <option value="Alterado"> Alterado </option>
                 <option value="Descaracterizado"> Descaracterizado</option>
@@ -527,11 +635,14 @@ const NewPatrimony: FC = () => {
           </div>
           <label>
             <h4>Comentário do grau de alteração</h4>
-            <textarea placeholder="Além da reconstrução da fachada, em 1899, verifica-se a construção de um anexo conjugado no fundo do lote..." />
+            <textarea
+              name="modificationLevelComment"
+              placeholder="Além da reconstrução da fachada, em 1899, verifica-se a construção de um anexo conjugado no fundo do lote..."
+            />
           </label>
           <label>
             <h4>Estado de conservação</h4>
-            <Select placeholder="Label">
+            <Select name="conservationLevel" placeholder="Label">
               <option value="Bom">Bom</option>
               <option value="Regular">Regular</option>
               <option value="Ruim">Ruim</option>
@@ -539,11 +650,17 @@ const NewPatrimony: FC = () => {
           </label>
           <label>
             <h4>Comentário do estado de conservação</h4>
-            <textarea placeholder="A fachada apresenta patologias como desagregação da argamassa de revestimento..." />
+            <textarea
+              name="conservationLevelComment"
+              placeholder="A fachada apresenta patologias como desagregação da argamassa de revestimento..."
+            />
           </label>
           <label>
             <h4>Observações (pavimentos)</h4>
-            <textarea placeholder="Térreo, Coro e Torre" />
+            <textarea
+              name="floorObservation"
+              placeholder="Térreo, Coro e Torre"
+            />
           </label>
         </section>
         <section>
@@ -552,30 +669,43 @@ const NewPatrimony: FC = () => {
           </div>
           <label>
             <h4>Dados históricos</h4>
-            <textarea placeholder="A Igreja de Santo Antônio foi construída pelos primeiros povoadores" />
+            <textarea
+              name="historicalData"
+              placeholder="A Igreja de Santo Antônio foi construída pelos primeiros povoadores"
+            />
           </label>
           <label>
             <h4>Dados arquitetônicos</h4>
-            <textarea placeholder="Inicialmente um ermida de característica colonial, passou por diversas" />
+            <textarea
+              name="architecturalData"
+              placeholder="Inicialmente um ermida de característica colonial, passou por diversas"
+            />
           </label>
           <label>
             <h4>Dados de ambiência</h4>
             <textarea
+              name="ambienceData"
               placeholder="FUPAM 
 Situada em meio de quadra na Praça do Patriarca"
             />
           </label>
           <label>
             <h4>Fontes bibliográficas</h4>
-            <textarea placeholder="Base de dados FUPAM/DPH" />
+            <textarea
+              name="bibliographicSource"
+              placeholder="Base de dados FUPAM/DPH"
+            />
           </label>
           <label>
             <h4>Outras informações</h4>
-            <textarea placeholder="O motivo de seu tombamento se deu principalmente pelo fato da Igreja" />
+            <textarea
+              name="otherInfo"
+              placeholder="O motivo de seu tombamento se deu principalmente pelo fato da Igreja"
+            />
           </label>
           <label>
             <h4>Observações</h4>
-            <textarea placeholder="..." />
+            <textarea name="observation" placeholder="..." />
           </label>
         </section>
         <section>
@@ -584,10 +714,11 @@ Situada em meio de quadra na Praça do Patriarca"
           </div>
           <label className={styles.inputFile}>
             <input
+              name="graphicDocumentation"
               type="file"
               accept="image/*"
               multiple
-              onChange={e => getBase64(e.target.files)}
+              onChange={e => getBase64Graphic(e.target.files)}
             />
             <img src={copyIcon} alt="File icon" />
             <span className={styles.fileDesc}>
@@ -601,10 +732,11 @@ Situada em meio de quadra na Praça do Patriarca"
           </div>
           <label className={styles.inputFile}>
             <input
+              name="photographicDocumentation"
               type="file"
               accept="image/*"
               multiple
-              onChange={e => getBase64(e.target.files)}
+              onChange={e => getBase64Photographic(e.target.files)}
             />
             <img src={copyIcon} alt="File icon" />
             <span className={styles.fileDesc}>
