@@ -178,8 +178,6 @@ const NewPatrimony: FC = () => {
         image => ({ image, imageName: 'bbbbb' })
       ),
     }
-    console.log(requestBody)
-
     fireCreatePatrimonyRequest(requestBody)
   }
 
